@@ -1,0 +1,48 @@
+.main{
+    height: 100%;
+    display: grid;
+    row-gap: 10px;
+    grid-template-rows: 35% auto;
+}
+
+.row1{
+    height: 100%;
+    background-color: blueviolet;
+
+    
+}
+
+.row2{
+    height: 100%;
+    background-color: blanchedalmond;
+}
+
+@media screen and (max-width: 600px) {
+    .category2banner {
+    display:none;
+    
+      background-color: rgb(3, 245, 188);
+    }
+  }
+@media screen and (max-width: 991px) {
+    .mobileView {
+    display:none;
+    
+      background-color: rgb(3, 245, 188);
+    }
+  }
+@media screen and (min-width: 991px) {
+    .desktopView {
+    display:none;
+    
+      background-color: rgb(3, 245, 188);
+    }
+  }
+
+@media screen and (min-width: 600px) {
+    .categorybanner1 {
+       display:none;
+       padding: "50px";
+      background-color: lightcoral;
+    }
+  }
