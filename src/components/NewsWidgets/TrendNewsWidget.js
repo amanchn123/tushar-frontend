@@ -6,9 +6,9 @@ export default function TrendingNewsWidget() {
       <div className="gallery_item">
         <div className="gallery_item_thumb">
           <img src="/images/gallery-1.jpg" alt="gallery" />
-          <div className="icon">
+          {/* <div className="icon">
             <i className="fas fa-bolt"></i>
-          </div>
+          </div> */}
         </div>
         <div className="gallery_item_content">
           <div className="post-meta">

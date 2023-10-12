@@ -32,7 +32,7 @@ export default function PostCarousel({ dark }) {
     const response = await axios.post(`${api}/getPost`, {
       subCategory: "Breaking News",
     });
-    await response.data.slice(0, 4);
+    await response.data.slice(0, 3);
     setPostData(response.data);
   };
   useEffect(() => {
@@ -104,16 +104,6 @@ export default function PostCarousel({ dark }) {
 
               const convertDays=Math.floor(hoursDifference / 7)
               console.log("convertDays",convertDays)
-
-              {/* if(minutesDifference>60){
-                setTime([hoursDifference,"hrs"])
-              }else if(hoursDifference>24){
-                let days=hoursDifference/24
-                setTime([days,"days"])
-              }else if(minutesDifference<=60){
-                setTime([minutesDifference,"min"])
-              } */}
-
 
               return (
                 <div className="col" key={i + 1}>

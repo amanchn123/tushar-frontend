@@ -19,46 +19,43 @@ import WidgetOne from "@/components/SocialMediaWidgets/WidgetOne";
 import TrendingSingleCarousel from "@/components/TrendingNews/TrendingSingleCarousel";
 import axios from "axios";
 import { api } from "@/components/api/api";
-import {redirect} from 'next/navigation';
+import { redirect } from "next/navigation";
 import PostCarousel from "@/components/News/PostCarousel";
 // import PostCarousel from "@/components/News/PostCarousel";
 
-
-async function content(params){
-   const response = await axios.post(`${api}/getpostdetails`, {
+async function content(params) {
+  const response = await axios.post(`${api}/getpostdetails`, {
     params: params,
   });
 
-  if(!response.data){
-    redirect('/')
+  if (!response.data) {
+    redirect("/");
   }
   return response.data;
 }
 
+export default async function PostDetailsOne({ params }) {
+  let Postdata = await content(params);
+  let metaDetails = Postdata?.metadata;
+  let contentData = Postdata.content;
 
-export default async function PostDetailsOne ({params}) {
+  // console.log('ele',Postdata)
+  let imagePath = "http://localhost:5000/uploads";
 
-let Postdata=await content(params)
-let metaDetails=Postdata?.metadata;
-let contentData=Postdata.content
-
-// console.log('ele',Postdata)
-let imagePath="http://localhost:5000/uploads"
-
-content(params) 
-  .then(async(data) => {
-    console.log('dataa',data)
-    // Modify the metadata object with the data from the content function
-     metadata.title =await data.metadata.title; // Assuming 'title' is a property in the data
-     metadata.description =await data.metadata.description; // Assuming 'description' is a property in the data
-  })
-  .catch(error => {
-    console.error("An error occurred:", error);
-  });
+  content(params)
+    .then(async (data) => {
+      console.log("dataa", data);
+      // Modify the metadata object with the data from the content function
+      metadata.title = await data.metadata.title; // Assuming 'title' is a property in the data
+      metadata.description = await data.metadata.description; // Assuming 'description' is a property in the data
+    })
+    .catch((error) => {
+      console.error("An error occurred:", error);
+    });
 
   return (
-<>
-    {/* <Content /> */}
+    <>
+      {/* <Content /> */}
       <div className="home-1-bg">
         <DrawerHeader />
         <PostCarousel />/
@@ -68,13 +65,10 @@ content(params)
               <div className="col-12">
                 {/* <BreadCrumb CategoryName={Postdata.category} /> */}
               </div>
-              <div className="col-lg-8 " style={{marginTop:"-60px"}}>
-                <div className="post-layout-top-content">
-                  <div className="post-categories d-flex justify-content-between align-content-center">
-                    <div className="categories-item">
-                      {/* <span>{Postdata.category}</span> */}
-                    </div>
-                    {/* <div className="categories-share">
+              <div className="col-lg-8 " style={{ marginTop: "-60px" }}>
+                <div className="post-layout-top-content post-layout-top-content-3">
+                  {/* <div className="post-categories d-flex justify-content-between align-content-center">
+                    <div className="categories-share">
                       <ul>
                         <li>
                           <i className="fas fa-comment"></i>45020
@@ -82,69 +76,67 @@ content(params)
                         <li>
                           <i className="fas fa-fire"></i>45020
                         </li>
-                      </ul>
-                    </div> */}
-                  </div>
-                  <div className="post-content">
-                    <heading className="title">
-                      {Postdata.heading}
-                    </heading>
-                    <p>
-                      {Postdata.metadata.description}
-                    </p>
-                  <div className="thumb">
-                    <img style={{width:""}} src={`${imagePath}/${Postdata.banner}`} alt="" />
-                  </div>
-                  </div>
-                  <div className="post-author">
-                    <div className="author-info">
-                      <div className="thumb">
-                        <img className="" src="/images/author.png" alt="" />
-                      </div>
-                      <h5 className="title">Subash Chandra</h5>
-                      <ul>
-                        <li>{Postdata.createdAt.split('T')[0]}</li>
-                        {/* <li>Updated 1:58 p.m. ET</li> */}
+                        <li>6 minutes read</li>
                       </ul>
                     </div>
-                    <div className="author-social">
-                      <ul>
-                        <li>
-                          <a href="#">
-                            <i className="fab fa-facebook-f"></i>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <i className="fab fa-twitter"></i>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <i className="fab fa-youtube"></i>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <i className="fab fa-instagram"></i>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <i className="fal fa-heart"></i>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <i className="fal fa-bookmark"></i>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <i className="fas fa-ellipsis-v"></i>
-                          </a>
-                        </li>
-                      </ul>
+                  </div> */}
+                  <div className="post-content">
+                    <h3 className="title">
+                    {Postdata.heading}{" "}
+                    </h3>
+                    <div className="post-author">
+                      <div className="author-info">
+                        <div className="thumb">
+                          <img src={`${imagePath}/${Postdata.banner}`} alt="" />
+                        </div>
+                        <h5 className="title">Subash Chandra</h5>
+                        <ul>
+                          <li>March 26, 2020</li>
+                          <li>Updated 1:58 p.m. ET</li>
+                        </ul>
+                      </div>
+                      <div className="author-social">
+                        <ul>
+                          <li>
+                            <a href="#">
+                              <i className="fab fa-facebook-f"></i>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <i className="fab fa-twitter"></i>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <i className="fab fa-youtube"></i>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <i className="fab fa-instagram"></i>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <i className="fal fa-heart"></i>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <i className="fal fa-bookmark"></i>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <i className="fas fa-ellipsis-v"></i>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div className="thumb">
+                      <img src={`${imagePath}/${Postdata.banner}`} alt="" />
                     </div>
                   </div>
                   {contentData && contentData.map((ele,index)=>{
@@ -174,6 +166,7 @@ content(params)
                   </div>
                     )
                   }) }
+
                   <div className="post-tags">
                     <ul>
                       <li>
@@ -191,32 +184,6 @@ content(params)
                         <a href="#">Corona</a>
                       </li>
                     </ul>
-                  </div>
-                  <div className="post-reader-text pt-50">
-                    <div className="row">
-                      <div className="col-md-6">
-                        <div className="post-reader-prev">
-                          <span>PREVIOUS NEWS</span>
-                          <h4 className="title">
-                            <a href="#">
-                              Kushner puts himself in middle of white house’s
-                              chaotic coronavirus response.
-                            </a>
-                          </h4>
-                        </div>
-                      </div>
-                      <div className="col-md-6">
-                        <div className="post-reader-prev">
-                          <span>NEXT NEWS</span>
-                          <h4 className="title">
-                            <a href="#">
-                              C.I.A. Hunts for authentic virus totals in china,
-                              dismissing government tallies
-                            </a>
-                          </h4>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -241,11 +208,12 @@ content(params)
         <Footer />
         <FooterCopyright />
       </div>
-</>
+    </>
   );
 }
 
 export const metadata = {
-  title: 'DLS News',
-  description: 'Blogging website',
-}
+  title: "DLS News",
+  description: "Blogging website",
+};
+

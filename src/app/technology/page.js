@@ -16,8 +16,11 @@ import { SvgIcon } from "@mui/material";
 // import { useMediaQuery } from "@mui/material";
 import newsTab from "../../styles/newsTab.module.css";
 import PostCarousel from "@/components/News/PostCarousel";
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
+
 
 async function getAllPost() {
+  
  try{
   const response = await axios.post(`${api}/getPost`, {
     category: "technology",
@@ -48,94 +51,101 @@ export default async function Technology({ params }) {
             <div className="row">
               <div className="col-lg-9 ">
                 <Grid container lg={12}>
-                  <h4 className="title ">
-                    <b>Technology News</b>
+                  <h4 className="title font-bold">
+                    Technology News
                   </h4>
 
                   {bloglist1 &&
                     bloglist1.map((ele) => {
+                      const timeDifference = Date.now() - new Date(ele.createdAt);
+              const minutesDifference = Math.floor(timeDifference / 1000 / 60);
+              const hoursDifference = Math.floor(timeDifference / 1000 / 60 / 60);
+
+              const convertDays=Math.floor(hoursDifference / 7)
                       return (
-                        <Link href={`${ele.category}/${ele.slug}`}>
-                          <Card
-                            sx={{
-                              // display: "flex",
-                              marginTop: "10px",
-                              // height: "250px",
-                            }}
-                          >
-                            <Grid container lg={12}>
-                              <Grid
-                                className={`${newsTab.categorybanner1} rounded `}
-                                item
-                                lg={3}
-                                sm={3}
-                                sx={{
-                                  placeItems: "center",
-                                  display: "grid",
-                                  width: "100%",
-                                  height: "auto",
-                                }}
-                              >
-                                <h5
-                                  className={`${newsTab.categorybanner1} font-bold p-2`}
-                                >
-                                  {ele.heading}
-                                </h5>
-                                <img
-                                  style={{
-                                    // display: "block",
-                                    height: "250px",
-                                    width: "100%",
+                        <Link href={`${ele.category}/${ele.slug}`} style={{width:"100%"}}>
+              <Card
+                sx={{
+                  // display: "flex",
+                  marginTop: "10px",
+                  // height: "250px",
+                  // width:"100%",
+                  // backgroundColor:"yellow"
+                  
+                }}
+              >
+                <Grid container lg={12}>
+                  <Grid
+                    className={`${newsTab.categorybanner1} rounded `}
+                    item
+                    lg={3}
+                    sm={3}
+                    sx={{
+                      placeItems: "center",
+                      display: "grid",
+                      width: "100%",
+                      height: "auto",
+                    }}
+                  >
+                    <h5 className={`${newsTab.categorybanner1} font-bold p-2`}>
+                      {ele.heading}
+                    </h5>
+                    <img
+                      style={{
+                        // display: "block",
+                        height: "250px",
+                        width: "100%",
 
-                                    // objectFit: "cover",
-                                    // borderRadius: "5%",
-                                  }}
-                                  src={`${imagePath}/${ele.banner}`}
-                                />
-                              </Grid>
-                              <Grid item lg={9} sm={9} className="p-4">
-                                <h5
-                                  className={`${newsTab.category2banner} font-bold`}
-                                >
-                                  {ele.heading}
-                                </h5>
-                                <div style={{}}>
-                                  {ele.metadata?.description.slice(0, 240)}
-                                </div>
-                                <div
-                                  style={{
-                                    // alignSelf: "end",
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    marginTop: "20px",
-                                  }}
-                                >
-                                  <span>Read more..</span>
-                                  <span>an hour ago</span>{" "}
-                                </div>
-                              </Grid>
-                              <Grid
-                                className={`${newsTab.category2banner} rounded`}
-                                item
-                                lg={3}
-                                sm={3}
-                                sx={{ placeItems: "center", display: "grid" }}
-                              >
-                                <img
-                                  style={{
-                                    // display: "block",
-                                    height: "100%",
-                                    width: "100%",
+                        // objectFit: "cover",
+                        // borderRadius: "5%",
+                      }}
+                      src={`${imagePath}/${ele.banner}`}
+                    />
+                  </Grid>
+                  <Grid item lg={8.5} sm={7} className="p-4">
+                    <h5 className={`${newsTab.category2banner} font-bold`}>
+                      {ele.heading}
+                    </h5>
+                    <div style={{height:"120px"}}>
+                      {ele.metadata?.description.slice(0, 250)}
+                    </div>
+                    <div
+                      style={{
+                        // alignSelf: "end",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        marginTop: "20px",
+                      }}
+                    >
+                      <span style={{color:"red"}}>Read more..</span>
+                      <span><AccessTimeIcon /> 
+                      {minutesDifference<=60?`${minutesDifference} Minutes`:minutesDifference>60?`${hoursDifference} hrs`:hoursDifference>24?`${convertDays} days`:""} 
+                      Ago</span>
+                      {" "}
+                    </div>
+                  </Grid>
+                  <Grid
+                    className={`${newsTab.category2banner} rounded shadow hover:shadow-lg focus:shadow-outline active:shadow-inner`}
+                    item
+                    lg={3.5}
+                    sm={5}
+                    sx={{ placeItems: "center", display: "grid" }}
+                  >
+                    <img
+                      style={{
+                        // display: "block",
+                        height: "100%",
+                        width: "100%",
 
-                                    // objectFit: "cover",
-                                    // borderRadius: "5%",
-                                  }}
-                                  src={`${imagePath}/${ele.banner}`}
-                                />
-                              </Grid>
-                            </Grid>
-                          </Card>
-                        </Link>
+                        // objectFit: "cover",
+                        // borderRadius: "5%",
+                      }}
+                      src={`${imagePath}/${ele.banner}`}
+                    />
+                  </Grid>
+                </Grid>
+              </Card>
+            </Link>
                       );
                     })}
                 </Grid>
@@ -143,24 +153,10 @@ export default async function Technology({ params }) {
               <div className={`col-lg-3 ${newsTab.mobileView}`}>
                 <div
                   className="post_gallery_sidebar"
-                  style={{ height: "100%", paddingTop: "15%" }}
+                  style={{ height: "100%",paddingTop: "6%",marginTop:"10px"  }}
                 >
                   <NewsTabs />
-                  
-                  <div style={{height:"60%"}} className="bg-red-300 rounded mt-20 p-4">
-                    <h3 className="title">Newsletter</h3>
-                    <p>
-                      Your email address will not be this published. Required
-                      fields are News Today.
-                    </p>
-                    {/* <form action="#">
-                      <div className="input-box">
-                        <input type="text" placeholder="Your email address" />
-                        <button type="button">SIGN UP</button>
-                      </div>
-                    </form> */}
-                    <span>We hate spam as much as you do</span>
-                  </div>
+                
                 </div>
               </div>
               <div className="col-lg-12">
@@ -220,90 +216,97 @@ export default async function Technology({ params }) {
               </div>
               <div className="col-lg-9 mt-12">
                 <Grid container lg={12}>
-                  {bloglist2 &&
+                {bloglist2 &&
                     bloglist2.map((ele) => {
+                      const timeDifference = Date.now() - new Date(ele.createdAt);
+              const minutesDifference = Math.floor(timeDifference / 1000 / 60);
+              const hoursDifference = Math.floor(timeDifference / 1000 / 60 / 60);
+
+              const convertDays=Math.floor(hoursDifference / 7)
                       return (
-                        <Link href={`${ele.category}/${ele.slug}`}>
-                          <Card
-                            sx={{
-                              // display: "flex",
-                              marginTop: "10px",
-                              // height: "250px",
-                            }}
-                          >
-                            <Grid container lg={12}>
-                              <Grid
-                                className={`${newsTab.categorybanner1} rounded `}
-                                item
-                                lg={3}
-                                sm={3}
-                                sx={{
-                                  placeItems: "center",
-                                  display: "grid",
-                                  width: "100%",
-                                  height: "auto",
-                                }}
-                              >
-                                <h5
-                                  className={`${newsTab.categorybanner1} font-bold p-2`}
-                                >
-                                  {ele.heading}
-                                </h5>
-                                <img
-                                  style={{
-                                    // display: "block",
-                                    height: "250px",
-                                    width: "100%",
+                        <Link href={`${ele.category}/${ele.slug}`} style={{width:"100%"}}>
+              <Card
+                sx={{
+                  // display: "flex",
+                  marginTop: "10px",
+                  // height: "250px",
+                  // width:"100%",
+                  // backgroundColor:"yellow"
+                  
+                }}
+              >
+                <Grid container lg={12}>
+                  <Grid
+                    className={`${newsTab.categorybanner1} rounded `}
+                    item
+                    lg={3}
+                    sm={3}
+                    sx={{
+                      placeItems: "center",
+                      display: "grid",
+                      width: "100%",
+                      height: "auto",
+                    }}
+                  >
+                    <h5 className={`${newsTab.categorybanner1} font-bold p-2`}>
+                      {ele.heading}
+                    </h5>
+                    <img
+                      style={{
+                        // display: "block",
+                        height: "250px",
+                        width: "100%",
 
-                                    // objectFit: "cover",
-                                    // borderRadius: "5%",
-                                  }}
-                                  src={`${imagePath}/${ele.banner}`}
-                                />
-                              </Grid>
-                              <Grid item lg={9} sm={9} className="p-4">
-                                <h5
-                                  className={`${newsTab.category2banner} font-bold`}
-                                >
-                                  {ele.heading}
-                                </h5>
-                                <div style={{}}>
-                                  {ele.metadata?.description.slice(0, 240)}
-                                </div>
-                                <div
-                                  style={{
-                                    // alignSelf: "end",
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    marginTop: "20px",
-                                  }}
-                                >
-                                  <span>Read more..</span>
-                                  <span>an hour ago</span>{" "}
-                                </div>
-                              </Grid>
-                              <Grid
-                                className={`${newsTab.category2banner} rounded`}
-                                item
-                                lg={3}
-                                sm={3}
-                                sx={{ placeItems: "center", display: "grid" }}
-                              >
-                                <img
-                                  style={{
-                                    // display: "block",
-                                    height: "100%",
-                                    width: "100%",
+                        // objectFit: "cover",
+                        // borderRadius: "5%",
+                      }}
+                      src={`${imagePath}/${ele.banner}`}
+                    />
+                  </Grid>
+                  <Grid item lg={8.5} sm={7} className="p-4">
+                    <h5 className={`${newsTab.category2banner} font-bold`}>
+                      {ele.heading}
+                    </h5>
+                    <div style={{height:"120px"}}>
+                      {ele.metadata?.description.slice(0, 250)}
+                    </div>
+                    <div
+                      style={{
+                        // alignSelf: "end",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        marginTop: "20px",
+                      }}
+                    >
+                      <span style={{color:"red"}}>Read more..</span>
+                      <span><AccessTimeIcon /> 
+                      {minutesDifference<=60?`${minutesDifference} Minutes`:minutesDifference>60?`${hoursDifference} hrs`:hoursDifference>24?`${convertDays} days`:""} 
+                      Ago</span>
+                      {" "}
+                    </div>
+                  </Grid>
+                  <Grid
+                    className={`${newsTab.category2banner} rounded shadow hover:shadow-lg focus:shadow-outline active:shadow-inner`}
+                    item
+                    lg={3.5}
+                    sm={5}
+                    sx={{ placeItems: "center", display: "grid" }}
+                  >
+                    <img
+                      style={{
+                        // display: "block",
+                        height: "100%",
+                        width: "100%",
 
-                                    // objectFit: "cover",
-                                    // borderRadius: "5%",
-                                  }}
-                                  src={`${imagePath}/${ele.banner}`}
-                                />
-                              </Grid>
-                            </Grid>
-                          </Card>
-                        </Link>
+                        // objectFit: "cover",
+                        // borderRadius: "5%",
+                      }}
+                      src={`${imagePath}/${ele.banner}`}
+                    />
+                  </Grid>
+                </Grid>
+              </Card>
+            </Link>
                       );
                     })}
                 </Grid>
