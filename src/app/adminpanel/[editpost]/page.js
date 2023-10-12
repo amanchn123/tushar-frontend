@@ -23,7 +23,7 @@ import { getCookie } from "cookies-next";
 import MuiAlert from "@mui/material/Alert";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export default function page({ params }) {
+export default function Page({ params }) {
   const getPostDet = async () => {
     try {
       const response = await axios.get(`${api}/getpost?id=${params.editpost}`);

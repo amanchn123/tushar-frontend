@@ -1,4 +1,5 @@
 import Layout from '@/components/Layout/Layout';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -10,7 +11,7 @@ export default function Custom404() {
           <div className="row justify-content-center">
             <div className="col-lg-9">
               <div className="error-thumb text-center">
-                <img src="/images/404.png" alt="" />
+                <Image src="/images/404.png" alt="" />
               </div>
             </div>
             <div className="col-lg-6">

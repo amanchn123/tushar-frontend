@@ -56,14 +56,14 @@ export default async function Technology({ params }) {
                   </h4>
 
                   {bloglist1 &&
-                    bloglist1.map((ele) => {
+                    bloglist1.map((ele,index) => {
                       const timeDifference = Date.now() - new Date(ele.createdAt);
               const minutesDifference = Math.floor(timeDifference / 1000 / 60);
               const hoursDifference = Math.floor(timeDifference / 1000 / 60 / 60);
 
               const convertDays=Math.floor(hoursDifference / 7)
                       return (
-                        <Link href={`${ele.category}/${ele.slug}`} style={{width:"100%"}}>
+                        <Link href={`${ele.category}/${ele.slug}`} style={{width:"100%"}} key={index}>
               <Card
                 sx={{
                   // display: "flex",
@@ -217,14 +217,14 @@ export default async function Technology({ params }) {
               <div className="col-lg-9 mt-12">
                 <Grid container lg={12}>
                 {bloglist2 &&
-                    bloglist2.map((ele) => {
+                    bloglist2.map((ele,index) => {
                       const timeDifference = Date.now() - new Date(ele.createdAt);
               const minutesDifference = Math.floor(timeDifference / 1000 / 60);
               const hoursDifference = Math.floor(timeDifference / 1000 / 60 / 60);
 
               const convertDays=Math.floor(hoursDifference / 7)
                       return (
-                        <Link href={`${ele.category}/${ele.slug}`} style={{width:"100%"}}>
+                        <Link href={`${ele.category}/${ele.slug}`} style={{width:"100%"}} key={index}>
               <Card
                 sx={{
                   // display: "flex",
