@@ -88,14 +88,11 @@ export default function page({ params }) {
   });
 
   const uploadPost = async () => {
-    // if ("help"
-    //   !state.heading
-    //   !state.title ||
-    //   !state.description ||
-    //   !state.slug
-    // ) {
-    //   setSelectAll(false);
-    // } else {
+    if (
+      !postInfo.slug
+    ) {
+      setSelectAll(false);
+    } else {
    
     try {
       // let contentFinal = selectedELement;
@@ -167,7 +164,7 @@ export default function page({ params }) {
     } catch (error) {
       console.log("error in upload post frontend", error);
     }
-    // }
+    }
   };
 
   const VisuallyHiddenInput = styled("input")({

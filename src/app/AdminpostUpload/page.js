@@ -61,13 +61,14 @@ export default function page() {
   });
 
   const haadlelement = async (e) => {
+    console.log("ho jaaaa")
     const val = e.target.value;
     await setSelectedElement([...selectedELement, val]);
   };
 
   const contentFinal = selectedELement;
 
-  const token = JSON.parse(getCookie("AdminDetails"))?.token;
+  // const token = JSON.parse(getCookie("AdminDetails"))?.token;
 
   const uploadPost = async () => {
     if (
@@ -78,7 +79,6 @@ export default function page() {
     ) {
       setSelectAll(false);
     } else {
-      
       try {
         let contentFinal = selectedELement;
         let newPara = await state.paragraph.filter((ele) => {
@@ -130,7 +130,7 @@ export default function page() {
           },
         });
 
-        console.log('reee',response)
+        console.log("reee", response);
 
         if (response.data == "not allowed") {
           setAllowed(false);
@@ -282,7 +282,7 @@ export default function page() {
         </div>
 
         <div className="bg-orange-100 p-4">
-          {selectedELement !== [] &&
+          {selectedELement &&
             selectedELement.map((ele, index) => (
               <>
                 {ele == "para" && (
@@ -385,6 +385,7 @@ export default function page() {
             </label>
             <div class="relative">
               <select
+              onChange={haadlelement}
                 class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="grid-state"
               >

@@ -15,12 +15,12 @@ export default function LogoWithSearch() {
           </div>
           <div className="col-lg-5 col-md-7">
             <div className="header-search">
-              <form action="#"  style={{backgroundColor:"green"}}>
-                <div className="input-box ">
+              {/* <form action="#"> */}
+                <div className="input-box">
                   <input type="text" placeholder="What you want to search?" />
                   <button type="button">Search</button>
                 </div>
-              </form>
+              {/* </form> */}
             </div>
           </div>
           <div className="col-lg-2">
