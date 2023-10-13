@@ -42,6 +42,7 @@ export default function Page() {
   const [allowed, setAllowed] = React.useState(true);
   const [selectAll, setSelectAll] = React.useState(true);
   let [selectedELement, setSelectedElement] = React.useState([]);
+  const [khali,setKhali]=React.useState()
 
   let [state, setState] = React.useState({
     heading: null,
@@ -61,10 +62,13 @@ export default function Page() {
   });
 
   const haadlelement = async (e) => {
-    console.log("ho jaaaa")
+    console.log("ho jaaaa",e.target.value)
     const val = e.target.value;
     await setSelectedElement([...selectedELement, val]);
+    setKhali("")
   };
+
+  console.log("selectedELement",selectedELement)
 
   const contentFinal = selectedELement;
 
@@ -384,16 +388,19 @@ export default function Page() {
               Add a New field
             </label>
             <div class="relative">
+            
               <select
+              value={khali}
               onChange={haadlelement}
-                class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="grid-state"
               >
                 {/* <option value="">None</option> */}
-                <option onClick={haadlelement} value="para">
+                <option>Select</option>
+                <option  value="para">
                   Para
                 </option>
-                <option onClick={haadlelement} value="image">
+                <option  value="image">
                   Image
                 </option>
               </select>

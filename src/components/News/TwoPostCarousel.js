@@ -19,6 +19,13 @@ const postData = [
     postTitle: 'Success is not a good food failure makes you humble',
   },
   {
+    postThumb: '/images/play-post-2.jpg',
+    postThumbDark: '/images/play-post-1.jpg',
+    postCategory: 'TECHNOLOGY',
+    postDate: 'March 26, 2020',
+    postTitle: 'Success is not a good food failure makes you humble',
+  },
+  {
     postThumb: '/images/play-post-1.jpg',
     postThumbDark: '/images/play-post-2.jpg',
     postCategory: 'TECHNOLOGY',
@@ -47,7 +54,7 @@ function NextArrow(props) {
 export default function TwoPostCarousel({ dark, customClass }) {
   const [isOpen, setOpen] = useState(false);
   const settings = {
-    slidesToShow: 2,
+    slidesToShow: 1,
     slidesToScroll: 1,
     dots: false,
     infinite: true,
@@ -80,19 +87,19 @@ export default function TwoPostCarousel({ dark, customClass }) {
         dark ? 'single-play-post-dark-area' : ''
       } `}
     >
-      <div className="container custom-container">
+      <div className="container custom-container ">
         <div className="single-play-box">
           <Slider {...settings} className="row single-play-post-slider">
             {postData.map((item, i) => (
               <div className="col" key={i + 1}>
                 <div className="single-play-post-item">
                   {dark ? (
-                    <img src={item.postThumbDark} alt="play" />
+                    <img className='rounded'  src={item.postThumbDark} alt="play" />
                   ) : (
-                    <img src={item.postThumb} alt="play" />
+                    <img className='rounded' style={{height:"300px"}} src={item.postThumb} alt="play" />
                   )}
 
-                  <div className="single-play-post-content">
+                  <div className="single-play-post-content">  
                     <div className="post-meta">
                       <div className="meta-categories">
                         <a href="#">{item.postCategory}</a>

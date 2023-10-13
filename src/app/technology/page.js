@@ -37,7 +37,7 @@ export default async function Technology({ params }) {
 
   let bloglist1 = await postData&&postData.slice(0, 3);
   let bloglist2 = await postData&&postData.slice(3, 5);
-  console.log("postData", postData);
+
   let imagePath = "http://localhost:5000/uploads";
 
   return (

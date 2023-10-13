@@ -12,13 +12,13 @@ function NavigationBar({ customClass }) {
               <li key={i}>
                 {item.child ? (
                   <>
-                    <Link href="#">
+                    <Link href="#"  >
                       {item.linkText}
                       <i className="fal fa-angle-down"></i>
                     </Link>
                   </>
                 ) : (
-                  <Link href={item.link}>{item.linkText}</Link>
+                  <Link style={{color:"black"}} href={item.link}>{item.linkText}</Link>
                 )}
                 {item.child && (
                   <ul className="sub-menu">

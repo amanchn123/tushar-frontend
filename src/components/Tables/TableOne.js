@@ -138,7 +138,7 @@ const TableOne = () => {
             </div>
 
            {matches?           <div className="flex items-center justify-center p-2.5 xl:p-5">
-              <p className="text-black ">{brand.metadata.description.slice(0,100)}...</p>
+              <p className="text-black ">{brand.metadata?.description?.slice(0,100)}...</p>
             </div>:""}
 
             <div className="flex items-center justify-between p-2.5 xl:p-5">

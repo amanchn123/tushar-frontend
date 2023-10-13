@@ -61,10 +61,10 @@ export default function Home() {
         >
           <NewsLetter />
         </div> */}
-        <TrendingNewsArea />
+        {/* <TrendingNewsArea /> */}
         <TwoPostCarousel />
 
-        <section className="video-news-area">
+        {/* <section className="video-news-area">
           <div className="container custom-container">
             <div className="video-news-box">
               <div className="row">
@@ -77,7 +77,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
         <section className="all-post-area">
           <div className="container">
             <div className="row justify-content-center">

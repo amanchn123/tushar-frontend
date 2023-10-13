@@ -23,7 +23,10 @@ import { redirect } from "next/navigation";
 import PostCarousel from "@/components/News/PostCarousel";
 // import PostCarousel from "@/components/News/PostCarousel";
 
+// console.log("paraaaaaa",{params})
+
 async function content(params) {
+  console.log("slug",params)
   const response = await axios.post(`${api}/getpostdetails`, {
     params: params,
   });
@@ -34,7 +37,31 @@ async function content(params) {
   return response.data;
 }
 
+
+
+export async function generateMetadata({params }){
+   
+  // var cleanedString = stringWithEntities.replace(/&quot;/g, '"');
+  let data=await content(params)
+  let des=data.metadata
+  console.log("dataaaaa",des)
+  // console.log(searchParams,"metadata",params)
+  return{
+    title:JSON.stringify(des.title),
+    description:JSON.stringify(des.description)
+  }
+  }
+
+// export const metadata = {
+//   title: "DLS News",
+//   description: "Blogging website",
+// };
+
+
+
+
 export default async function PostDetailsOne({ params }) {
+ 
   let Postdata = await content(params);
   let metaDetails = Postdata?.metadata;
   let contentData = Postdata.content;
@@ -42,20 +69,20 @@ export default async function PostDetailsOne({ params }) {
   // console.log('ele',Postdata)
   let imagePath = "http://localhost:5000/uploads";
 
-  content(params)
-    .then(async (data) => {
-      console.log("dataa", data);
-      // Modify the metadata object with the data from the content function
-      metadata.title = await data.metadata.title; // Assuming 'title' is a property in the data
-      metadata.description = await data.metadata.description; // Assuming 'description' is a property in the data
-    })
-    .catch((error) => {
-      console.error("An error occurred:", error);
-    });
+//  await content(params)
+//     .then(async (data) => {
+//       // Modify the metadata object with the data from the content function
+//       generateMetadata.title = await data.metadata.title; // Assuming 'title' is a property in the data
+//       generateMetadata.description = await data.metadata.description; // Assuming 'description' is a property in the data
+//     })
+//     .catch((error) => {
+//       console.error("An error occurred:", error);
+//     });
 
   return (
     <>
       {/* <Content /> */}
+      <Layout>
       <div className="home-1-bg">
         <DrawerHeader />
         <PostCarousel />/
@@ -65,7 +92,7 @@ export default async function PostDetailsOne({ params }) {
               <div className="col-12">
                 {/* <BreadCrumb CategoryName={Postdata.category} /> */}
               </div>
-              <div className="col-lg-8 " style={{ marginTop: "-60px" }}>
+              <div className="col-lg-9 " style={{ marginTop: "-60px" }}>
                 <div className="post-layout-top-content post-layout-top-content-3">
                   {/* <div className="post-categories d-flex justify-content-between align-content-center">
                     <div className="categories-share">
@@ -187,7 +214,7 @@ export default async function PostDetailsOne({ params }) {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-4">
+              <div className="col-lg-3">
                 <div className="post_gallery_sidebar mt-40">
                   {/* <NewsTabs /> */}
                   {/* <WidgetOne customClass="mt-30" /> */}
@@ -208,12 +235,9 @@ export default async function PostDetailsOne({ params }) {
         <Footer />
         <FooterCopyright />
       </div>
-    </>
+    
+      </Layout></>
   );
 }
 
-export const metadata = {
-  title: "DLS News",
-  description: "Blogging website",
-};
 

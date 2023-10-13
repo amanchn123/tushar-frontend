@@ -58,6 +58,7 @@ export default function Page({ params }) {
   const [mount, setMount] = React.useState(false);
   let [selectedELement, setSelectedElement] = React.useState([]);
   const [postInfo, setPostInfo] = React.useState([]);
+  const[khali,setKhali]=React.useState()
 
   const contentFinal = selectedELement;
   const imageUrls = "http://localhost:5000/uploads";
@@ -87,6 +88,8 @@ export default function Page({ params }) {
     banner: null,
   });
 
+  console.log("state Banner",state.banner)
+
   const uploadPost = async () => {
     if (
       !postInfo.slug
@@ -104,6 +107,7 @@ export default function Page({ params }) {
         return ele!==undefined
       });
      
+
 
       let modifiedContentFinal = await postInfo?.content.map((ele, index) => {
         if (ele === "para") {
@@ -134,12 +138,12 @@ export default function Page({ params }) {
 
       await formdata.append("heading", postInfo.heading);
       await formdata.append("id", params.editpost);
-      await formdata.append("description", postInfo.description);
+      await formdata.append("description", postInfo?.metadata?.description);
       await formdata.append("featuredImage", postInfo.featuredImage);
       await formdata.append("category", postInfo.category);
       await formdata.append("subCategory", postInfo.subCategory);
       await formdata.append("slug", postInfo.slug);
-      await formdata.append("title", postInfo.title);
+      await formdata.append("title", postInfo?.metadata?.title);
       await formdata.append("banner", state.banner);
       await formdata.append("alt", JSON.stringify(state.alt));
       await formdata.append("final", JSON.stringify(modifiedContentFinal));
@@ -323,7 +327,7 @@ export default function Page({ params }) {
                 placeholder="Blog title"
                 multiline
                 defaultValue={postInfo?.metadata?.title}
-                onChange={(e) => setPostInfo({ ...postInfo, title: e.target.value })}
+                onChange={(e) => setPostInfo({ ...postInfo, metadata:{...postInfo.metadata,title: e.target.value} })}
               />
               <TextField
                 id="outlined-multiline-static"
@@ -528,18 +532,20 @@ export default function Page({ params }) {
                         </label>
                         <div class="relative">
                           <select
+                          value={khali}
+                          onChange={(e)=>handlelement(e,index+1)}
                             class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="grid-state"
                           >
-                            {/* <option value="">None</option> */}
+                            <option>select field</option>
                             <option
-                              onClick={(e) => handlelement(e, index + 1)}
+                         
                               value="para"
                             >
                               Para
                             </option>
                             <option
-                              onClick={(e) => handlelement(e, index + 1)}
+                           
                               value="image"
                             >
                               Image
@@ -572,7 +578,22 @@ export default function Page({ params }) {
                   <VisuallyHiddenInput
                     type="file"
                     onChange={(e) =>
-                      setState({ ...state, banner: e.target.files[0] })
+                         {
+       
+                          const originalFile = e.target.files[0]; // Get the original File object
+                          const updatedName = postInfo?.banner;
+                         console.log("updatedName",updatedName)
+                          const updatedFile = new File(
+                                  [originalFile],
+                                  updatedName,
+                                  { type: originalFile.type }
+                                );
+                            
+                                setState({
+                                  ...state,
+                                  banner: updatedFile,
+                                });
+                         }
                     }
                   />
                 </Button>

@@ -6,6 +6,7 @@ import { api } from "../api/api";
 import Link from "next/link";
 import newsTab from "../../styles/newsTab.module.css";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import Image from "next/image";
 
 export default function NewsGallary() {
 
@@ -29,7 +30,7 @@ export default function NewsGallary() {
   useEffect(() => {
     getAllPost();
   }, [time]);
-
+  console.log("postData",postData)
   // const PostData= getAllPost()
 
   const imagePath = "http://localhost:5000/uploads";
@@ -46,6 +47,7 @@ export default function NewsGallary() {
               const hoursDifference = Math.floor(timeDifference / 1000 / 60 / 60);
 
               const convertDays=Math.floor(hoursDifference / 7)
+              const bannelurl=`${imagePath}/${ele.banner}`
           return (
             <Link href={`${ele.category}/${ele.slug}`} style={{width:"100%"}}>
               <Card
@@ -74,16 +76,19 @@ export default function NewsGallary() {
                     <h5 className={`${newsTab.categorybanner1} font-bold p-2`}>
                       {ele.heading}
                     </h5>
-                    <img
-                      style={{
+                    <Image
+                    alt="imagesss"
+                    height={250}
+                    width={250}
+                      // style={{
                         // display: "block",
-                        height: "250px",
-                        width: "100%",
+                        // height: "250px",
+                        // width: "100%",
 
                         // objectFit: "cover",
                         // borderRadius: "5%",
-                      }}
-                      src={`${imagePath}/${ele.banner}`}
+                      // }}
+                      src={`${bannelurl}`}
                     />
                   </Grid>
                   <Grid item lg={8.5} sm={7} className="p-4">
