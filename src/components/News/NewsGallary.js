@@ -35,13 +35,13 @@ export default function NewsGallary() {
 
   const imagePath = "http://localhost:5000/uploads";
   return (
-    <Grid container lg={12}>
+    <Grid container >
       <h4 className="title">
         <b>Featured News</b>
       </h4>
 
       {postData &&
-        postData.map((ele) => {
+        postData.map((ele,idx) => {
           const timeDifference = Date.now() - new Date(ele.createdAt);
               const minutesDifference = Math.floor(timeDifference / 1000 / 60);
               const hoursDifference = Math.floor(timeDifference / 1000 / 60 / 60);
@@ -49,18 +49,18 @@ export default function NewsGallary() {
               const convertDays=Math.floor(hoursDifference / 7)
               const bannelurl=`${imagePath}/${ele.banner}`
           return (
-            <Link href={`${ele.category}/${ele.slug}`} style={{width:"100%"}}>
+            <Link href={`${ele.category}/${ele.slug}`} style={{width:"100%"}} key={idx}>
               <Card
                 sx={{
                   // display: "flex",
-                  marginTop: "10px",
+                    marginBottom:"10px"
                   // height: "250px",
                   // width:"100%",
                   // backgroundColor:"yellow"
                   
                 }}
               >
-                <Grid container lg={12}>
+                <Grid container>
                   <Grid
                     className={`${newsTab.categorybanner1} rounded `}
                     item

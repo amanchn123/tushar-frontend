@@ -20,29 +20,29 @@ import axios from 'axios';
 export default function NewsTabs() {
   const[score,setScore]=useState(null)
   
-  const getScorecard=async()=>{
-    let apikey="6c9e2cfa-84ed-4fd5-b43d-ac6f3c853e46"
-     try{
-  const result=await axios.post
-  (`https://api.cricapi.com/v1/currentMatches?apikey=${apikey}&offset=0`,{
-    "apikey":apikey,
-    "offset": 0
-  })
- const matches= await result?.data?.data
- const match=await matches&&matches.filter((res)=>res.matchStarted==true && res.matchEnded==false && !res.name.includes("Warm-up game") && !res.status.includes("No result") )
- console.log("matchesss",matches,match)
- const neww=await match&&match.find((ele)=>ele.teams.includes(["Netherlands,New Zealands"]))
- console.log(match,'match',neww)
- const final=await axios.post(`https://api.cricapi.com/v1/match_scorecard?apikey=${apikey}&id=${match[0].id}`,{
-  "apikey": apikey,
-  "id": `${match[0].id}`
- })
-//  setScore(match) 
-console.log("final",final)
- }catch(error){
-  console.log(error)
- }
-  }
+//   const getScorecard=async()=>{
+//     let apikey="6c9e2cfa-84ed-4fd5-b43d-ac6f3c853e46"
+//      try{
+//   const result=await axios.post
+//   (`https://api.cricapi.com/v1/currentMatches?apikey=${apikey}&offset=0`,{
+//     "apikey":apikey,
+//     "offset": 0
+//   })
+//  const matches= await result?.data?.data
+//  const match=await matches&&matches.filter((res)=>res.matchStarted==true && res.matchEnded==false && !res.name.includes("Warm-up game") && !res.status.includes("No result") )
+//  console.log("matchesss",matches,match)
+//  const neww=await match&&match.find((ele)=>ele.teams.includes(["Netherlands,New Zealands"]))
+//  console.log(match,'match',neww)
+//  const final=await axios.post(`https://api.cricapi.com/v1/match_scorecard?apikey=${apikey}&id=${match[0].id}`,{
+//   "apikey": apikey,
+//   "id": `${match[0].id}`
+//  })
+// //  setScore(match) 
+// console.log("final",final)
+//  }catch(error){
+//   console.log(error)
+//  }
+//   }
 
   return (
 <>
@@ -63,7 +63,7 @@ console.log("final",final)
       Your email address will not be this published. Required fields are News
       Today.
     </p>
-    <button onClick={getScorecard}>getscore</button>
+    <button >getscore</button>
     <form action="#">
       <div className="input-box">
         <input type="text" placeholder="Your email address" />

@@ -21,21 +21,22 @@ import axios from "axios";
 import { api } from "@/components/api/api";
 import { redirect } from "next/navigation";
 import PostCarousel from "@/components/News/PostCarousel";
+import content from "../../fun";
 // import PostCarousel from "@/components/News/PostCarousel";
 
 // console.log("paraaaaaa",{params})
 
-async function content(params) {
-  console.log("slug",params)
-  const response = await axios.post(`${api}/getpostdetails`, {
-    params: params,
-  });
+// async function content(params) {
+//   console.log("slug",params)
+//   const response = await axios.post(`${api}/getpostdetails`, {
+//     params: params,
+//   });
 
-  if (!response.data) {
-    redirect("/");
-  }
-  return response.data;
-}
+//   if (!response.data) {
+//     redirect("/");
+//   }
+//   return response.data;
+// }
 
 
 

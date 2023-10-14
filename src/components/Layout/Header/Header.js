@@ -1,3 +1,4 @@
+'use client'
 
 import Topbar from "./Topbar";
 import LogoBanner from "./LogoBanner";

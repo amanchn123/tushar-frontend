@@ -17,7 +17,7 @@ export default function LogoWithSearch() {
             <div className="header-search">
               {/* <form action="#"> */}
                 <div className="input-box">
-                  <input type="text" placeholder="What you want to search?" />
+                  <input className='2xl-rounded' type="text" placeholder="What you want to search?" />
                   <button type="button">Search</button>
                 </div>
               {/* </form> */}

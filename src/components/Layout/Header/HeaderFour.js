@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import LogoWithSearch from './LogoWithSearch';
 import NavigationBar from './NavigationBar';

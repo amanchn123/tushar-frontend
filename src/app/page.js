@@ -26,6 +26,7 @@ import useToggle from "@/Hooks/useToggle";
 import Link from "next/link";
 import React from "react";
 import DrawerHeader from "@/components/Drawer&HeaderCom/drawerheaderclient";
+import Blogs from "@/components/News/Blogs";
 
 export default function Home() {
   return (
@@ -49,12 +50,15 @@ export default function Home() {
                 </div>
               </div>
               <div className="col-lg-12">
-              <NewsLetter />
+                <NewsLetter />
+              </div>
+              <div className="col-lg-12">
+                <FeatureNewsCarousel />
               </div>
             </div>
           </div>
         </div>
-        <FeatureNewsCarousel />
+
         {/* <div
           className="post_gallery_sidebar"
           style={{ display: "grid", justifyContent: "center" }}
@@ -63,21 +67,24 @@ export default function Home() {
         </div> */}
         {/* <TrendingNewsArea /> */}
         <TwoPostCarousel />
-
-        {/* <section className="video-news-area">
-          <div className="container custom-container">
-            <div className="video-news-box">
-              <div className="row">
-                <div className="col-lg-8">
-                  <VideoNews />
-                </div>
-                <div className="col-lg-4">
-                  <PopularNewsCarousel />
+        <div className="post__gallery__area">
+          <div className="container">
+            <div className="row">
+            <div className="col-lg-9 ">
+                <Blogs />
+              </div>
+              <div className="col-lg-3">
+                <div
+                  className="post_gallery_sidebar"
+                  style={{ height: "100%", paddingTop: "6%" }}
+                >
+                  <NewsTabs />
                 </div>
               </div>
             </div>
           </div>
-        </section> */}
+        </div>
+
         <section className="all-post-area">
           <div className="container">
             <div className="row justify-content-center">

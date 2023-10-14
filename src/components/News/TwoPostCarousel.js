@@ -1,38 +1,40 @@
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import ModalVideo from 'react-modal-video';
+import axios from 'axios';
+import { api } from '../api/api';
 
-const postData = [
-  {
-    postThumb: '/images/play-post-1.jpg',
-    postThumbDark: '/images/play-post-dark-1.jpg',
-    postCategory: 'TECHNOLOGY',
-    postDate: 'March 26, 2020',
-    postTitle: 'Success is not a good food failure makes you humble',
-  },
-  {
-    postThumb: '/images/play-post-2.jpg',
-    postThumbDark: '/images/play-post-1.jpg',
-    postCategory: 'TECHNOLOGY',
-    postDate: 'March 26, 2020',
-    postTitle: 'Success is not a good food failure makes you humble',
-  },
-  {
-    postThumb: '/images/play-post-2.jpg',
-    postThumbDark: '/images/play-post-1.jpg',
-    postCategory: 'TECHNOLOGY',
-    postDate: 'March 26, 2020',
-    postTitle: 'Success is not a good food failure makes you humble',
-  },
-  {
-    postThumb: '/images/play-post-1.jpg',
-    postThumbDark: '/images/play-post-2.jpg',
-    postCategory: 'TECHNOLOGY',
-    postDate: 'March 26, 2020',
-    postTitle: 'Success is not a good food failure makes you humble',
-  },
-];
+// const postData = [
+//   {
+//     postThumb: '/images/play-post-1.jpg',
+//     postThumbDark: '/images/play-post-dark-1.jpg',
+//     postCategory: 'TECHNOLOGY',
+//     postDate: 'March 26, 2020',
+//     postTitle: 'Success is not a good food failure makes you humble',
+//   },
+//   {
+//     postThumb: '/images/play-post-2.jpg',
+//     postThumbDark: '/images/play-post-1.jpg',
+//     postCategory: 'TECHNOLOGY',
+//     postDate: 'March 26, 2020',
+//     postTitle: 'Success is not a good food failure makes you humble',
+//   },
+//   {
+//     postThumb: '/images/play-post-2.jpg',
+//     postThumbDark: '/images/play-post-1.jpg',
+//     postCategory: 'TECHNOLOGY',
+//     postDate: 'March 26, 2020',
+//     postTitle: 'Success is not a good food failure makes you humble',
+//   },
+//   {
+//     postThumb: '/images/play-post-1.jpg',
+//     postThumbDark: '/images/play-post-2.jpg',
+//     postCategory: 'TECHNOLOGY',
+//     postDate: 'March 26, 2020',
+//     postTitle: 'Success is not a good food failure makes you humble',
+//   },
+// ];
 
 function PrevArrow(props) {
   const { onClick } = props;
@@ -52,6 +54,31 @@ function NextArrow(props) {
 }
 
 export default function TwoPostCarousel({ dark, customClass }) {
+  const[postDatas,setPostDatas]=useState([])
+  const getTrendPost=async()=>{
+    try{
+      const response=await axios.post(`${api}/getPost`,{
+          subCategory:"Trending News"
+      })
+  
+      if(response.data){
+         
+          setPostDatas(response.data.slice(0,4))
+      }else{
+          console.log(response)
+      }
+     }catch(error){
+      console.log('errro in getting trending post in frontend',error)
+     }
+  }
+  useEffect(()=>{
+ getTrendPost()
+    
+  },[])
+  let imagePath = "http://localhost:5000/uploads";
+ 
+  console.log("postDatasssss",postDatas)
+
   const [isOpen, setOpen] = useState(false);
   const settings = {
     slidesToShow: 1,
@@ -90,29 +117,26 @@ export default function TwoPostCarousel({ dark, customClass }) {
       <div className="container custom-container ">
         <div className="single-play-box">
           <Slider {...settings} className="row single-play-post-slider">
-            {postData.map((item, i) => (
+            {postDatas.map((item, i) => (
               <div className="col" key={i + 1}>
                 <div className="single-play-post-item">
-                  {dark ? (
-                    <img className='rounded'  src={item.postThumbDark} alt="play" />
-                  ) : (
-                    <img className='rounded' style={{height:"300px"}} src={item.postThumb} alt="play" />
-                  )}
-
+             
+                    <img className='rounded' style={{height:"370px"}}  src={`${imagePath}/${item.banner}`} alt="play" />
+                  
                   <div className="single-play-post-content">  
                     <div className="post-meta">
                       <div className="meta-categories">
-                        <a href="#">{item.postCategory}</a>
+                        <a href="#">{item.metadata?.title}</a>
                       </div>
                       <div className="meta-date">
-                        <span>{item.postDate}</span>
+                      <span>{item.createdAt.slice(0,10)}</span>
                       </div>
                     </div>
                     <h3 className="title">
-                      <Link href="/post-details-two">{item.postTitle}</Link>
+                      <Link href="/post-details-two">{item.heading}</Link>
                     </h3>
                   </div>
-                  <div className="play-btn">
+                  {/* <div className="play-btn">
                     <a
                       className="video-popup"
                       onClick={() => setOpen(true)}
@@ -120,10 +144,12 @@ export default function TwoPostCarousel({ dark, customClass }) {
                     >
                       <i className="fas fa-play"></i>
                     </a>
-                  </div>
+                  </div> */}
                 </div>
+                
               </div>
             ))}
+            
           </Slider>
           <ModalVideo
             channel="youtube"
