@@ -70,7 +70,8 @@ export default function NewsTabs() {
         <button type="button">SIGN UP</button>
       </div>
     </form> 
-  </div></>
+  </div>
+  </>
 
   )
 }

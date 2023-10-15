@@ -4,11 +4,14 @@ import LogoWithSearch from './LogoWithSearch';
 import NavigationBar from './NavigationBar';
 import TopbarThree from './TopbarThree';
 
+
 export default function HeaderFour({ action }) {
+ 
   return (
     <header className="header-area header-style-2 header-style-4">
       <TopbarThree />
       <LogoWithSearch />
+      
       <div className="header-menubar">
         <div className="container custom-container">
           <div className="menubar-b">
@@ -29,6 +32,7 @@ export default function HeaderFour({ action }) {
                 <div className="header-menu-rightbar" >
                   <div className="absolute inset-0 flex items-center justify-center font-semibold mt-2" >
                     <p>{Date().slice(0,15)}</p>
+
                   </div>
                 </div>
               </div>
@@ -36,6 +40,7 @@ export default function HeaderFour({ action }) {
           </div>
         </div>
       </div>
+ 
     </header>
   );
 }

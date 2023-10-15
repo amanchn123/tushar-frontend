@@ -9,7 +9,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 function PrevArrow(props) {
   const { onClick } = props;
   return (
-    <span className="prev slick-arrow" onClick={onClick}>
+    <span className="prev slick-arrow " onClick={onClick}>
       <i className="fal fa-angle-left"></i>
     </span>
   );
@@ -17,7 +17,7 @@ function PrevArrow(props) {
 function NextArrow(props) {
   const { onClick } = props;
   return (
-    <span className="next slick-arrow" onClick={onClick}>
+    <span className="next slick-arrow" style={{backgroundColor:"orange"}} onClick={onClick}>
       <i className="fal fa-angle-right"></i>
     </span>
   );
@@ -41,7 +41,6 @@ export default function PostCarousel({ dark }) {
 
   // const PostData= getAllPost()
   const bannerUrl = "http://localhost:5000/uploads";
-  console.log("breee", postData);
   const settings = {
     slidesToShow: 3,
     slidesToScroll: 1,

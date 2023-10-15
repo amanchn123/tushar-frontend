@@ -26,7 +26,6 @@ import useToggle from "@/Hooks/useToggle";
 import Link from "next/link";
 import React from "react";
 import DrawerHeader from "@/components/Drawer&HeaderCom/drawerheaderclient";
-import Blogs from "@/components/News/Blogs";
 
 export default function Home() {
   return (
@@ -71,7 +70,7 @@ export default function Home() {
           <div className="container">
             <div className="row">
             <div className="col-lg-9 ">
-                <Blogs />
+                <NewsGallary />
               </div>
               <div className="col-lg-3">
                 <div
