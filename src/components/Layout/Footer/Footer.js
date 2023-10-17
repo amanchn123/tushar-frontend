@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import CategoryWidget from "./CategoryWidget";
+import Image from "next/image";
 
 export default function Footer({ dark }) {
   const footerClass = `footer-area ${dark ? "footer-dark" : ""}`;
@@ -8,7 +9,7 @@ export default function Footer({ dark }) {
     dark ? "footer-copyright-dark" : ""
   }`;
 
-  const footerStyles = { backgroundColor: "#FBE1C3" };
+  const footerStyles = { backgroundColor: "#FBE1C3" ,padding:"0%"};
   const copyrightStyles = { backgroundColor: "#FBE1C3", color: "black" };
 
   return (
@@ -18,8 +19,8 @@ export default function Footer({ dark }) {
           <div className="row align-items-center">
             <div className="col-lg-7 col-md-5">
               <div className="footer-logo">
-                <Link href="/">
-                  <img src="images\dlslogo.png" alt="" />
+                <Link href="/" className="p-2">
+                <Image height={100} width={200} src="/images/logo/logo-black-footer.png" alt="Logo" />
                 </Link>
                 <ul>
                   <li>

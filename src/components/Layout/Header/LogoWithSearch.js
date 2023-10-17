@@ -373,7 +373,7 @@ export default function LogoWithSearch() {
           <div className="col-lg-3 col-md-5">
             <div className="logo">
               <Link href="/">
-                <img src="/images/logo/logo-black.png" alt="Logo" />
+                <Image  height={100} width={200} src="/images/logo/logo-black.png" alt="Logo" />
               </Link>
             </div>
           </div>
