@@ -12,7 +12,7 @@ import BreakingNews from "@/components/News/BreakingNews";
 import ScoreComp from "@/components/News/ScoreComp";
 import NewsLetter from "@/components/Newsletter/NewsLetter";
 
-export function generateMetadata({ params }) {
+export function generateMetadata() {
   return {
     title: "DLS technology New",
     description:
@@ -23,7 +23,7 @@ export function generateMetadata({ params }) {
 async function getAllPost() {
   try {
     const response = await axios.post(`${api}/getPost`, {
-      category: "technology",
+      category: "World News",
     });
     return response.data;
   } catch (error) {
@@ -31,7 +31,7 @@ async function getAllPost() {
   }
 }
 
-export default async function Technology({ params }) {
+export default async function Technology() {
   let postData = await getAllPost();
 
   let bloglist1 = (await postData) && postData.slice(0, 3);
@@ -50,7 +50,7 @@ export default async function Technology({ params }) {
             <div className="row">
               <div className="col-lg-9 ">
                 <Grid container lg={12}>
-                  <h4 className="title font-bold">Technology News</h4>
+                  <h4 className="title font-bold">Business News</h4>
 
                   {bloglist1 &&
                     bloglist1.map((ele, index) => {

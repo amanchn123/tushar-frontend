@@ -10,6 +10,7 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import DeleteIcon from '@mui/icons-material/Delete';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Link from "next/link";
+import { getCookie } from "cookies-next";
 
 
 const TableOne = () => {
@@ -18,9 +19,16 @@ const TableOne = () => {
   const[search,setSearch]=useState("")
   const [data, setData] = useState([]);
   const[filtereddata,setFiltereddata]=useState([])
+  const token =
+  getCookie("AdminDetails") && JSON.parse(getCookie("AdminDetails"))?.token;
   const getAllPost = async () => {
     try {
-      const response = await axios.get(`${api}/admingetpost`);
+      const response = await axios.get(`${api}/admingetpost`, {
+        headers: {
+          authorization: token.toString(),
+          "Content-Type": "multipart/form-data",
+        },
+      });
       if (response.data) {
         setData(response.data);
       }
@@ -41,6 +49,7 @@ const TableOne = () => {
 
   return (
     <div className="mt-10 rounded-sm border border-stroke bg-white px-5 pt-2 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+      <h5 className="title">All Post</h5>
       {/* <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
         Top Channels
       </h4> */}
@@ -120,7 +129,7 @@ const TableOne = () => {
           </div> */}
         </div>
 
-        {data && data.filter((ele)=>ele.heading.toLowerCase().includes(search.toLowerCase()) && ele.category.includes(category) && ele.subCategory.includes(subcategory) ).map((brand, key) => (
+        {data!==[]? data.filter((ele)=>ele.heading.toLowerCase().includes(search.toLowerCase()) && ele.category.includes(category) && ele.subCategory.includes(subcategory) ).map((brand, key) => (
           <div
             className={`grid grid-cols-3 sm:grid-cols-5  ${
               key === data.length - 1
@@ -157,7 +166,7 @@ const TableOne = () => {
               <p className="text-meta-5">{brand.conversion}%</p>
             </div> */}
           </div>
-        ))}
+        )):""}
       </div>
     </div>
   );

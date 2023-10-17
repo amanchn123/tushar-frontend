@@ -1,5 +1,4 @@
 import React from 'react';
-import NewsLetterTwo from '../Newsletter/NewsLetterTwo';
 import WidgetOne from '../SocialMediaWidgets/WidgetOne';
 
 export default function ContactFormArea() {
@@ -53,7 +52,6 @@ export default function ContactFormArea() {
           <div className="col-lg-4">
             <div className="contact-sidebar">
               <WidgetOne />
-              <NewsLetterTwo />
             </div>
           </div>
         </div>

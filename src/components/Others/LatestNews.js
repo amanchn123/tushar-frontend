@@ -1,8 +1,33 @@
-import React from 'react';
+'use client'
+import React, { useEffect, useState } from 'react';
+import { Domain } from '../api/domain';
+import axios from 'axios';
+import { api } from '../api/api';
+import Link from 'next/link';
 
 export default function LatestNews() {
+  const [postData, setPostData] = useState([]);
+
+  const getAllPost = async () => {
+    try {
+      const response = await axios.post(`${api}/getPost`, {
+        subCategory: "Featured News",
+      });
+      // await ;
+      setPostData(response.data.slice(0, 3));
+    } catch (error) {
+      console.log("error in getting featured news in frontend", error);
+    }
+  };
+  useEffect(() => {
+    getAllPost();
+  },[]);
+
+  // const PostData= getAllPost()
+
+  const imagePath = "http://localhost:5000/uploads";
   return (
-    <section className="latest-news-area">
+    <section className="pt-16">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
@@ -12,84 +37,35 @@ export default function LatestNews() {
           </div>
         </div>
         <div className="row">
-          <div className="col-lg-4">
+         {postData&&postData.map((ele,index)=>{
+          return(
+            <div className="col-lg-4" key={index}>
             <div className="trending-news-item mb-30">
               <div className="trending-news-thumb">
-                <img src="/images/latest-news-1.png" alt="trending" />
+                <img className='w-64 h-64' src={`${imagePath}/${ele.banner}`} alt="trending" />
               </div>
               <div className="trending-news-content">
                 <div className="post-meta">
                   <div className="meta-categories">
-                    <a href="#">TECHNOLOGY</a>
+                    <Link href={`${Domain}/${ele.category}`}>{ele.category}</Link>
                   </div>
                   <div className="meta-date">
-                    <span>March 26, 2020</span>
+                    <span>{ele.createdAt.slice(0,21)}</span>
                   </div>
                 </div>
                 <h3 className="title">
-                  <a href="#">
-                    There may be no consoles in the future ea exec says
-                  </a>
+                  <Link href={`${Domain}/${ele.category}/${ele.slug}`}>
+                    {ele.heading.slice(0,65)}
+                  </Link>
                 </h3>
                 <p className="text">
-                  The property, complete with 30-seat screening from room, a
-                  100-seat amphitheater and a swimming pond with sandy shower…
+                 {ele.metadata?.description.slice(0,120)}
                 </p>
               </div>
             </div>
           </div>
-          <div className="col-lg-4">
-            <div className="trending-news-item mb-30">
-              <div className="trending-news-thumb">
-                <img src="/images/latest-news-2.png" alt="trending" />
-              </div>
-              <div className="trending-news-content">
-                <div className="post-meta">
-                  <div className="meta-categories">
-                    <a href="#">TECHNOLOGY</a>
-                  </div>
-                  <div className="meta-date">
-                    <span>March 26, 2020</span>
-                  </div>
-                </div>
-                <h3 className="title">
-                  <a href="#">
-                    There may be no consoles in the future ea exec says
-                  </a>
-                </h3>
-                <p className="text">
-                  The property, complete with 30-seat screening from room, a
-                  100-seat amphitheater and a swimming pond with sandy shower…
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-4">
-            <div className="trending-news-item mb-30">
-              <div className="trending-news-thumb">
-                <img src="/images/latest-news-3.png" alt="trending" />
-              </div>
-              <div className="trending-news-content">
-                <div className="post-meta">
-                  <div className="meta-categories">
-                    <a href="#">TECHNOLOGY</a>
-                  </div>
-                  <div className="meta-date">
-                    <span>March 26, 2020</span>
-                  </div>
-                </div>
-                <h3 className="title">
-                  <a href="#">
-                    There may be no consoles in the future ea exec says
-                  </a>
-                </h3>
-                <p className="text">
-                  The property, complete with 30-seat screening from room, a
-                  100-seat amphitheater and a swimming pond with sandy shower…
-                </p>
-              </div>
-            </div>
-          </div>
+          )
+         })}
         </div>
       </div>
     </section>

@@ -29,14 +29,14 @@ export default function Blogs() {
   useEffect(() => {
     getAllPost();
   }, [time]);
-  console.log("postData", postData);
+
   // const PostData= getAllPost()
 
   const imagePath = "http://localhost:5000/uploads";
   return (
 <>
-      <h4 className="title">
-        <b>Blogs and Discussion</b>
+      <h4 className="title mt-5 font-bold">
+        Blogs and Discussion
       </h4>
 
       {postData &&
@@ -48,11 +48,7 @@ export default function Blogs() {
           const convertDays = Math.floor(hoursDifference / 7);
           const bannelurl = `${imagePath}/${ele.banner}`;
           return (
-            <Link
-              key={idx}
-              href={`${ele.category}/${ele.slug}`}
-              style={{ width: "100%" }}
-            >
+
               <Card
               className=""
                 sx={{
@@ -71,7 +67,7 @@ export default function Blogs() {
                     </h5>
                     <div style={{ height: "80px" }}>
                       
-                        ele.metadata?.description.slice(0, 250)
+                        {ele.metadata?.description.slice(0, 250)}
                         
                     </div>
                     <div
@@ -81,8 +77,8 @@ export default function Blogs() {
                         justifyContent: "space-between",
                         marginTop: "20px",
                       }}
-                    >
-                      <span style={{ color: "red" }}>Read more..</span>
+                    > 
+                      <div>Comment &nbsp;&nbsp;&nbsp; <Link href='/' style={{ color: "red" }}>Read more..</Link></div>
                       <span>
                         <AccessTimeIcon />{" "}
                         {minutesDifference <= 60
@@ -98,7 +94,7 @@ export default function Blogs() {
 
                 </Grid>
               </Card>
-            </Link>
+          
           );
         })}
         </>

@@ -1,76 +1,57 @@
 "use client";
 import "../styles/Home.module.css";
-import Image from "next/image";
-import AdOne from "@/components/AdsWidget/AdOne";
-import FeatureNewsCarousel from "@/components/FeatureNews/FeatureNewsCarousel";
-import Drawer from "@/components/Layout/Drawer/Drawer";
 import Footer from "@/components/Layout/Footer/Footer";
 import FooterCopyright from "@/components/Layout/Footer/FooterCopyright";
-import Header from "@/components/Layout/Header/Header";
 import Layout from "@/components/Layout/Layout";
-import BusinessNews from "@/components/News/BusinessNews";
-import EntertainmentNews from "@/components/News/EntertainmentNews";
-import NewsGallary from "@/components/News/NewsGallary";
-import PopularNewsCarousel from "@/components/News/PopularNewsCarousel";
-import PostCarousel from "@/components/News/PostCarousel";
-import SportsNewsCarousel from "@/components/News/SportsNewsCarousel";
-import TwoPostCarousel from "@/components/News/TwoPostCarousel";
-import VideoNews from "@/components/News/VideoNews";
 import NewsLetter from "@/components/Newsletter/NewsLetter";
-import MostShare from "@/components/Sidebar/MostShare";
 import NewsTabs from "@/components/Sidebar/NewsTabs";
-import SidebarCategories from "@/components/Sidebar/SidebarCategories";
-import SportsFixtures from "@/components/Sidebar/SportsFixtures";
-import TrendingNewsArea from "@/components/TrendingNews/TrendingNewsArea";
-import useToggle from "@/Hooks/useToggle";
-import Link from "next/link";
 import React from "react";
 import DrawerHeader from "@/components/Drawer&HeaderCom/drawerheaderclient";
+import ScoreComp from "@/components/News/ScoreComp";
+import BreakingNews from "@/components/News/BreakingNews";
+import FeaturedNews from "@/components/News/FeaturedNews";
+import VideoCarousel from "@/components/FeatureNews/VideoCarousel";
+import TrendingNews from "@/components/News/TrendingNews";
+import Blogs from "@/components/News/Blogs";
 
+  
 export default function Home() {
   return (
     // <main className="flex min-h-screen flex-col items-center justify-between p-24">
     <Layout>
       <div className="home-1-bg">
         <DrawerHeader />
-        <PostCarousel />
+        <BreakingNews />
         <div className="post__gallery__area">
           <div className="container">
             <div className="row">
               <div className="col-lg-9 ">
-                <NewsGallary />
+                <FeaturedNews />
               </div>
               <div className="col-lg-3">
                 <div
                   className="post_gallery_sidebar"
                   style={{ height: "100%", paddingTop: "6%" }}
                 >
-                  <NewsTabs />
+                  <ScoreComp />
                 </div>
               </div>
               <div className="col-lg-12">
                 <NewsLetter />
               </div>
               <div className="col-lg-12">
-                <FeatureNewsCarousel />
+                <VideoCarousel />
               </div>
             </div>
           </div>
         </div>
 
-        {/* <div
-          className="post_gallery_sidebar"
-          style={{ display: "grid", justifyContent: "center" }}
-        >
-          <NewsLetter />
-        </div> */}
-        {/* <TrendingNewsArea /> */}
-        <TwoPostCarousel />
+        <TrendingNews />
         <div className="post__gallery__area">
           <div className="container">
-            <div className="row">
+            <div className="row mb-16">
             <div className="col-lg-9 ">
-                <NewsGallary />
+                <Blogs />
               </div>
               <div className="col-lg-3">
                 <div
@@ -84,7 +65,7 @@ export default function Home() {
           </div>
         </div>
 
-        <section className="all-post-area">
+        {/* <section className="all-post-area">
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-lg-8">
@@ -144,9 +125,8 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
         <Footer />
-        <FooterCopyright />
       </div>
     </Layout>
     // </main>

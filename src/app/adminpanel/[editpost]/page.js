@@ -24,10 +24,11 @@ import MuiAlert from "@mui/material/Alert";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function Page({ params }) {
+  
   const getPostDet = async () => {
     try {
       const response = await axios.get(`${api}/getpost?id=${params.editpost}`);
-      // console.log("pppp", response);
+
       if (response.data) {
         setPostInfo(response?.data);
         setSelectedElement(response?.data);
@@ -58,7 +59,7 @@ export default function Page({ params }) {
   const [mount, setMount] = React.useState(false);
   let [selectedELement, setSelectedElement] = React.useState([]);
   const [postInfo, setPostInfo] = React.useState([]);
-  const[khali,setKhali]=React.useState()
+  const [khali, setKhali] = React.useState();
 
   const contentFinal = selectedELement;
   const imageUrls = "http://localhost:5000/uploads";
@@ -88,86 +89,81 @@ export default function Page({ params }) {
     banner: null,
   });
 
-  console.log("state Banner",state.banner)
+  console.log("state Banner", state.banner);
 
   const uploadPost = async () => {
-    if (
-      !postInfo.slug
-    ) {
+    if (!postInfo.slug) {
       setSelectAll(false);
     } else {
-   
-    try {
-      // let contentFinal = selectedELement;
-      let newPara = await state.paragraph?.filter((ele) => {
-        return ele !== undefined;
-      });
-             
-      let subHead = (await state.subHeading) && state.subHeading.filter((ele)=>{
-        return ele!==undefined
-      });
-     
+      try {
+        // let contentFinal = selectedELement;
+        let newPara = await state.paragraph?.filter((ele) => {
+          return ele !== undefined;
+        });
 
+        let subHead =
+          (await state.subHeading) &&
+          state.subHeading.filter((ele) => {
+            return ele !== undefined;
+          });
 
-      let modifiedContentFinal = await postInfo?.content.map((ele, index) => {
-        if (ele === "para") {
-          let head = subHead.shift();
-          let par = newPara.shift();
-          let shiftpara = { head, par };
-          return shiftpara;
+        let modifiedContentFinal = await postInfo?.content.map((ele, index) => {
+          if (ele === "para") {
+            let head = subHead.shift();
+            let par = newPara.shift();
+            let shiftpara = { head, par };
+            return shiftpara;
+          }
+          return ele;
+        });
+
+        const formdata = new FormData();
+
+        (await state.updatedimage) &&
+          state.updatedimage.forEach((fil, index) => {
+            formdata.append(`updatedimage`, fil);
+          });
+
+        (await state.images) &&
+          state.images.forEach((fil, index) => {
+            formdata.append(`images`, fil);
+          });
+
+        // const newAlt=  await state.alt &&
+        //   state.alt.filter((name,index)=>{
+        //   return name!==undefined
+        //   });
+
+        await formdata.append("heading", postInfo.heading);
+        await formdata.append("id", params.editpost);
+        await formdata.append("description", postInfo?.metadata?.description);
+        await formdata.append("featuredImage", postInfo.featuredImage);
+        await formdata.append("category", postInfo.category);
+        await formdata.append("subCategory", postInfo.subCategory);
+        await formdata.append("slug", postInfo.slug);
+        await formdata.append("title", postInfo?.metadata?.title);
+        await formdata.append("banner", state.banner);
+        await formdata.append("alt", JSON.stringify(state.alt));
+        await formdata.append("final", JSON.stringify(modifiedContentFinal));
+
+        const response = await axios.post(`${api}/updatepost`, formdata, {
+          headers: {
+            authorization: token.toString(),
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        await formdata.delete("final");
+        if (response.data == "not allowed") {
+          setAllowed(false);
+        } else if (response.data.postUpdated) {
+          alert("Post updated Successfully")
+          setSuccessPost(true);
+          
         }
-        return ele;
-      });
-
-      const formdata = new FormData();
-
-      (await state.updatedimage) &&
-        state.updatedimage.forEach((fil, index) => {
-          formdata.append(`updatedimage`, fil);
-        });
-
-      (await state.images) &&
-        state.images.forEach((fil, index) => {
-          formdata.append(`images`, fil);
-        });
-
-      // const newAlt=  await state.alt &&
-      //   state.alt.filter((name,index)=>{
-      //   return name!==undefined
-      //   });
-
-      await formdata.append("heading", postInfo.heading);
-      await formdata.append("id", params.editpost);
-      await formdata.append("description", postInfo?.metadata?.description);
-      await formdata.append("featuredImage", postInfo.featuredImage);
-      await formdata.append("category", postInfo.category);
-      await formdata.append("subCategory", postInfo.subCategory);
-      await formdata.append("slug", postInfo.slug);
-      await formdata.append("title", postInfo?.metadata?.title);
-      await formdata.append("banner", state.banner);
-      await formdata.append("alt", JSON.stringify(state.alt));
-      await formdata.append("final", JSON.stringify(modifiedContentFinal));
-
-      console.log("formadata", formdata);
-
-      const response = await axios.post(`${api}/updatepost`, formdata, {
-        headers: {
-          // authorization: token.toString(),
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      await formdata.delete("final")
-
-
-      if (response.data == "not allowed") {
-        setAllowed(false);
-      } else if (response.data.postSuccess) {
-        setSuccessPost(true);
+      } catch (error) {
+        console.log("error in upload post frontend", error);
       }
-
-    } catch (error) {
-      console.log("error in upload post frontend", error);
-    }
     }
   };
 
@@ -189,7 +185,8 @@ export default function Page({ params }) {
     const val = e.target.value;
     const updatedContent = [...postInfo.content]; // Create a copy of the content array
     updatedContent.splice(index, 0, val); // Modify the copy
-    setPostInfo({ ...postInfo, content: updatedContent }); // Update the state
+    setPostInfo({ ...postInfo, content: updatedContent });
+    setKhali("") // Update the state
   };
 
   const handlremovelement = async (index) => {
@@ -199,8 +196,7 @@ export default function Page({ params }) {
     setPostInfo({ ...postInfo, content: updatedContent }); // Update the state
   };
 
-  console.log("updatepostInfo",postInfo)
-
+  console.log("updatepostInfo", postInfo);
 
   const portsize = useMediaQuery("(max-width: 1000px)");
   return (
@@ -262,7 +258,6 @@ export default function Page({ params }) {
                   setPostInfo({ ...postInfo, slug: chang });
                 }}
               />
-             
 
               <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                 <InputLabel id="demo-simple-select-standard-label">
@@ -284,6 +279,8 @@ export default function Page({ params }) {
                   <MenuItem value="Health">Health</MenuItem>
                   <MenuItem value="Business">Business</MenuItem>
                   <MenuItem value="technology">technology</MenuItem>
+                  <MenuItem value="Entertainment">Entertainment</MenuItem>
+                  <MenuItem value="Science">Science</MenuItem>
                 </Select>
               </FormControl>
 
@@ -327,7 +324,12 @@ export default function Page({ params }) {
                 placeholder="Blog title"
                 multiline
                 defaultValue={postInfo?.metadata?.title}
-                onChange={(e) => setPostInfo({ ...postInfo, metadata:{...postInfo.metadata,title: e.target.value} })}
+                onChange={(e) =>
+                  setPostInfo({
+                    ...postInfo,
+                    metadata: { ...postInfo.metadata, title: e.target.value },
+                  })
+                }
               />
               <TextField
                 id="outlined-multiline-static"
@@ -336,7 +338,13 @@ export default function Page({ params }) {
                 defaultValue={postInfo?.metadata?.description}
                 rows={3}
                 onChange={(e) =>
-                  setPostInfo({ ...postInfo, metadata:{...postInfo.metadata,description:e.target.value}  })
+                  setPostInfo({
+                    ...postInfo,
+                    metadata: {
+                      ...postInfo.metadata,
+                      description: e.target.value,
+                    },
+                  })
                 }
               />
             </div>
@@ -347,12 +355,11 @@ export default function Page({ params }) {
                   <>
                     {ele?.hasOwnProperty("par") && (
                       <>
-                        <div
-                          className="flex justify-end p-2"
-                          onClick={() => handlremovelement(index)}
-                          style={{ cursor: "pointer" }}
-                        >
-                          <DeleteIcon />{" "}
+                        <div className="flex justify-end p-2">
+                          <DeleteIcon
+                            onClick={() => handlremovelement(index)}
+                            style={{ cursor: "pointer" }}
+                          />{" "}
                         </div>
                         <TextField
                           id="outlined-textarea"
@@ -381,12 +388,11 @@ export default function Page({ params }) {
                     )}
                     {ele == "para" && (
                       <>
-                        <div
-                          className="flex justify-end p-2"
-                          onClick={() => handlremovelement(index)}
-                          style={{ cursor: "pointer" }}
-                        >
-                          <DeleteIcon />{" "}
+                        <div className="flex justify-end p-2">
+                          <DeleteIcon
+                            onClick={() => handlremovelement(index)}
+                            style={{ cursor: "pointer" }}
+                          />{" "}
                         </div>
                         <TextField
                           id="outlined-textarea"
@@ -415,12 +421,11 @@ export default function Page({ params }) {
                     )}
                     {ele?.hasOwnProperty("img") && (
                       <>
-                        <div
-                          className="flex justify-end p-2"
-                          onClick={() => handlremovelement(index)}
-                          style={{ cursor: "pointer" }}
-                        >
-                          <DeleteIcon />{" "}
+                        <div className="flex justify-end p-2">
+                          <DeleteIcon
+                            onClick={() => handlremovelement(index)}
+                            style={{ cursor: "pointer" }}
+                          />{" "}
                         </div>
                         <div className="flex flex-col items-center space-y-4 mt-10 mb-10">
                           <label
@@ -452,7 +457,7 @@ export default function Page({ params }) {
                                   updatedName,
                                   { type: originalFile.type }
                                 );
-                                
+
                                 updatedContent[index] = updatedFile;
                                 setState({
                                   ...state,
@@ -480,10 +485,10 @@ export default function Page({ params }) {
                       <>
                         <div
                           className="flex justify-end p-2"
-                          onClick={() => handlremovelement(index)}
-                          style={{ cursor: "pointer" }}
+                         
                         >
-                          <DeleteIcon />{" "}
+                          <DeleteIcon  onClick={() => handlremovelement(index)}
+                          style={{ cursor: "pointer" }} />{" "}
                         </div>
                         <div className="flex flex-col items-center space-y-4 mt-10 mb-10">
                           <label
@@ -532,24 +537,15 @@ export default function Page({ params }) {
                         </label>
                         <div class="relative">
                           <select
-                          value={khali}
-                          onChange={(e)=>handlelement(e,index+1)}
+                            
+                            onChange={(e) => handlelement(e, index + 1)}
+                            value={khali}
                             class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="grid-state"
                           >
                             <option>select field</option>
-                            <option
-                         
-                              value="para"
-                            >
-                              Para
-                            </option>
-                            <option
-                           
-                              value="image"
-                            >
-                              Image
-                            </option>
+                            <option value="para">Para</option>
+                            <option value="image">Image</option>
                           </select>
 
                           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -577,24 +573,21 @@ export default function Page({ params }) {
                   Change Banner Image of Blog
                   <VisuallyHiddenInput
                     type="file"
-                    onChange={(e) =>
-                         {
-       
-                          const originalFile = e.target.files[0]; // Get the original File object
-                          const updatedName = postInfo?.banner;
-                         console.log("updatedName",updatedName)
-                          const updatedFile = new File(
-                                  [originalFile],
-                                  updatedName,
-                                  { type: originalFile.type }
-                                );
-                            
-                                setState({
-                                  ...state,
-                                  banner: updatedFile,
-                                });
-                         }
-                    }
+                    onChange={(e) => {
+                      const originalFile = e.target.files[0]; // Get the original File object
+                      const updatedName = postInfo?.banner;
+                      console.log("updatedName", updatedName);
+                      const updatedFile = new File(
+                        [originalFile],
+                        updatedName,
+                        { type: originalFile.type }
+                      );
+
+                      setState({
+                        ...state,
+                        banner: updatedFile,
+                      });
+                    }}
                   />
                 </Button>
               )}

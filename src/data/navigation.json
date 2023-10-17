@@ -10,13 +10,13 @@
     {
       "id": 5,
       "linkText": "World News",
-      "link": "/World News",
+      "link": "/WorldNews",
       "child": false
     },
     {
       "id": 5,
       "linkText": "Politics",
-      "link": "/politics",
+      "link": "/Politics",
       "child": false
     },
     {
@@ -40,13 +40,13 @@
     {
       "id": 7,
       "linkText": "Health",
-      "link": "/health",
+      "link": "/Health",
       "child": false
     },
     {
       "id": 7,
       "linkText": "Science",
-      "link": "/science",
+      "link": "/Science",
       "child": false
     },
     {

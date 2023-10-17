@@ -1,92 +1,53 @@
-import React from 'react';
+"use client";
+import React, { useEffect, useState } from "react";
+import { api } from "../api/api";
+import axios from "axios";
+import Link from "next/link";
+import { Domain } from "../api/domain";
 
 export default function TrendingNewsWidget() {
+  const[postDatas,setPostDatas]=useState([])
+  const getTrendPost=async()=>{
+    try{
+      const response=await axios.post(`${api}/getPost`,{
+          subCategory:"Trending News"
+      })
+  
+      if(response.data){
+         
+          setPostDatas(response.data.slice(0,4))
+      }else{
+          console.log(response)
+      }
+     }catch(error){
+      console.log('errro in getting trending post in frontend',error)
+     }
+  }
+  useEffect(()=>{
+ getTrendPost()
+    
+  },[])
+  let imagePath = "http://localhost:5000/uploads";
+ 
   return (
-    <div className="trending-news-post-items">
-      <div className="gallery_item">
+    <div className=" mt-4">
+      {postDatas&&postDatas.slice(0,5).map((ele,idx)=>{
+        return(
+          <div className="gallery_item " key={idx}>
         <div className="gallery_item_thumb">
-          <img src="/images/gallery-1.jpg" alt="gallery" />
+          <img className="w-28 h-24" src={`${imagePath}/${ele.banner}`} alt="gallery" />
           {/* <div className="icon">
             <i className="fas fa-bolt"></i>
           </div> */}
         </div>
         <div className="gallery_item_content">
-          <div className="post-meta">
-            <div className="meta-categories">
-              <a href="#">TECHNOLOGY</a>
-            </div>
-            <div className="meta-date">
-              <span>March 26, 2020</span>
-            </div>
-          </div>
           <h4 className="title">
-            <a href="#">Nancy zhang a chinese busy woman and dhaka</a>
+            <Link href={`${Domain}/${ele.category}/${ele.slug}`}>{ele.heading.slice(0,65)}</Link>
           </h4>
         </div>
       </div>
-      <div className="gallery_item">
-        <div className="gallery_item_thumb">
-          <img src="/images/gallery-2.jpg" alt="gallery" />
-          <div className="icon">
-            <i className="fas fa-bolt"></i>
-          </div>
-        </div>
-        <div className="gallery_item_content">
-          <div className="post-meta">
-            <div className="meta-categories">
-              <a href="#">TECHNOLOGY</a>
-            </div>
-            <div className="meta-date">
-              <span>March 26, 2020</span>
-            </div>
-          </div>
-          <h4 className="title">
-            <a href="#">The billionaire Philan thropist read to learn</a>
-          </h4>
-        </div>
-      </div>
-      <div className="gallery_item">
-        <div className="gallery_item_thumb">
-          <img src="/images/gallery-2.jpg" alt="gallery" />
-          <div className="icon">
-            <i className="fas fa-bolt"></i>
-          </div>
-        </div>
-        <div className="gallery_item_content">
-          <div className="post-meta">
-            <div className="meta-categories">
-              <a href="#">TECHNOLOGY</a>
-            </div>
-            <div className="meta-date">
-              <span>March 26, 2020</span>
-            </div>
-          </div>
-          <h4 className="title">
-            <a href="#">The billionaire Philan thropist read to learn</a>
-          </h4>
-        </div>
-      </div>
-      <div className="gallery_item">
-        <div className="gallery_item_thumb">
-          <img src="/images/gallery-3.jpg" alt="gallery" />
-          <div className="icon">
-            <i className="fas fa-bolt"></i>
-          </div>
-        </div>
-        <div className="gallery_item_content">
-          <div className="post-meta">
-            <div className="meta-categories">
-              <a href="#">TECHNOLOGY</a>
-            </div>
-            <div className="meta-date">
-              <span>March 26, 2020</span>
-            </div>
-          </div>
-          <h4 className="title">
-            <a href="#">Cheap smartphone sensor could help you old food safe</a>
-          </h4>
-        </div>
-      </div>
+        )
+      })}
     </div>
   );
 }

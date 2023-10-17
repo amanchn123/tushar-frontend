@@ -74,7 +74,7 @@ export default function Page() {
 
           setCookie("AdminDetails", userDataJSON, { sameSite: "Strict" });
           setLoading(false);
-          router.push("/AdminpostUpload");
+          router.push("/adminpanel");
         } else {
           setLoginFailed(true);
           setLoading(false)

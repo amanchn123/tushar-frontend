@@ -14,7 +14,7 @@ export default function NewsLetter({ dark }) {
         }}
         className=" w-full mt-30"
       >
-        <div className="footer-topbar">
+        <div className="footer-topba">
           <div className="row align-items-center">
             <div className="col-lg-7 col-md-5">
               <div className="footer-logo">

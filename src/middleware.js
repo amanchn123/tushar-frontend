@@ -13,5 +13,5 @@ export function middleware(request) {
  
 // Supports both a single string value or an array of matchers
 export const config = {
-  matcher: ['/AdminpostUpload'],
+  matcher: ['/adminpanel/:path*'],
 }

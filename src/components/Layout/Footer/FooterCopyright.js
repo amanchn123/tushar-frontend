@@ -3,10 +3,10 @@ import React from 'react';
 
 export default function FooterCopyright({ dark }) {
   return (
-    <section
+    <section style={{backgroundColor:"#FBE1C3"}}
       className={`footer-copyright ${dark ? 'footer-copyright-dark' : ''}`}
     >
-      <div className="container">
+      <div className="container" >
         <div className="row">
           <div className="col-lg-12">
             <div className="copyright-item d-block d-md-flex justify-content-between align-items-center">
