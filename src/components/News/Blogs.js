@@ -50,7 +50,7 @@ export default function Blogs() {
           return (
 
               <Card
-              className=""
+              key={idx}
                 sx={{
                   // display: "flex",
                   marginBottom: "10px",
