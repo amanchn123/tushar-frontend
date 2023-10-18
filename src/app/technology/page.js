@@ -1,6 +1,5 @@
 import Footer from "@/components/Layout/Footer/Footer";
 import FooterCopyright from "@/components/Layout/Footer/FooterCopyright";
-import NewsTabs from "@/components/Sidebar/NewsTabs";
 import axios from "axios";
 import Link from "next/link";
 import { api } from "@/components/api/api";

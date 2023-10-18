@@ -176,7 +176,7 @@ export default function LogoWithSearch() {
           style={{ border: "2px solid orange", height: "40px", padding: "5px" }}
         />
 
-        {console.log("firebse errorrrr", errorr ? errorr : "")}
+        {/* {console.log("firebse errorrrr", errorr ? errorr : "")} */}
         {number ? (
           ""
         ) : (

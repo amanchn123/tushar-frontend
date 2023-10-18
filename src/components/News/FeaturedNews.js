@@ -7,11 +7,9 @@ import Link from "next/link";
 import newsTab from "../../styles/newsTab.module.css";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Image from "next/image";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import NewsTabs from "@/components/Sidebar/NewsTabs";
 
 export default function FeaturedNews() {
-  const matches = useMediaQuery("(min-width:600px)");
+
 
   const [postData, setPostData] = useState([]);
   const [time, setTime] = useState([]);
@@ -20,7 +18,6 @@ export default function FeaturedNews() {
     const mediaQueryy = window.matchMedia("(max-width: 768px)");
 
     setMobileV(mediaQueryy.media);
-    // console.log('mediaQuery',mobileV)
   });
 
   const getAllPost = async () => {
@@ -36,8 +33,8 @@ export default function FeaturedNews() {
   };
   useEffect(() => {
     getAllPost();
-  }, [time]);
-  console.log("postData", postData);
+  }, []);
+
   // const PostData= getAllPost()
 
   const imagePath = "http://localhost:5000/uploads";
