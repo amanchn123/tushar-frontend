@@ -4,15 +4,12 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import {
   Button,
-  Drawer,
   FormControl,
-  Grid,
   InputLabel,
   MenuItem,
   Select,
   Typography,
 } from "@mui/material";
-import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import DrawerHeader from "@/components/Drawer&HeaderCom/drawerheaderclient";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
@@ -24,7 +21,6 @@ import MuiAlert from "@mui/material/Alert";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function Page({ params }) {
-  
   const getPostDet = async () => {
     try {
       const response = await axios.get(`${api}/getpost?id=${params.editpost}`);
@@ -89,7 +85,6 @@ export default function Page({ params }) {
     banner: null,
   });
 
-  console.log("state Banner", state.banner);
 
   const uploadPost = async () => {
     if (!postInfo.slug) {
@@ -129,10 +124,6 @@ export default function Page({ params }) {
             formdata.append(`images`, fil);
           });
 
-        // const newAlt=  await state.alt &&
-        //   state.alt.filter((name,index)=>{
-        //   return name!==undefined
-        //   });
 
         await formdata.append("heading", postInfo.heading);
         await formdata.append("id", params.editpost);
@@ -157,9 +148,8 @@ export default function Page({ params }) {
         if (response.data == "not allowed") {
           setAllowed(false);
         } else if (response.data.postUpdated) {
-          alert("Post updated Successfully")
+          alert("Post updated Successfully");
           setSuccessPost(true);
-          
         }
       } catch (error) {
         console.log("error in upload post frontend", error);
@@ -186,7 +176,7 @@ export default function Page({ params }) {
     const updatedContent = [...postInfo.content]; // Create a copy of the content array
     updatedContent.splice(index, 0, val); // Modify the copy
     setPostInfo({ ...postInfo, content: updatedContent });
-    setKhali("") // Update the state
+    setKhali(""); // Update the state
   };
 
   const handlremovelement = async (index) => {
@@ -196,7 +186,6 @@ export default function Page({ params }) {
     setPostInfo({ ...postInfo, content: updatedContent }); // Update the state
   };
 
-  console.log("updatepostInfo", postInfo);
 
   const portsize = useMediaQuery("(max-width: 1000px)");
   return (
@@ -483,12 +472,11 @@ export default function Page({ params }) {
                     )}
                     {ele == "image" && (
                       <>
-                        <div
-                          className="flex justify-end p-2"
-                         
-                        >
-                          <DeleteIcon  onClick={() => handlremovelement(index)}
-                          style={{ cursor: "pointer" }} />{" "}
+                        <div className="flex justify-end p-2">
+                          <DeleteIcon
+                            onClick={() => handlremovelement(index)}
+                            style={{ cursor: "pointer" }}
+                          />{" "}
                         </div>
                         <div className="flex flex-col items-center space-y-4 mt-10 mb-10">
                           <label
@@ -537,7 +525,6 @@ export default function Page({ params }) {
                         </label>
                         <div class="relative">
                           <select
-                            
                             onChange={(e) => handlelement(e, index + 1)}
                             value={khali}
                             class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -576,7 +563,7 @@ export default function Page({ params }) {
                     onChange={(e) => {
                       const originalFile = e.target.files[0]; // Get the original File object
                       const updatedName = postInfo?.banner;
-                      console.log("updatedName", updatedName);
+        
                       const updatedFile = new File(
                         [originalFile],
                         updatedName,

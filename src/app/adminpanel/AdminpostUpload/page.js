@@ -4,15 +4,12 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import {
   Button,
-  Drawer,
   FormControl,
-  Grid,
   InputLabel,
   MenuItem,
   Select,
   Typography,
 } from "@mui/material";
-import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import DrawerHeader from "@/components/Drawer&HeaderCom/drawerheaderclient";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
@@ -62,13 +59,11 @@ export default function Page() {
   });
 
   const haadlelement = async (e) => {
-    console.log("ho jaaaa",e.target.value)
     const val = e.target.value;
     await setSelectedElement([...selectedELement, val]);
     setKhali("")
   };
 
-  console.log("selectedELement",selectedELement)
 
   const contentFinal = selectedELement;
 
@@ -122,7 +117,6 @@ export default function Page() {
         await formdata.append("alt", JSON.stringify(state.alt));
         await formdata.append("final", JSON.stringify(modifiedContentFinal));
 
-        console.log("state", state);
 
         const response = await axios.post(`${api}/createNewPost`, formdata, {
           headers: {

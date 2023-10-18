@@ -16,12 +16,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { api } from '@/components/api/api';
 import { useRouter } from 'next/navigation';
-// import { useDispatch } from 'react-redux';
-// import { Login } from '@/createSlice';
 import CircularProgress from '@mui/material/CircularProgress';
 import { setCookie } from "cookies-next";
-import Header from '@/components/Layout/Header/Header';
-import { Drawer } from '@mui/material';
 import useToggle from '@/Hooks/useToggle';
 import DrawerHeader from '@/components/Drawer&HeaderCom/drawerheaderclient';
 
@@ -66,7 +62,6 @@ export default function Page() {
           Email,
           Password:password,
         });
-        console.log("response", response);
      
 
         if (response.data.response) {

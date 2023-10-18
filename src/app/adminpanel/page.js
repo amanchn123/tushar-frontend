@@ -1,15 +1,4 @@
 "use client";
-import { Metadata } from "next";
-import {
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Select,
-  TextField,
-} from "@mui/material";
 import Link from "next/link";
 import TableOne from "@/components/Tables/TableOne";
 import DrawerHeader from "@/components/Drawer&HeaderCom/drawerheaderclient";
@@ -30,7 +19,7 @@ const TablesPage = () => {
           <h3 className="title"><i>Admin Panel</i></h3>
           <div className=" h-auto p-2 flex shadow">
           <Link className="bg-orange-400 m-5 p-3 rounded-lg shadow" href="/adminpanel/AdminpostUpload">Create New Post</Link>
-          <Link className="bg-orange-400 m-5 p-3 rounded-lg shadow" href="/">Manage Users Question </Link>
+          <Link className="bg-orange-400 m-5 p-3 rounded-lg shadow" href="/">Manage User Question </Link>
           </div> 
             <div className="grid">
               <TableOne />
