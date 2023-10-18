@@ -64,8 +64,8 @@ export default function Page() {
     setKhali("")
   };
 
-  
-  const token = JSON.parse(getCookie("AdminDetails"))?.token;
+
+  const token = getCookie("AdminDetails")?JSON.parse(getCookie("AdminDetails"))?.token:null;
 
   const uploadPost = async () => {
     if (
