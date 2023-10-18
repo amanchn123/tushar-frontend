@@ -11,6 +11,10 @@ const nextConfig = {
         ],
         domains: ['localhost'],
       },
+      devServer: {
+        host: '0.0.0.0', // Allow external network connections
+        port: 3000, // Your preferred port
+      },
 }
 
 module.exports = nextConfig
