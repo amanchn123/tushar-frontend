@@ -64,9 +64,7 @@ export default function Page() {
     setKhali("")
   };
 
-
-  const contentFinal = selectedELement;
-
+  
   const token = JSON.parse(getCookie("AdminDetails"))?.token;
 
   const uploadPost = async () => {
