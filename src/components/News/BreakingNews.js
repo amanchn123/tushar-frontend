@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { api } from "../api/api";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import { imageurl } from "../api/api";
 
 function PrevArrow(props) {
   const { onClick } = props;
@@ -44,7 +45,7 @@ export default function BreakingNews({ dark }) {
   }, [time]);
 
   // const PostData= getAllPost()
-  const bannerUrl = "http://localhost:5000/uploads";
+  const bannerUrl = imageurl;
   const settings = {
     slidesToShow: 3,
     slidesToScroll: 1,
@@ -106,7 +107,6 @@ export default function BreakingNews({ dark }) {
               );
 
               const convertDays=Math.floor(hoursDifference / 7)
-              console.log("convertDays",convertDays)
 
               return (
                 <div className="col" key={i + 1}>

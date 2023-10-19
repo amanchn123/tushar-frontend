@@ -7,6 +7,7 @@ import Link from "next/link";
 import newsTab from "../../styles/newsTab.module.css";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Image from "next/image";
+import { imageurl } from "../api/api";
 
 export default function Blogs() {
   const [postData, setPostData] = useState([]);
@@ -32,7 +33,7 @@ export default function Blogs() {
 
   // const PostData= getAllPost()
 
-  const imagePath = "http://localhost:5000/uploads";
+  const imagePath = imageurl;
   return (
 <>
       <h4 className="title mt-5 font-bold">

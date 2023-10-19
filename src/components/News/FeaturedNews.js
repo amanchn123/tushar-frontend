@@ -7,6 +7,7 @@ import Link from "next/link";
 import newsTab from "../../styles/newsTab.module.css";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Image from "next/image";
+import { imageurl } from "../api/api";
 
 export default function FeaturedNews() {
 
@@ -37,7 +38,7 @@ export default function FeaturedNews() {
 
   // const PostData= getAllPost()
 
-  const imagePath = "http://localhost:5000/uploads";
+  const imagePath = imageurl;
   return (
     <Grid container>
       <h4 className="title">

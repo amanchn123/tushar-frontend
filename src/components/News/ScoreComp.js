@@ -29,6 +29,7 @@ export default function ScoreComp() {
       //   (await match) &&
       //   match.find((ele) => ele.teams.includes(["Netherlands,New Zealands,Hyderabad,Jammu and Kashmir"]));
       // console.log(match, "match", neww);
+      console.log("matcccc",matches)
 
       const preferredCountries = [
         "India",
@@ -47,6 +48,7 @@ export default function ScoreComp() {
         "Bihar",
         "Hyderabad",
         "Goa",
+        "Delhi"
       ];
 
       let firstMatch = null;

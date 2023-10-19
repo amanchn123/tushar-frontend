@@ -11,6 +11,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import BreakingNews from "@/components/News/BreakingNews";
 import ScoreComp from "@/components/News/ScoreComp";
 import NewsLetter from "@/components/Newsletter/NewsLetter";
+import { imageurl } from "@/components/api/api";
 
 export function generateMetadata({ params }) {
   return {
@@ -37,7 +38,7 @@ export default async function Technology({ params }) {
   let bloglist1 = (await postData) && postData.slice(0, 3);
   let bloglist2 = (await postData) && postData.slice(3, 5);
 
-  let imagePath = "http://localhost:5000/uploads";
+  let imagePath = imageurl;
 
   return (
     <div className="home-1-bg">

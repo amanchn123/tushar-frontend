@@ -18,9 +18,10 @@ import axios from "axios";
 import { api } from "@/components/api/api";
 import { getCookie } from "cookies-next";
 import MuiAlert from "@mui/material/Alert";
+import { imageurl } from "@/components/api/api";
 
 export default function Page() {
-  const imageUrl = "http://localhost:5000/uploads/1696480718036.png";
+  const imageUrl = imageurl;
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return (

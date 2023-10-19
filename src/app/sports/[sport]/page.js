@@ -8,6 +8,7 @@ import LatestNews from "@/components/Others/LatestNews";
 import content from "../../fun";
 import Image from "next/image";
 import BreakingNews from "@/components/News/BreakingNews";
+import { imageurl } from "@/components/api/api";
 
 
 export async function generateMetadata({ params }) {
@@ -24,7 +25,7 @@ export default async function PostDetailsOne({ params }) {
   let Postdata = await content(params);
   let contentData = Postdata.content;
 
-  let imagePath = "http://localhost:5000/uploads";
+  let imagePath =imageurl;
 
   return (
     <>

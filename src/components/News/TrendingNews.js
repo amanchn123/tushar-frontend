@@ -4,37 +4,8 @@ import Slider from 'react-slick';
 import ModalVideo from 'react-modal-video';
 import axios from 'axios';
 import { api } from '../api/api';
+import { imageurl } from '../api/api';
 
-// const postData = [
-//   {
-//     postThumb: '/images/play-post-1.jpg',
-//     postThumbDark: '/images/play-post-dark-1.jpg',
-//     postCategory: 'TECHNOLOGY',
-//     postDate: 'March 26, 2020',
-//     postTitle: 'Success is not a good food failure makes you humble',
-//   },
-//   {
-//     postThumb: '/images/play-post-2.jpg',
-//     postThumbDark: '/images/play-post-1.jpg',
-//     postCategory: 'TECHNOLOGY',
-//     postDate: 'March 26, 2020',
-//     postTitle: 'Success is not a good food failure makes you humble',
-//   },
-//   {
-//     postThumb: '/images/play-post-2.jpg',
-//     postThumbDark: '/images/play-post-1.jpg',
-//     postCategory: 'TECHNOLOGY',
-//     postDate: 'March 26, 2020',
-//     postTitle: 'Success is not a good food failure makes you humble',
-//   },
-//   {
-//     postThumb: '/images/play-post-1.jpg',
-//     postThumbDark: '/images/play-post-2.jpg',
-//     postCategory: 'TECHNOLOGY',
-//     postDate: 'March 26, 2020',
-//     postTitle: 'Success is not a good food failure makes you humble',
-//   },
-// ];
 
 function PrevArrow(props) {
   const { onClick } = props;

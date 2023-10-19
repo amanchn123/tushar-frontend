@@ -19,6 +19,7 @@ import { api } from "@/components/api/api";
 import { getCookie } from "cookies-next";
 import MuiAlert from "@mui/material/Alert";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { imageurl } from "@/components/api/api";
 
 export default function Page({ params }) {
   const getPostDet = async () => {
@@ -58,7 +59,7 @@ export default function Page({ params }) {
   const [khali, setKhali] = React.useState();
 
   const contentFinal = selectedELement;
-  const imageUrls = "http://localhost:5000/uploads";
+  const imageUrls = imageurl;
 
   const token =
     getCookie("AdminDetails") && JSON.parse(getCookie("AdminDetails"))?.token;
