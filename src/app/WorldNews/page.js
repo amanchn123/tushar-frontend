@@ -51,7 +51,7 @@ export default async function Technology() {
             <div className="row">
               <div className="col-lg-9 ">
                 <Grid container lg={12}>
-                  <h4 className="title font-bold">Business News</h4>
+                  <h4 className="title font-bold">World News</h4>
 
                   {bloglist1 &&
                     bloglist1.map((ele, index) => {

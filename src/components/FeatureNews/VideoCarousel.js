@@ -67,7 +67,7 @@ export default function VideoCarousel({ customClass, dark }) {
     dots: false,
     infinite: true,
     autoplay: true,
-    autoplaySpeed: 8000,
+    autoplaySpeed: 80000,
     arrows: true,
     prevArrow: <PrevArrow />,
     nextArrow: <NextArrow />,
@@ -102,20 +102,20 @@ export default function VideoCarousel({ customClass, dark }) {
     ],
   };
 
-  const [pause, setPause] = useState(true);
+  // const [pause, setPause] = useState(true);
   const videoRefs = postData.map(() => React.createRef());
 
-  const handlePlayClick = (index) => {
-    if (videoRefs[index].current) {
-      const video = videoRefs[index].current;
+  // const handlePlayClick = (index) => {
+  //   if (videoRefs[index].current) {
+  //     const video = videoRefs[index].current;
 
-      if (video.paused) {
-        video.play();
-      } else {
-        video.pause();
-      }
-    }
-  };
+  //     if (video.paused) {
+  //       video.play();
+  //     } else {
+  //       video.pause();
+  //     }
+  //   }
+  // };
 
   return (
     <section className={`feature-area ${customClass}`}>
@@ -145,7 +145,7 @@ export default function VideoCarousel({ customClass, dark }) {
                   Your browser does not support the video tag.
                 </video>
               </div>
-              <div className="feature-post-content absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              {/* <div className="feature-post-content absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <div className="post-meta">
                   <button
                     onClick={(e) => {
@@ -165,7 +165,7 @@ export default function VideoCarousel({ customClass, dark }) {
                     />
                   </button>
                 </div>
-              </div>
+              </div> */}
             </div>
           ))}
         </Slider>
