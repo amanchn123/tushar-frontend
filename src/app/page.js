@@ -12,6 +12,7 @@ import VideoCarousel from "@/components/FeatureNews/VideoCarousel";
 import TrendingNews from "@/components/News/TrendingNews";
 import Blogs from "@/components/News/Blogs";
 
+
 export default function Home() {
   return (
     // <main className="flex min-h-screen flex-col items-center justify-between p-24">

@@ -198,7 +198,7 @@ export default function Page({ params }) {
           <Box
             component="form"
             sx={{
-              "& .MuiTextField-root": { m: 3, width: "35ch" },
+              "& .MuiTextField-root": { m: 3, width:portsize?"30ch":"35ch" },
               display: "grid",
               justifyContent: "center",
               padding: "10px",
@@ -231,17 +231,17 @@ export default function Page({ params }) {
               ""
             )}
 
-            <Typography fontSize={25} marginLeft={1} marginBottom={5}>
+            <Typography fontSize={25} padding={2} marginLeft={1}>
               Add new Post Blog
             </Typography>
 
             <div>
               <TextField
                 id="outlined-textarea"
-                // label="www.domain/bog/"
+                label="www.domain/bog/"
                 placeholder="www.domain/blog/"
                 multiline
-                defaultValue={`www.domain/${postInfo.category}/${postInfo.slug}`}
+                defaultValue={`${postInfo.slug}`}
                 onChange={(e) => {
                   let text = e.target.value;
                   let chang = text.replace(/ /g, "-");
@@ -249,7 +249,7 @@ export default function Page({ params }) {
                 }}
               />
 
-              <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+              <FormControl variant="standard" sx={{ m: 1, minWidth: 120,marginLeft:"25px" }}>
                 <InputLabel id="demo-simple-select-standard-label">
                   Category
                 </InputLabel>
@@ -264,12 +264,12 @@ export default function Page({ params }) {
                   label="category"
                 >
                   <MenuItem value="Politics">Politics</MenuItem>
-                  <MenuItem value="World News">World News</MenuItem>
-                  <MenuItem value="Sports">Sports</MenuItem>
+                  <MenuItem value="WorldNews">World News</MenuItem>
+                  <MenuItem value="sports">Sports</MenuItem>
                   <MenuItem value="Health">Health</MenuItem>
                   <MenuItem value="Business">Business</MenuItem>
                   <MenuItem value="technology">technology</MenuItem>
-                  <MenuItem value="Entertainment">Entertainment</MenuItem>
+                  <MenuItem value="entertainment">Entertainment</MenuItem>
                   <MenuItem value="Science">Science</MenuItem>
                 </Select>
               </FormControl>
@@ -429,9 +429,9 @@ export default function Page({ params }) {
                             src={`${imageUrls}/${ele.img?.filename}`}
                           />
                           <Button
-                            sx={{}}
+                            sx={{backgroundColor:"#ffa31a",color:"white"}}
                             component="label"
-                            variant="contained"
+                            // variant="contained"
                             startIcon={<CloudUploadIcon />}
                           >
                             change image {index + 1}
@@ -487,9 +487,9 @@ export default function Page({ params }) {
                             First add Alt then select Image
                           </label>
                           <Button
-                            sx={{}}
+                            sx={{backgroundColor:"#ffa31a",color:"white"}}
                             component="label"
-                            variant="contained"
+                            // variant="contained"
                             startIcon={<CloudUploadIcon />}
                           >
                             select Image Item {index + 1}
@@ -555,7 +555,7 @@ export default function Page({ params }) {
                 <Button
                   sx={{ marginTop: "10px" }}
                   component="label"
-                  variant="contained"
+                  sx={{backgroundColor:"#ffa31a",color:"white",margin:"5px"}}
                   startIcon={<CloudUploadIcon />}
                 >
                   Change Banner Image of Blog
@@ -583,9 +583,9 @@ export default function Page({ params }) {
 
             {/* </form> */}
             <div
-              style={{ display: "flex", justifyContent: portsize ? "" : "end" }}
+              style={{ display: "flex", justifyContent:"end",marginTop:"4px" }}
             >
-              <Button variant="contained" onClick={uploadPost}>
+              <Button variant="contained" style={{backgroundColor:"#fb923c",color:"white"}} onClick={uploadPost}>
                 Upload Post
               </Button>
             </div>

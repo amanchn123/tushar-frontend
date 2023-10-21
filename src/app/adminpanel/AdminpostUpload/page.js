@@ -216,13 +216,13 @@ export default function Page() {
               label="Age"
             >
               <MenuItem value="Politics">Politics</MenuItem>
-              <MenuItem value="World News">World News</MenuItem>
-              <MenuItem value="Sports">Sports</MenuItem>
+              <MenuItem value="WorldNews">World News</MenuItem>
+              <MenuItem value="sports">Sports</MenuItem>
               <MenuItem value="Health">Health</MenuItem>
               <MenuItem value="Business">Business</MenuItem>
               <MenuItem value="technology">technology</MenuItem>
               <MenuItem value="Science">Science</MenuItem>
-              <MenuItem value="Entertainment">Entertainment</MenuItem>
+              <MenuItem value="entertainment">Entertainment</MenuItem>
             </Select>
           </FormControl>
 
@@ -404,7 +404,7 @@ export default function Page() {
         </div>
         {/* </form> */}
         <div style={{ display: "flex", justifyContent: portsize ? "" : "end" }}>
-          <Button variant="contained" onClick={uploadPost}>
+          <Button variant="contained" onClick={uploadPost} style={{backgroundColor:"orange"}}>
             Upload Post
           </Button>
         </div>

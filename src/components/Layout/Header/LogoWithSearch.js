@@ -16,6 +16,7 @@ import OtpInput from "react-otp-input";
 import styless from "../../../styles/newsTab.module.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useMediaQuery } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -44,6 +45,8 @@ export default function LogoWithSearch() {
   const [errorr, setErrorr] = useState(null);
 
   const router = useRouter();
+  const portsize = useMediaQuery("(max-width:769px)");
+  const portsizes = useMediaQuery("(max-width:991px)");
 
   useEffect(() => {
     if (slideno == 1) {
@@ -64,34 +67,32 @@ export default function LogoWithSearch() {
 
   const getOtp = async () => {
     try {
-      if (number.length>12) {
+      if (number.length > 12) {
         const recaptchaVerifier = await new RecaptchaVerifier(
           auth,
           "recaptcha-container",
           {}
         );
 
-        console.log("recaptchaVerifier", recaptchaVerifier);
-        console.log("number.length",number.length)
+        // console.log("recaptchaVerifier", recaptchaVerifier);
+        // console.log("number.length",number.length)
 
-
-        try{
+        try {
           const confirmation = await signInWithPhoneNumber(
             auth,
             number,
             recaptchaVerifier
           );
-  
-            await setUsers(confirmation);
-            console.log("confirmation", confirmation);
-            // console.log("confirmation",confirmation)
-            setSlideno(slideno + 1);
-            // console.log("response", confirmation);
-        }catch(error){
-          console.log("error",error)
-          setErrorr(error)
-        }
 
+          await setUsers(confirmation);
+          // console.log("confirmation", confirmation);
+          // console.log("confirmation",confirmation)
+          setSlideno(slideno + 1);
+          // console.log("response", confirmation);
+        } catch (error) {
+          console.log("error", error);
+          setErrorr(error);
+        }
       }
     } catch (error) {
       setErrorr(error);
@@ -105,8 +106,8 @@ export default function LogoWithSearch() {
       try {
         const verify = await users.confirm(otp);
         console.log("verify", verify);
-        setOpen(false)
-        setSlideno(slideno+1)
+        setOpen(false);
+        setSlideno(slideno + 1);
       } catch (error) {
         setInvalidOtp(true);
         console.log("error in verifying otp", error);
@@ -114,9 +115,9 @@ export default function LogoWithSearch() {
     }
   };
 
-  const resendOtp=async()=>{
-    try{
-      if (number.length>12) {
+  const resendOtp = async () => {
+    try {
+      if (number.length > 12) {
         const recaptchaVerifier = await new RecaptchaVerifier(
           auth,
           "recaptcha-container",
@@ -124,30 +125,28 @@ export default function LogoWithSearch() {
         );
 
         console.log("recaptchaVerifier", recaptchaVerifier);
-        console.log("number.length",number.length)
+        console.log("number.length", number.length);
 
-
-        try{
+        try {
           const confirmation = await signInWithPhoneNumber(
             auth,
             number,
             recaptchaVerifier
           );
-  
-            await setUsers(confirmation);
-            console.log("confirmation", confirmation);
-            // console.log("confirmation",confirmation)
-            // console.log("response", confirmation);
-        }catch(error){
-          console.log("error",error)
-          setErrorr(error)
-        }
 
+          await setUsers(confirmation);
+          console.log("confirmation", confirmation);
+          // console.log("confirmation",confirmation)
+          // console.log("response", confirmation);
+        } catch (error) {
+          console.log("error", error);
+          setErrorr(error);
+        }
       }
-    }catch(error){
-      console.log("error in sending otp")
+    } catch (error) {
+      console.log("error in sending otp");
     }
-  }
+  };
 
   const verifSlide = [
     <>
@@ -156,13 +155,12 @@ export default function LogoWithSearch() {
           <img src="/images/logo/logo-black.png" alt="Logo" />
         </Link>
         <Image
-            content="center"
-            height={200}
-            width={200}
-            alt="otp"
-            src="/images/otp.jpg"
-          />
-
+          content="center"
+          height={200}
+          width={200}
+          alt="otp"
+          src="/images/otp.jpg"
+        />
       </div>
 
       <Typography id="modal-modal-description" sx={{ mt: 2 }}>
@@ -261,7 +259,9 @@ export default function LogoWithSearch() {
           <span>
             <button
               disabled={disablebtn}
-              className={`rounded-lg text-white px-1 ${disablebtn?"bg-orange-100":"bg-orange-400"} `}
+              className={`rounded-lg text-white px-1 ${
+                disablebtn ? "bg-orange-100" : "bg-orange-400"
+              } `}
             >
               resend
             </button>{" "}
@@ -370,12 +370,27 @@ export default function LogoWithSearch() {
     <div className="header-centerbar">
       <div className="container custom-container">
         <div className="row align-items-center">
-          <div className="col-lg-3 col-md-5">
+          <div className="col-lg-3 col-md-5 flex justify-between">
             <div className="logo">
               <Link href="/">
-                <Image  height={100} width={200} src="/images/logo/logo-black.png" alt="Logo" />
+                <Image
+                  height={100}
+                  width={200}
+                  src="/images/logo/logo-black.png"
+                  alt="Logo"
+                />
               </Link>
             </div>
+            {portsize ? (
+              <button
+                onClick={handleOpen}
+                className=" rounded-full bg-orange-400 w-20 h-8 text-sm text-white font-semibold mt-2"
+              >
+                Join Now
+              </button>
+            ) : (
+              ""
+            )}
           </div>
           <div className="col-lg-6 col-md-7">
             <div className="header-search  w-full">
@@ -389,15 +404,21 @@ export default function LogoWithSearch() {
                     style={{
                       border: "2px solid orange",
                       height: "40px",
-                      width: "75%",
+                      width: portsize ? "100%" : "75%",
                     }}
                     type="text"
                     placeholder="Search..."
                   />
 
-                  {/* <button type="button">Search</button> */}
+                  
                 </div>
               </form>
+              {!portsize && portsizes?<button
+                    onClick={handleOpen}
+                    className=" rounded-full bg-orange-400 w-20 h-8 text-sm text-white font-semibold mt-2 ml-4"
+                  >
+                    Join Now
+                  </button>:""}
             </div>
           </div>
           <div className="col-lg-3 ">

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useMediaQuery } from "@mui/material";
+import SendIcon from '@mui/icons-material/Send';
 
 export default function NewsLetter({ dark }) {
   const portsize = useMediaQuery("(max-width: 1000px)");
@@ -33,11 +34,11 @@ export default function NewsLetter({ dark }) {
                 <div className="input-box ">
                   <input
                     type="text"
-                    className="rounded"
+                    className="rounded-full"
                     placeholder="Your email address"
                   />
-                  <button type="button" className="rounded-ee rounded-se">
-                    SIGN UP
+                  <button type="button" style={{backgroundColor:"transparent",width:"auto",paddingRight:"10px",paddingBottom:"2px"}}>
+                    <SendIcon style={{color:"orange",transform:"rotate(-45deg)",fontSize:"35px"}}/>
                   </button>
                 </div>
                 <p>We hate spam as much as you do</p>
