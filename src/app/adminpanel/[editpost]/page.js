@@ -553,7 +553,6 @@ export default function Page({ params }) {
                 ))}
               {selectedELement.length !== 0 && (
                 <Button
-                  sx={{ marginTop: "10px" }}
                   component="label"
                   sx={{backgroundColor:"#ffa31a",color:"white",margin:"5px"}}
                   startIcon={<CloudUploadIcon />}
