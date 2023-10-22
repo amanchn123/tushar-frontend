@@ -27,7 +27,8 @@ export default function FeaturedNews() {
         subCategory: "Featured News",
       });
       // await ;
-      setPostData(response.data.slice(0, 2));
+      await setPostData(response.data.slice(0, 2));
+      // console.log("response",response)
     } catch (error) {
       console.log("error in getting featured news in frontend", error);
     }

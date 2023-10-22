@@ -1,1 +1,1 @@
-export const Domain="http://localhost:3000"
+export const Domain="dainikloksandarbh.com"
