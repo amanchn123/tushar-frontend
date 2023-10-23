@@ -68,7 +68,7 @@ export default function Blogs() {
                     </h5>
                     <div style={{ height: "80px" }}>
                       
-                        {ele.metadata?.description.slice(0, 250)}
+                        {ele.metadata?.description.slice(0, 150)}
                         
                     </div>
                     <div
