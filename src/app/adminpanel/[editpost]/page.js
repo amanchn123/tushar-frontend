@@ -35,7 +35,7 @@ export default function Page({ params }) {
       console.log("error in getting post in edit post in frontend", error);
     }
   };
-  const imageUrl = "http://localhost:5000/uploads/1696480718036.png";
+
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return (

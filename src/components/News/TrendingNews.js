@@ -46,7 +46,7 @@ export default function TrendingNews({ dark, customClass }) {
  getTrendPost()
     
   },[])
-  let imagePath = "http://localhost:5000/uploads";
+  let imagePath = imageurl;
  
 
   const [isOpen, setOpen] = useState(false);

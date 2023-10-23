@@ -24,7 +24,7 @@ export function generateMetadata() {
 async function getAllPost() {
   try {
     const response = await axios.post(`${api}/getPost`, {
-      category: "World News",
+      category: "WorldNews",
     });
     return response.data;
   } catch (error) {
