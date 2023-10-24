@@ -1,47 +1,16 @@
 "use client";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import ModalVideo from "react-modal-video";
 import Slider from "react-slick";
+import { api } from "../api/api";
+import { videourl } from "../api/api"; 
+import { useMediaQuery } from '@mui/material';
 
-const postData = [
-  {
-    postThumb: "/vid1.mp4",
-    postThumbDark: "/images/feature-dark-1.jpg",
-    postTag: "TECHNOLOGY",
-    postDate: "March 26, 2020",
-    postTitle: "Best garden wing supplies for the horticu ltural",
-  },
-  {
-    postThumb: "/vid2.mp4",
-    postThumbDark: "/vid3",
-    postTag: "TECHNOLOGY",
-    postDate: "March 26, 2020",
-    postTitle: "Best garden wing supplies for the horticu ltural",
-  },
-  {
-    postThumb: "/vid3.mp4",
-    postThumbDark: "/images/feature-dark-3.jpg",
-    postTag: "TECHNOLOGY",
-    postDate: "March 26, 2020",
-    postTitle: "Best garden wing supplies for the horticu ltural",
-  },
-  {
-    postThumb: "/vid5.mp4",
-    postThumbDark: "/images/feature-dark-4.jpg",
-    postTag: "TECHNOLOGY",
-    postDate: "March 26, 2020",
-    postTitle: "Best garden wing supplies for the horticu ltural",
-  },
-  {
-    postThumb: "/vid4.mp4",
-    postThumbDark: "/images/feature-dark-2.jpg",
-    postTag: "TECHNOLOGY",
-    postDate: "March 26, 2020",
-    postTitle: "Best garden wing supplies for the horticu ltural",
-  },
-];
+
 
 function PrevArrow(props) {
   const { onClick } = props;
@@ -61,6 +30,24 @@ function NextArrow(props) {
 }
 
 export default function VideoCarousel({ customClass, dark }) {
+  const portJoin = useMediaQuery("(max-width:990px)");
+  const[videos,setVideos]=useState([])
+  const getVideos=async()=>{
+    try{
+     const response=await axios.get(`${api}/getVideos`)
+     if(response.data.length>0){
+      setVideos(response.data)
+     }
+     console.log("bites",response.data.length)
+    }catch(error){
+      console.log('error in getting videos in frontend',error)
+    }
+  }
+  
+  useEffect(()=>{
+    getVideos()
+  },[])
+
   const settings = {
     slidesToShow: 5,
     slidesToScroll: 1,
@@ -103,7 +90,7 @@ export default function VideoCarousel({ customClass, dark }) {
   };
 
   // const [pause, setPause] = useState(true);
-  const videoRefs = postData.map(() => React.createRef());
+  // const videoRefs = postData.map(() => React.createRef());
 
   // const handlePlayClick = (index) => {
   //   if (videoRefs[index].current) {
@@ -128,22 +115,23 @@ export default function VideoCarousel({ customClass, dark }) {
           </div>
         </div>
         <Slider className="row feature-post-slider" {...settings}>
-          {postData.map((item, i) => (
-            <div className="col" key={i + 1}>
+          {videos.map((item, i) => (
+            <div className="col" key={i + 1} >
               <div
-                className="feature-post-thumb flex justify-center"
-                style={{ height: "auto", width: "auto", borderRadius: "10%" }}
+                className="feature-post-thumb flex justify-center "
+                // style={{ height: "250px", width: portJoin?:"300", borderRadius: "10%" }}
               >
                 <video
-                  className="rounded-2xl bg-orange-100"
-                  ref={videoRefs[i]}
+                  className="rounded-2xl "
+                  // ref={videoRefs[i]}
                   width="340"
                   height="200"
                   controls={true}
                 >
-                  <source src={item.postThumb} type="video/mp4" />
+                  <source src={`${videourl}/${item.name}`} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
+                
               </div>
               {/* <div className="feature-post-content absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <div className="post-meta">

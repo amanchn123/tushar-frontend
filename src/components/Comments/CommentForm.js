@@ -31,7 +31,7 @@ export default function CommentForm() {
                         rows="10"
                         placeholder="Tell us about your opinion…"
                       ></textarea>
-                      <button className="main-btn" type="button">
+                      <button className="main-btn " type="button" style={{backgroundColor:"orange"}}>
                         POST OPINION
                       </button>
                     </div>

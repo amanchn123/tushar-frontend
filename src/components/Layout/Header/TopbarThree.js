@@ -41,9 +41,9 @@ export default function TopbarThree() {
   };
 
   return (
-    <div className="header-topbar">
+    <div className="header-topbar ">
       <div className="container custom-container">
-        <div className="row align-items-center">
+        <div className="row align-items-center bg-orange-200">
           <div className="col-lg-8">
             <div className="topbar-trending">
               <span>Trending</span>

@@ -17,6 +17,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Link from "next/link";
 import { getCookie } from "cookies-next";
+import { imageurl } from "../api/api";
 
 const TableOne = () => {
   const [category, setCategory] = useState("");
@@ -26,6 +27,7 @@ const TableOne = () => {
 
   const token =
     getCookie("AdminDetails") && JSON.parse(getCookie("AdminDetails"))?.token;
+
   const getAllPost = async () => {
     try {
       const response = await axios.get(`${api}/admingetpost`, {
@@ -46,9 +48,29 @@ const TableOne = () => {
     getAllPost();
   }, []);
 
-  const bannerUrl = "http://localhost:5000/uploads";
+  const bannerUrl = imageurl;
   const matches = useMediaQuery("(min-width:800px)");
   const Smallmatches = useMediaQuery("(min-width:600px)");
+
+  const DeletePost=async(id)=>{
+    console.log(id)
+    try{
+      const response=await axios.post(`${api}/deletepost`,{id},
+      {
+        headers: {
+          authorization: token.toString()
+        },
+      }
+      ) 
+      console.log(response)
+     if(response.data){
+      alert("post deletd successfully")
+     }
+     
+    }catch(error){
+     console.log("error in deleted post in frontend",error)
+    }
+  }
 
   return (
     <div className="mt-10 rounded-sm border border-stroke bg-white px-5 pt-2 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -194,9 +216,9 @@ const TableOne = () => {
                     </Link>{" "}
 
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    {/* <span onclick={()=>deletePost(brand._id)}> */}
+                    <span onClick={()=>DeletePost(brand._id)}>
                     <DeleteIcon className="cursor-pointer" />
-                    {/* </span> */}
+                    </span>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <RemoveRedEyeIcon className="cursor-pointer" />
                   </div>

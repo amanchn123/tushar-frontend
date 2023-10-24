@@ -4,8 +4,9 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { api } from "../api/api";
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { imageurl } from "../api/api";
+import { Domain } from "../api/domain";
 
 function PrevArrow(props) {
   const { onClick } = props;
@@ -18,31 +19,36 @@ function PrevArrow(props) {
 function NextArrow(props) {
   const { onClick } = props;
   return (
-    <span className="next slick-arrow" style={{backgroundColor:"orange"}} onClick={onClick}>
+    <span
+      className="next slick-arrow"
+      style={{ backgroundColor: "orange" }}
+      onClick={onClick}
+    >
       <i className="fal fa-angle-right"></i>
     </span>
   );
 }
 
-
 export default function BreakingNews({ dark }) {
   const [postData, setPostData] = useState([]);
-  const [time,setTime]=useState([])
+  const [time, setTime] = useState([]);
 
   const getAllPost = async () => {
-   try{
-    const response = await axios.post(`${api}/getPost`, {
-      subCategory: "Breaking News",
-    });
-    await response.data.slice(0, 3);
-    setPostData(response.data);
-   }catch(error){
-    console.log('error in getiing breaking news post',error)
-   }
+    try {
+      const response = await axios.post(`${api}/getPost`, {
+        subCategory: "Breaking News",
+      });
+      await response.data.slice(0, 3);
+      setPostData(response.data);
+    } catch (error) {
+      console.log("error in getiing breaking news post", error);
+    }
   };
   useEffect(() => {
     getAllPost();
   }, [time]);
+
+  const Domains = Domain;
 
   // const PostData= getAllPost()
   const bannerUrl = imageurl;
@@ -88,31 +94,26 @@ export default function BreakingNews({ dark }) {
   };
   return (
     <section className="post-area">
-    
       <div className="container">
-      <h4 style={{color:"grey"}}>
-                    Breaking News
-                  </h4>
+        <h4 style={{ color: "grey" }}>Breaking News</h4>
         <Slider
           className="row post-slider justify-content-between"
           {...settings}
         >
           {postData &&
             postData.map((item, i) => {
-            
               const timeDifference = Date.now() - new Date(item.createdAt);
               const minutesDifference = Math.floor(timeDifference / 1000 / 60);
               const hoursDifference = Math.floor(
                 timeDifference / 1000 / 60 / 60
               );
 
-              const convertDays=Math.floor(hoursDifference / 7)
+              const convertDays = Math.floor(hoursDifference / 7);
 
               return (
                 <div className="col" key={i + 1}>
-                
                   <div
-                    className={`single__post d-flex align-items-center flex-column flex-lg-row ${
+                    className={`  single__post d-flex align-items-center  flex-md-row flex-lg-row ${
                       dark ? "post_dark" : ""
                     }`}
                   >
@@ -123,11 +124,23 @@ export default function BreakingNews({ dark }) {
                         alt="post"
                       />
                     </div>
-                    <div className="post-content">
+                    <div className="post-content text-sm">
                       <h4 className="title">
-                        <Link href={`${item.category}/${item.slug}`}>{item.heading}</Link>
+                        <Link href={`${Domains}/${item.category}/${item.slug}`}>
+                          {item.heading}
+                        </Link>
                       </h4>
-                      <p><AccessTimeIcon /> {minutesDifference<=60?`${minutesDifference} Minutes`:""}{minutesDifference>60?`${hoursDifference} Hours`:""} Ago</p></div>
+                      <p>
+                        <AccessTimeIcon />{" "}
+                        {minutesDifference <= 60
+                          ? `${minutesDifference} Minutes`
+                          : ""}
+                        {minutesDifference > 60
+                          ? `${hoursDifference} Hours`
+                          : ""}{" "}
+                        Ago
+                      </p>
+                    </div>
                   </div>
                 </div>
               );

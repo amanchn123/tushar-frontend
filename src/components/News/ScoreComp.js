@@ -134,7 +134,7 @@ export default function ScoreComp() {
           {cricMatch?.teamInfo[1]===toss?toss[0]:"" && toss?toss[3]:""=="Bat"?cricMatch.score[0]?.r:"unavailable"}
           </h3>
         </div> */}
-        <button onClick={getScorecard}>get score</button>
+        {/* <button onClick={getScorecard}>get score</button> */}
       </div>
       <div
         className="post-newsletter post-newsletter-3-style mt-10 "

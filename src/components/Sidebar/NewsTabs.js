@@ -3,16 +3,33 @@ export default function NewsTabs() {
     <>
       <div
         className="post-newsletter post-newsletter-3-style mt-30"
-        style={{ height: "30%" }}
+        style={{ height: "30%",backgroundColor:"#FBE1C3" }}
       >
         <div></div>
-        <p>
-          Your email address will not be this published. Required fields are
-          News Today.
-        </p>
+        <h5>
+         Advertisement
+        </h5>
+      </div>
+      <div
+        className="post-newsletter post-newsletter-3-style mt-30"
+        style={{ height: "30%",backgroundColor:"#FBE1C3" }}
+      >
+        <div></div>
+        <h5>
+         Advertisement
+        </h5>
+      </div>
+      <div
+        className="post-newsletter post-newsletter-3-style mt-30"
+        style={{ height: "30%",backgroundColor:"#FBE1C3" }}
+      >
+        <div></div>
+        <h5>
+         Advertisement
+        </h5>
       </div>
 
-      <div
+      {/* <div
         className="post-newsletter post-newsletter-3-style mt-10 "
         style={{ height: "63%" }}
       >
@@ -28,7 +45,7 @@ export default function NewsTabs() {
             <button type="button">SIGN UP</button>
           </div>
         </form>
-      </div>
+      </div> */}
     </>
   );
 }

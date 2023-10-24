@@ -147,7 +147,7 @@ export default function Page({ params }) {
 
         await formdata.delete("final");
         if (response.data == "not allowed") {
-          setAllowed(false);
+           alert("You are not allowed Pls login again")
         } else if (response.data.postUpdated) {
           alert("Post updated Successfully");
           setSuccessPost(true);

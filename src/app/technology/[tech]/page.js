@@ -111,7 +111,7 @@ export default async function PostDetailsOne({ params }) {
                           {ele.hasOwnProperty("img") && ele.img ? (
                             <div className=" pb-15 flex justify-center">
                               <img
-                                 
+                                style={{maxHeight:"350px",width:"auto"}} 
                                 src={`${imagePath}/${ele.img.filename}`}
                                 alt={`${ele.alt}`}
                               />

@@ -17,18 +17,19 @@ import axios from 'axios';
 import { api } from '@/components/api/api';
 import { useRouter } from 'next/navigation';
 import CircularProgress from '@mui/material/CircularProgress';
-import { setCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 import useToggle from '@/Hooks/useToggle';
 import DrawerHeader from '@/components/Drawer&HeaderCom/drawerheaderclient';
+import { useEffect } from 'react';
 
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © CollageMedia'}
-      <Link color="inherit" href="https://mui.com/">
+      {'Copyright © DLS News'}
+      {/* <Link color="inherit" href="https://mui.com/">
         Your Website
-      </Link>{' '}
+      </Link>{' '} */}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -42,13 +43,21 @@ export default function Page() {
 
   const router=useRouter()
   // const dispatch=useDispatch()
-
   const[loading,setLoading]=React.useState(false)
   const[Email,setEmail]=React.useState()
   const[password,setPassword]=React.useState()
   const[success,setSuccess]=React.useState(false)
   const[tokenAgainsend,setTokenAgainsend]=React.useState(false)
   const[loginFailed,setLoginFailed]=React.useState(false)
+
+  // const token =
+  // getCookie("AdminDetails") && JSON.parse(getCookie("AdminDetails"))?.token;
+
+  // useEffect(()=>{
+  //   if(token){
+  //     router.push('/adminpanel')
+  //   }
+  // })
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -172,11 +181,6 @@ export default function Page() {
               <Grid item xs>
                 <Link href="#" variant="body2">
                   Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/signup" variant="body2" style={{ color: "blue" }}>
-                  {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
             </Grid>

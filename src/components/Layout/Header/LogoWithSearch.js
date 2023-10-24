@@ -17,6 +17,8 @@ import styless from "../../../styles/newsTab.module.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMediaQuery } from "@mui/material";
+import { getCookie, deleteCookie,hasCookie  } from "cookies-next";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const style = {
   position: "absolute",
@@ -43,10 +45,10 @@ export default function LogoWithSearch() {
   const [countdown, setCountdown] = useState(60); // Initial countdown value in seconds
   const [disablebtn, setDisablebtn] = useState(false);
   const [errorr, setErrorr] = useState(null);
-
+  const [token,setToken]=useState(false)
   const router = useRouter();
   const portsize = useMediaQuery("(max-width:769px)");
-  const portsizes = useMediaQuery("(max-width:991px)");
+  const portJoin = useMediaQuery("(max-width:990px)");
 
   useEffect(() => {
     if (slideno == 1) {
@@ -154,13 +156,15 @@ export default function LogoWithSearch() {
         <Link href="/">
           <img src="/images/logo/logo-black.png" alt="Logo" />
         </Link>
-        <Image
-          content="center"
-          height={200}
-          width={200}
-          alt="otp"
-          src="/images/otp.jpg"
-        />
+        <div className="flex justify-center">
+          <Image
+            content="center"
+            height={200}
+            width={200}
+            alt="otp"
+            src="/images/otp.jpg"
+          />
+        </div>
       </div>
 
       <Typography id="modal-modal-description" sx={{ mt: 2 }}>
@@ -366,22 +370,51 @@ export default function LogoWithSearch() {
       </Typography>
     </>,
   ];
+
+  
+  // const token = hasCookie("AdminDetails")
+  // console.log("tttt",token)
+  // const token ="jgbg" 
+useEffect(()=>{
+  const tokens = hasCookie("AdminDetails")
+  setToken(tokens)
+})
+
+console.log("oooooo",token)
+  const logout = () => {
+    deleteCookie("AdminDetails");
+    router.refresh();
+  
+  };
+
   return (
-    <div className="header-centerbar">
+    <div className="header-centerbar" style={{ padding: "0%" }}>
       <div className="container custom-container">
-        <div className="row align-items-center">
+        <div className="row align-items-center bg-orange-400">
           <div className="col-lg-3 col-md-5 flex justify-between">
-            <div className="logo">
-              <Link href="/">
-                <Image
-                  height={100}
-                  width={200}
-                  src="/images/logo/logo-black.png"
-                  alt="Logo"
-                />
-              </Link>
+            <div className="logo p-2">
+              {portJoin ? (
+                <Link href="/">
+                  <Image
+                    height={200}
+                    width={200}
+                    src="/images/logo/logo-black.png"
+                    alt="Logo"
+                  />
+                </Link>
+              ) : (
+                <Link href="/">
+                  <Image
+                    style={{ height: "120px", width: "390px" }}
+                    height={200}
+                    width={200}
+                    src="/images/logo/logo-black.png"
+                    alt="Logo"
+                  />
+                </Link>
+              )}
             </div>
-            {portsize ? (
+            {/* {portsize ? (
               <button
                 onClick={handleOpen}
                 className=" rounded-full bg-orange-400 w-20 h-8 text-sm text-white font-semibold mt-2"
@@ -390,49 +423,135 @@ export default function LogoWithSearch() {
               </button>
             ) : (
               ""
-            )}
+            )} */}
           </div>
-          <div className="col-lg-6 col-md-7">
-            <div className="header-search  w-full">
-              <form action="#">
-                <div className=" p-2">
-                  <span className="absolute left-8 top-4 text-gray-400">
-                    <SearchIcon />{" "}
-                  </span>
-                  <input
-                    className="rounded-full px-10"
-                    style={{
-                      border: "2px solid orange",
-                      height: "40px",
-                      width: portsize ? "100%" : "75%",
-                    }}
-                    type="text"
-                    placeholder="Search..."
-                  />
-
-                  
-                </div>
-              </form>
-              {!portsize && portsizes?<button
-                    onClick={handleOpen}
-                    className=" rounded-full bg-orange-400 w-20 h-8 text-sm text-white font-semibold mt-2 ml-4"
-                  >
-                    Join Now
-                  </button>:""}
+          <div className="col-lg-5 col-md-7 ">
+            <div className="header-search  w-full items-center">
+              <div className=" flex items-center">
+                {/* <div className=" bg-red-600"> */}
+                <span className="absolute left-8 top-3 text-gray-400">
+                  <SearchIcon />{" "}
+                </span>
+                <input
+                  className="rounded-full px-10"
+                  style={{
+                    border: "2px solid orange",
+                    height: portsize ? "40px" : "50px",
+                    width: portsize ? "100%" : "100%",
+                  }}
+                  type="text"
+                  placeholder="Search..."
+                />
+                {/* </div> */}
+                &nbsp;
+                {portJoin ? (
+                  <div className=" flex items-center">
+                    <NotificationsSharpIcon
+                      style={{ cursor: "pointer", fontSize: "30px" }}
+                    />
+                    <button
+                      onClick={handleOpen}
+                      className=" rounded-full bg-dark w-24 h-10 text-sm text-white font-semibold  ml-4"
+                    >
+                      Join Now
+                    </button>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
           </div>
-          <div className="col-lg-3 ">
-            <div className="header-temperature justify-content-end d-none d-lg-flex ">
-              <NotificationsSharpIcon style={{ cursor: "pointer" }} />{" "}
+          <div className="col-lg-4">
+            <div className="header-temperature justify-content-end d-none d-lg-flex">
+              <Link
+                href="/"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  fontSize: "20px",
+                  marginRight: "30px",
+                  color: "white",
+                }}
+              >
+                <i
+                  style={{ fontSize: "30px" }}
+                  class="fas fa-newspaper  mr-2"
+                ></i>
+                <span>
+                  <b>E-Paper</b>
+                </span>{" "}
+              </Link>
+
+              {token ? (
+                <button className="font-bold text-light text-lg" onClick={logout}>Logout</button>
+              ) : (
+                <Link
+                  href="/adminpanel"
+                  style={{
+                    fontSize: "20px",
+                    fontWeight: "600",
+                    color: "white",
+                  }}
+                >
+                  Login
+                </Link>
+              )}
+              
+              &nbsp;&nbsp;&nbsp;
+              <NotificationsSharpIcon
+                style={{ cursor: "pointer", fontSize: "30px", color: "white" }}
+              />{" "}
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <button
                 onClick={handleOpen}
-                className=" rounded-full bg-orange-400 w-32 h-10 text-white font-semibold"
+                className=" rounded-full bg-dark w-36 h-12 text-white font-semibold"
               >
                 Join Now
               </button>
             </div>
           </div>
+          {portJoin ? (
+            <div
+              className="col-md-6 flex items-center justify-start px-4 pt-4 pb-2"
+            >
+              <Link
+                href="/"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  fontSize: "15px",
+                  marginRight: "30px",
+                  color: "white",
+                }}
+              >
+                <i
+                  style={{ fontSize: "25px" }}
+                  class="fas fa-newspaper font-bold mr-2"
+                ></i>
+
+                  E-Paper
+
+              </Link>
+              {token ? (
+                <button className="font-bold text-light text-sm" onClick={logout}>Logout <LogoutIcon /> </button>
+              ) : (
+                <Link
+                  href="/adminpanel"
+                  style={{
+                    fontSize: "17px",
+                    fontWeight: "600",
+                    color: "white",
+                  }}
+                >
+                  Login
+                </Link>
+              )}
+              &nbsp;&nbsp;
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <Modal

@@ -5,7 +5,7 @@ import data from '../../../data/navigation.json';
 function NavigationBar({ customClass }) {
   return (
     <>
-      <div className={`newspark-header-main-menu ${customClass}`}>
+      <div className={`newspark-header-main-menu ${customClass} `}>
         {data && data.data&& data.data.length > 0 && (
           <ul>
             {data.data.map((item, i) => (
