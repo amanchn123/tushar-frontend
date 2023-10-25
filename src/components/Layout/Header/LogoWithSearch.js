@@ -537,7 +537,7 @@ console.log("oooooo",token)
               className="col-md-6 flex items-center justify-start px-4 pt-4 pb-2"
             >
               <Link
-                href="/"
+                href={`${Domain}/E-News`}
                 style={{
                   display: "flex",
                   alignItems: "center",
