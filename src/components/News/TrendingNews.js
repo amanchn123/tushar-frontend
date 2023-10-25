@@ -106,10 +106,10 @@ export default function TwoPostCarousel({ dark, customClass }) {
     >
        {/* <div className="container custom-container"> 
         <div className="single-play-box">  */}
-        {data && data.map((epap)=>{
-          console.log('epap',epap)
+        {data && data.map((epap,idx)=>{
+          
           return(
-            <Slider {...settings} className="row single-play-post-slider mb-16">
+            <Slider {...settings} className="row single-play-post-slider mb-16" key={idx}>
             { epap?.content?.map((item, i) => (
               
               <div className="col" key={i + 1}>

@@ -41,7 +41,7 @@ export default function Modals() {
 
   const imgArr = Array.from({ length: imageCount });
   const submit = async () => {
-console.log("date",formdata.get('image'))
+
     try {
       if (!formdata.get('date') || !formdata.get('image')) {
         alert("pls select all field");
@@ -126,7 +126,7 @@ console.log("date",formdata.get('image'))
           <div className="grid">
             {imgArr &&
               imgArr.map((ele, indx) => (
-                <input
+                <input key={indx}
                   required
                   className="mt-4"
                   placeholder="image 1"
