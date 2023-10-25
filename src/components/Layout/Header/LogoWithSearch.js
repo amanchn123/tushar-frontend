@@ -411,9 +411,9 @@ console.log("oooooo",token)
   return (
     <div className="header-centerbar" style={{ padding: "0%" }}>
       <div className="container custom-container">
-        <div className="row align-items-center bg-orange-400">
-          <div className="col-lg-3 col-md-5 flex justify-between ">
-            <div className="logo p-2">
+        <div className="row align-items-center bg-orange-400 pt-1 pb-1">
+          <div className="col-lg-3 col-md-5 flex justify-between logo p-0">
+            {/* <div className=" bg-green-200"> */}
               {portJoin ? (
                 <Link href="/">
                   <Image
@@ -424,9 +424,9 @@ console.log("oooooo",token)
                   />
                 </Link>
               ) : (
-                <Link href="/">
+                <Link href="/" >
                   <Image
-                    style={{ height: "100px", width: "450px" }}
+                    style={{ height: "100px", width: "130%" }}
                     height={200}
                     width={200}
                     src="/images/logo/logo-black.png"
@@ -434,7 +434,7 @@ console.log("oooooo",token)
                   />
                 </Link>
               )}
-            </div>
+            {/* </div> */}
             {/* {portsize ? (
               <button
                 onClick={handleOpen}
@@ -526,7 +526,7 @@ console.log("oooooo",token)
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <button
                 onClick={handleOpen}
-                className=" rounded-full bg-dark w-64  h-12 text-white font-semibold"
+                className=" rounded-full bg-dark w-64  h-12 text-white font-semibold mr-1"
               >
                 Join Now
               </button>
