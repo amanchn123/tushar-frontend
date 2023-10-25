@@ -91,9 +91,9 @@ export default function FeaturedNews() {
                     <h5
                       className={`${newsTab.category2banner} hidden md:block font-bold text-center p-3 px-2`}
                     >
-                      {ele.heading}
+                      {ele?.heading?.slice(0,90)}
                     </h5>
-                    <div style={{ height: "120px", padding: "10px" }}>
+                    <div style={{ height: "120px", padding: "10px"}}>
                       {ele.metadata?.description.slice(0, 250)}
                     </div>
                     <div

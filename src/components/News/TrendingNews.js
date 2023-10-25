@@ -5,12 +5,37 @@ import ModalVideo from 'react-modal-video';
 import axios from 'axios';
 import { api } from '../api/api';
 import { imageurl } from '../api/api';
+import { useMediaQuery } from '@mui/material';
 
+
+const postData = [
+  {
+    postThumb: '/images/play-post-1.jpg',
+    postThumbDark: '/images/paper1.png',
+    postCategory: '',
+    postDate: '',
+    postTitle: '',
+  },
+  {
+    postThumb: '/images/play-post-2.jpg',
+    postThumbDark: '/images/paper2.jpeg',
+    postCategory: 'TECHNOLOGY',
+    postDate: 'March 26, 2020',
+    postTitle: 'Success is not a good food failure makes you humble',
+  },
+  {
+    postThumb: '/images/play-post-1.jpg',
+    postThumbDark: '/images/play-post-2.jpg',
+    postCategory: 'TECHNOLOGY',
+    postDate: 'March 26, 2020',
+    postTitle: 'Success is not a good food failure makes you humble',
+  },
+];
 
 function PrevArrow(props) {
   const { onClick } = props;
   return (
-    <span className="prev slick-arrow" onClick={onClick}>
+    <span className="prev slick-arrow" onClick={onClick} style={{backgroundColor:"orange"}}>
       <i className="fal fa-angle-left"></i>
     </span>
   );
@@ -18,45 +43,24 @@ function PrevArrow(props) {
 function NextArrow(props) {
   const { onClick } = props;
   return (
-    <span className="next slick-arrow" onClick={onClick}>
+    <span className="next slick-arrow" onClick={onClick} style={{backgroundColor:"orange"}}>
       <i className="fal fa-angle-right"></i>
     </span>
   );
 }
 
-export default function TrendingNews({ dark, customClass }) {
-  const[postDatas,setPostDatas]=useState([])
-  const getTrendPost=async()=>{
-    try{
-      const response=await axios.post(`${api}/getPost`,{
-          subCategory:"Trending News"
-      })
-  
-      if(response.data){
-         
-          setPostDatas(response.data.slice(0,4))
-      }else{
-          console.log(response)
-      }
-     }catch(error){
-      console.log('errro in getting trending post in frontend',error)
-     }
-  }
-  useEffect(()=>{
- getTrendPost()
-    
-  },[])
-  let imagePath = imageurl;
- 
+export default function TwoPostCarousel({ dark, customClass }) {
 
+  const paperurl=imageurl;
   const [isOpen, setOpen] = useState(false);
+  const [data,setData]=useState([])
   const settings = {
     slidesToShow: 1,
     slidesToScroll: 1,
     dots: false,
     infinite: true,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 30000,
     arrows: true,
     prevArrow: <PrevArrow />,
     nextArrow: <NextArrow />,
@@ -78,32 +82,53 @@ export default function TrendingNews({ dark, customClass }) {
       },
     ],
   };
+
+  const portsize=useMediaQuery("(max-width:990px)")
+  const getEnews=async()=>{
+    try{
+     const response=await axios.get(`${api}/getenews`)
+     console.log(response.data)
+     setData(response.data) 
+    }catch(error){
+      console.log("error in getting e-news",error)
+    }
+  }
+
+  useEffect(()=>{
+    getEnews()
+  },[])
   return (
     <section
-      className={`single-play-post-area mt-10 ${customClass} ${
+      className={`single-play-post-area  ${customClass} ${
         dark ? 'single-play-post-dark-area' : ''
       } `}
+  
     >
-      <div className="container custom-container ">
-        <div className="single-play-box">
-          <Slider {...settings} className="row single-play-post-slider">
-            {postDatas.map((item, i) => (
+       {/* <div className="container custom-container"> 
+        <div className="single-play-box">  */}
+        {data && data.map((epap)=>{
+          console.log('epap',epap)
+          return(
+            <Slider {...settings} className="row single-play-post-slider mb-16">
+            { epap?.content?.map((item, i) => (
+              
               <div className="col" key={i + 1}>
-                <div className="single-play-post-item">
-             
-                    <img className='rounded' style={{height:"370px"}}  src={`${imagePath}/${item.banner}`} alt="play" />
-                  
-                  <div className="single-play-post-content">  
+              {console.log("itemm",item)}
+                <div className="single-play-post-item ">
+                    <img src={`${imageurl}/${item}`} alt="play" style={{height:portsize?"":"700px"}}/>
+   
+
+                  <div className="single-play-post-content">
                     <div className="post-meta">
                       <div className="meta-categories">
-                        <a href="#">{item.metadata?.title}</a>
+                        <a href="#">{item.postCategory}</a>
                       </div>
                       <div className="meta-date">
-                      <span>{item.createdAt.slice(0,10)}</span>
+                        <span>{epap.date.slice(0,10)}</span>
                       </div>
                     </div>
                     <h3 className="title">
-                      <Link href={`${item.category}/${item.slug}`}>{item.heading}</Link>
+                      <Link href="/post-details-two">{item.postTitle}</Link>
                     </h3>
                   </div>
                   {/* <div className="play-btn">
@@ -116,13 +141,14 @@ export default function TrendingNews({ dark, customClass }) {
                     </a>
                   </div> */}
                 </div>
-                
               </div>
             ))}
-            
           </Slider>
-        </div>
-      </div>
+          )
+        })}
+          
+        {/* </div> 
+       </div>  */}
     </section>
   );
 }

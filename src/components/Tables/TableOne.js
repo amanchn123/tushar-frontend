@@ -36,7 +36,9 @@ const TableOne = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+   
       if (response.data) {
+
         setData(response.data);
       }
     } catch (error) {
@@ -53,7 +55,7 @@ const TableOne = () => {
   const Smallmatches = useMediaQuery("(min-width:600px)");
 
   const DeletePost=async(id)=>{
-    console.log(id)
+
     try{
       const response=await axios.post(`${api}/deletepost`,{id},
       {
@@ -62,7 +64,7 @@ const TableOne = () => {
         },
       }
       ) 
-      console.log(response)
+  
      if(response.data){
       alert("post deletd successfully")
      }
@@ -71,6 +73,7 @@ const TableOne = () => {
      console.log("error in deleted post in frontend",error)
     }
   }
+ 
 
   return (
     <div className="mt-10 rounded-sm border border-stroke bg-white px-5 pt-2 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -102,9 +105,8 @@ const TableOne = () => {
             <MenuItem value="WorldNews">World News</MenuItem>
             <MenuItem value="sports">Sports</MenuItem>
             <MenuItem value="Health">Health</MenuItem>
-            <MenuItem value="Business">Business</MenuItem>
             <MenuItem value="technology">technology</MenuItem>
-            <MenuItem value="Business">Business</MenuItem>
+            <MenuItem value="business">business</MenuItem>
             <MenuItem value="entertainment">Entertainment</MenuItem>
           </Select>
         </FormControl>
@@ -169,13 +171,14 @@ const TableOne = () => {
         {Array.isArray(data) && data.length > 0 
           ? data
               .filter(
-                async(ele) =>
-                 await ele.heading.toLowerCase().includes(search.toLowerCase()) &&
-                 await ele.category.includes(category) &&
-                 await ele.subCategory.includes(subcategory)
+                (ele) =>
+                  ele.heading.toLowerCase().includes(search.toLowerCase()) &&
+                  ele.category.includes(category) &&
+                  ele.subCategory.includes(subcategory)
               )
               .map((brand, key) => (
                 <div
+                
                   className={`grid grid-cols-3 sm:grid-cols-5  ${
                     key === data.length - 1
                       ? ""

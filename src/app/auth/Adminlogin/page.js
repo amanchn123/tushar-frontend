@@ -50,14 +50,14 @@ export default function Page() {
   const[tokenAgainsend,setTokenAgainsend]=React.useState(false)
   const[loginFailed,setLoginFailed]=React.useState(false)
 
-  // const token =
-  // getCookie("AdminDetails") && JSON.parse(getCookie("AdminDetails"))?.token;
+  const token =
+  getCookie("AdminDetails") && JSON.parse(getCookie("AdminDetails"))?.token;
 
-  // useEffect(()=>{
-  //   if(token){
-  //     router.push('/adminpanel')
-  //   }
-  // })
+  useEffect(()=>{
+    if(token){
+      router.push('/adminpanel')
+    }
+  })
 
   const handleSubmit = async (event) => {
     event.preventDefault();

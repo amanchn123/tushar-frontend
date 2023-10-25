@@ -25,6 +25,8 @@ async function getAllPost() {
     const response = await axios.post(`${api}/getPost`, {
       category: "technology",
     });
+
+    console.log("techno post",response.data)
     return response.data;
   } catch (error) {
     console.log("error in calling getPost in frontend");

@@ -10,6 +10,7 @@ import { Box, Modal } from "@mui/material";
 import axios from "axios";
 import { api } from "@/components/api/api";
 import { getCookie } from "cookies-next";
+import Modals from '../../components/e-newsAdmin/modal'
 
 const TablesPage = () => {
   const [open, setOpen] = useState(false);
@@ -20,7 +21,6 @@ const TablesPage = () => {
 
   const handlevid = (e) => {
     const doc = e.target.files[0];
-    console.log(doc);
     if (doc.type !== "video/mp4") {
       setVid("");
       alert("pls select only video");
@@ -85,13 +85,17 @@ const TablesPage = () => {
             <h3 className="title">
               <i>Admin Panel</i>
             </h3>
-            <div className=" h-auto p-2 flex shadow">
+            <div className=" h-auto  flex shadow">
+              <div className="grid">
               <Link
                 className="bg-orange-400 m-5 p-3 rounded-lg shadow"
                 href="/adminpanel/AdminpostUpload"
               >
                 Create New Post
               </Link>
+              <Modals />
+              </div>
+              <div className="grid">
               <Link
                 className="bg-orange-400 m-5 p-3 rounded-lg shadow"
                 href="/"
@@ -104,6 +108,7 @@ const TablesPage = () => {
               >
                 Upload videos in News Bites{" "}
               </button>
+              </div>
             </div>
             <div className="grid">
               <TableOne />

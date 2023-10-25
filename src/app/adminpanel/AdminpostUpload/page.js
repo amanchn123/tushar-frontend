@@ -219,7 +219,7 @@ export default function Page() {
               <MenuItem value="WorldNews">World News</MenuItem>
               <MenuItem value="sports">Sports</MenuItem>
               <MenuItem value="Health">Health</MenuItem>
-              <MenuItem value="Business">Business</MenuItem>
+              <MenuItem value="business">Business</MenuItem>
               <MenuItem value="technology">technology</MenuItem>
               <MenuItem value="Science">Science</MenuItem>
               <MenuItem value="entertainment">Entertainment</MenuItem>

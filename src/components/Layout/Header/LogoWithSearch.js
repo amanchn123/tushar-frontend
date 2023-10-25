@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { useMediaQuery } from "@mui/material";
 import { getCookie, deleteCookie,hasCookie  } from "cookies-next";
 import LogoutIcon from '@mui/icons-material/Logout';
+import { Domain } from "@/components/api/domain";
 
 const style = {
   position: "absolute",
@@ -38,7 +39,7 @@ export default function LogoWithSearch() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [slideno, setSlideno] = useState(0);
+  const [slideno, setSlideno] = useState(2);
   const [invalidOtp, setInvalidOtp] = useState(false);
   const [users, setUsers] = useState(null);
   const [otp, setOtp] = useState();
@@ -49,6 +50,18 @@ export default function LogoWithSearch() {
   const router = useRouter();
   const portsize = useMediaQuery("(max-width:769px)");
   const portJoin = useMediaQuery("(max-width:990px)");
+  const [userdata,setUserdata]=useState({
+    name:"",
+    password:"",
+    email:"",
+    gender:""
+
+  })
+
+  const handleSubmit=()=>{
+    alert("You are successfully logged in")
+    setOpen(false)
+  }
 
   useEffect(() => {
     if (slideno == 1) {
@@ -87,7 +100,7 @@ export default function LogoWithSearch() {
           );
 
           await setUsers(confirmation);
-          // console.log("confirmation", confirmation);
+          console.log("confirmation", confirmation);
           // console.log("confirmation",confirmation)
           setSlideno(slideno + 1);
           // console.log("response", confirmation);
@@ -108,7 +121,7 @@ export default function LogoWithSearch() {
       try {
         const verify = await users.confirm(otp);
         console.log("verify", verify);
-        setOpen(false);
+        // setOpen(false);
         setSlideno(slideno + 1);
       } catch (error) {
         setInvalidOtp(true);
@@ -298,31 +311,39 @@ export default function LogoWithSearch() {
           className="rounded-lg w-full mt-4 p-2"
           style={{ border: "2px solid orange", height: "40px" }}
           type="text"
+          onChange={(e)=>setUserdata({...userdata,name:e.target.value})}
           placeholder="Name"
         />
         <input
           className="rounded-lg w-full mt-4 p-2"
           style={{ border: "2px solid orange", height: "40px" }}
-          type="text"
+          type="email"
+          onChange={(e)=>setUserdata({...userdata,email:e.target.value})}
           placeholder="Email"
         />
         <input
           className="rounded-lg w-full mt-4 p-2"
           style={{ border: "2px solid orange", height: "40px" }}
+          onChange={(e)=>setUserdata({...userdata,password:e.target.value})}
           type="text"
-          placeholder="Password"
+          placeholder="Create Password"
         />
-        <input
-          className="rounded-lg w-full mt-4 p-2"
+        <select
+          className="rounded-lg w-full mt-4 p-2 bg-transparent"
           style={{ border: "2px solid orange", height: "40px" }}
-          type="text"
+          onChange={(e)=>setUserdata({...userdata,gender:e.target.value})}
+          type="select"
           placeholder="Gender"
-        />
+        >
+          <option className="bg-transparent" selected>Male</option>
+          <option className="bg-transparent">FeMale</option>
+          <option className="bg-transparent">Prefered not to Disclose</option>
+        </select>
         <div className="flext text-center mt-4">
-          I agreee to the terms and condition
+         By Joining I agreee to the terms and condition
         </div>
         <div className="grid items-center justify-center mt-2">
-          <button className="rounded-2xl bg-orange-400 w-52 h-10 text-white font-semibold">
+          <button onClick={handleSubmit} className="rounded-2xl bg-orange-400 w-52 h-10 text-white font-semibold">
             Join Now
           </button>
         </div>
@@ -363,7 +384,7 @@ export default function LogoWithSearch() {
           I agreee to the terms and condition
         </div>
         <div className="grid items-center justify-center mt-2">
-          <button className="rounded-2xl bg-orange-400 w-52 h-10 text-white font-semibold">
+          <button  className="rounded-2xl bg-orange-400 w-52 h-10 text-white font-semibold">
             Join Now
           </button>
         </div>
@@ -391,7 +412,7 @@ console.log("oooooo",token)
     <div className="header-centerbar" style={{ padding: "0%" }}>
       <div className="container custom-container">
         <div className="row align-items-center bg-orange-400">
-          <div className="col-lg-3 col-md-5 flex justify-between">
+          <div className="col-lg-3 col-md-5 flex justify-between ">
             <div className="logo p-2">
               {portJoin ? (
                 <Link href="/">
@@ -405,7 +426,7 @@ console.log("oooooo",token)
               ) : (
                 <Link href="/">
                   <Image
-                    style={{ height: "120px", width: "390px" }}
+                    style={{ height: "100px", width: "450px" }}
                     height={200}
                     width={200}
                     src="/images/logo/logo-black.png"
@@ -425,7 +446,7 @@ console.log("oooooo",token)
               ""
             )} */}
           </div>
-          <div className="col-lg-5 col-md-7 ">
+          <div className="col-lg-5 col-md-7">
             <div className="header-search  w-full items-center">
               <div className=" flex items-center">
                 {/* <div className=" bg-red-600"> */}
@@ -462,10 +483,10 @@ console.log("oooooo",token)
               </div>
             </div>
           </div>
-          <div className="col-lg-4">
-            <div className="header-temperature justify-content-end d-none d-lg-flex">
+          <div className="col-lg-4" style={{padding:"0%"}}>
+            <div className="header-temperature justify-content-end d-none d-lg-flex " style={{padding:"0%",margin:"0%"}} >
               <Link
-                href="/"
+                href={`${Domain}/E-News`}
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -478,8 +499,8 @@ console.log("oooooo",token)
                   style={{ fontSize: "30px" }}
                   class="fas fa-newspaper  mr-2"
                 ></i>
-                <span>
-                  <b>E-Paper</b>
+                <span className="flex items-center text-center">
+                  E-<p className="flex text-center mt-3"> Paper</p>
                 </span>{" "}
               </Link>
 
@@ -505,7 +526,7 @@ console.log("oooooo",token)
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <button
                 onClick={handleOpen}
-                className=" rounded-full bg-dark w-36 h-12 text-white font-semibold"
+                className=" rounded-full bg-dark w-64  h-12 text-white font-semibold"
               >
                 Join Now
               </button>
