@@ -9,8 +9,9 @@ import ScoreComp from "@/components/News/ScoreComp";
 import BreakingNews from "@/components/News/BreakingNews";
 import FeaturedNews from "@/components/News/FeaturedNews";
 import VideoCarousel from "@/components/FeatureNews/VideoCarousel";
-import TrendingNews from "@/components/News/TrendingNews";
+import TrendingNews from "@/components/News/E-paperSlide";
 import Blogs from "@/components/News/Blogs";
+import TrendingCarousel from "@/components/News/TrendingCarousel";
 
 
 export default function Home() {
@@ -34,16 +35,20 @@ export default function Home() {
                 <ScoreComp />
               </div>
             </div>
+            
+            <div className="col-lg-12">
+              <VideoCarousel />
+            </div>
             <div className="col-lg-12">
               <NewsLetter />
             </div>
             <div className="col-lg-12">
-              <VideoCarousel />
+            <TrendingCarousel />
             </div>
           </div>
         </div>
       </div>
-
+  
       <div className="post__gallery__area">
         <div className="container">
           <div className="row mb-16">
@@ -58,6 +63,7 @@ export default function Home() {
                 <NewsTabs />
               </div>
             </div>
+          
           </div>
         </div>
       </div>

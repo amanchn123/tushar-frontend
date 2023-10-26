@@ -1,5 +1,9 @@
 import React from 'react';
 
+const submit=async()=>{
+  alert("you have successfully posted opinion")
+}
+
 export default function CommentForm() {
   return (
     <div className="post-form-area">
@@ -31,7 +35,7 @@ export default function CommentForm() {
                         rows="10"
                         placeholder="Tell us about your opinion…"
                       ></textarea>
-                      <button className="main-btn " type="button" style={{backgroundColor:"orange"}}>
+                      <button className="main-btn " type="button" style={{backgroundColor:"orange"}} onClick={submit}>
                         POST OPINION
                       </button>
                     </div>

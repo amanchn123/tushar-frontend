@@ -56,6 +56,7 @@ export default function Page() {
   useEffect(()=>{
     if(token){
       router.push('/adminpanel')
+      router.refresh()
     }
   })
 
@@ -76,9 +77,10 @@ export default function Page() {
         if (response.data.response) {
           const userDataJSON = JSON.stringify(response.data);
 
-          setCookie("AdminDetails", userDataJSON, { sameSite: "Strict" });
           setLoading(false);
+          setCookie("AdminDetails", userDataJSON, { sameSite: "Strict" });
           router.push("/adminpanel");
+          router.refresh()
         } else {
           setLoginFailed(true);
           setLoading(false)

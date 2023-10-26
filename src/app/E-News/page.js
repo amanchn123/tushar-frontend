@@ -9,7 +9,7 @@ import ScoreComp from "@/components/News/ScoreComp";
 import BreakingNews from "@/components/News/BreakingNews";
 import FeaturedNews from "@/components/News/FeaturedNews";
 import VideoCarousel from "@/components/FeatureNews/VideoCarousel";
-import TrendingNews from "@/components/News/TrendingNews";
+import TrendingNews from "@/components/News/E-paperSlide";
 import Blogs from "@/components/News/Blogs";
 import E_News from "@/components/News/E-news";
 

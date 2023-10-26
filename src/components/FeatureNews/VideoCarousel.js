@@ -110,7 +110,7 @@ export default function VideoCarousel({ customClass, dark }) {
         <div className="row">
           <div className="col-lg-12">
             <div className={`section-title ${dark ? "section-title-2" : ""}`}>
-              <h3 className="title">Feature News</h3>
+              <h3 className="font-semibold">News Bites</h3>
             </div>
           </div>
         </div>

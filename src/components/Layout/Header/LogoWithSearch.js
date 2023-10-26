@@ -15,11 +15,14 @@ import { auth } from "../../../app/firebase.config";
 import OtpInput from "react-otp-input";
 import styless from "../../../styles/newsTab.module.css";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+
 import { useMediaQuery } from "@mui/material";
-import { getCookie, deleteCookie,hasCookie  } from "cookies-next";
-import LogoutIcon from '@mui/icons-material/Logout';
+import { getCookie, deleteCookie, hasCookie, setCookie } from "cookies-next";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { Domain } from "@/components/api/domain";
+import { api } from "@/components/api/api";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const style = {
   position: "absolute",
@@ -39,29 +42,71 @@ export default function LogoWithSearch() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [slideno, setSlideno] = useState(0);
+  const [slideno, setSlideno] = useState(3);
   const [invalidOtp, setInvalidOtp] = useState(false);
   const [users, setUsers] = useState(null);
   const [otp, setOtp] = useState();
   const [countdown, setCountdown] = useState(60); // Initial countdown value in seconds
   const [disablebtn, setDisablebtn] = useState(false);
   const [errorr, setErrorr] = useState(null);
-  const [token,setToken]=useState(false)
-  const router = useRouter();
-  const portsize = useMediaQuery("(max-width:769px)");
-  const portJoin = useMediaQuery("(max-width:990px)");
-  const [userdata,setUserdata]=useState({
-    name:"",
-    password:"",
+  const [usertoken, setUsertoken] = useState(false);
+  const [loginDetails,setLoginDetails]=useState({
     email:"",
-    gender:""
-
+    password:""
   })
 
-  const handleSubmit=()=>{
-    alert("You are successfully logged in")
-    setOpen(false)
+  const portsize = useMediaQuery("(max-width:769px)");
+  const portJoin = useMediaQuery("(max-width:990px)");
+  const [isInputDisabled, setInputDisabled] = useState(false);
+  const [searchlist,setsearchlist]=useState([])
+
+  const [userdata, setUserdata] = useState({
+    name: "",
+    password: "",
+    email: "",
+    gender: "",
+  });
+
+  const handleSubmit = async() => {
+ try{
+  const response=await axios.post(`${api}/userRegister`,{
+    name:userdata.name,
+    password:userdata.password,
+    email:userdata.email,
+    gender:userdata.gender,
+    phone:number
+  })
+
+  setCookie("UserDetails", response.data, { sameSite: "Strict" });
+  alert("You are successfully logged in");
+  setOpen(false);
+ }catch(error){
+  console.log("error in registrating user",error)
+ }
+  };
+
+const login=async()=>{
+  try{
+    if(!loginDetails.email || !loginDetails.password){
+    alert("pls fill both fields")
+    }else{
+      const response=await axios.post(`${api}/userLogin`,{
+        email:loginDetails.email,
+        password:loginDetails.password
+      })
+      
+      if(response.data.success){
+        setCookie("UserDetails", response.data.result, { sameSite: "Strict" }); 
+        alert("successfully logged in")
+      }else{
+        alert("Pls check your crendentials")
+      }
+      
+    }
+  }catch(error){
+    console.log("error in logging in frontend",error)
   }
+}  
 
   useEffect(() => {
     if (slideno == 1) {
@@ -82,7 +127,8 @@ export default function LogoWithSearch() {
 
   const getOtp = async () => {
     try {
-      if (number.length > 12) {
+      if (number.length == 13) {
+        setInputDisabled(true);
         const recaptchaVerifier = await new RecaptchaVerifier(
           auth,
           "recaptcha-container",
@@ -97,17 +143,27 @@ export default function LogoWithSearch() {
             auth,
             number,
             recaptchaVerifier
-          );
+          )
+            .then((confirmationResult) => {
+              // console.log("cccccc",confirmation)
+              // console.log("confirmation", confirmationResult);
+              // console.log("uuuuuuu",users)
+              setUsers(confirmationResult);
+              alert("otp sent successfully");
+              setSlideno(slideno + 1);
+            })
+            .catch((error) => {
+              console.log("errorrrrrr", error);
+              alert("error", error);
+            });
 
-          await setUsers(confirmation);
-          console.log("confirmation", confirmation);
-          // console.log("confirmation",confirmation)
-          setSlideno(slideno + 1);
           // console.log("response", confirmation);
         } catch (error) {
           console.log("error", error);
           setErrorr(error);
         }
+      } else {
+        alert(`pls eneter ${number.length} valid Phone no`);
       }
     } catch (error) {
       setErrorr(error);
@@ -185,20 +241,22 @@ export default function LogoWithSearch() {
           placeholder="Enter phone number"
           defaultCountry="IN"
           value={number}
-          // limitMaxLength={8}
+          // limitMaxLength={13}
           onChange={setNumber}
           className="rounded-lg"
+          disabled={isInputDisabled}
           style={{ border: "2px solid orange", height: "40px", padding: "5px" }}
         />
 
         {/* {console.log("firebse errorrrr", errorr ? errorr : "")} */}
-        {number ? (
+        {/* {number ? (
           ""
         ) : (
           <div className="text-red-500 flex justify-end">
             Pls Provide a valid Phone No
           </div>
-        )}
+        )} */}
+        
         {errorr ? JSON.stringify(errorr.code) : ""}
         <div className="flex items-center mt-4" style={{ padding: "0%" }}>
           <Checkbox
@@ -223,6 +281,10 @@ export default function LogoWithSearch() {
           >
             Join Now
           </button>
+          <div className="text-blue-400 flex mt-2">
+            alreday have an Account? &nbsp;
+            <button onClick={()=>setSlideno(3)}>Login</button>
+          </div>
         </div>
       </Typography>
     </>,
@@ -311,39 +373,46 @@ export default function LogoWithSearch() {
           className="rounded-lg w-full mt-4 p-2"
           style={{ border: "2px solid orange", height: "40px" }}
           type="text"
-          onChange={(e)=>setUserdata({...userdata,name:e.target.value})}
+          onChange={(e) => setUserdata({ ...userdata, name: e.target.value })}
           placeholder="Name"
         />
         <input
           className="rounded-lg w-full mt-4 p-2"
           style={{ border: "2px solid orange", height: "40px" }}
           type="email"
-          onChange={(e)=>setUserdata({...userdata,email:e.target.value})}
+          onChange={(e) => setUserdata({ ...userdata, email: e.target.value })}
           placeholder="Email"
         />
         <input
           className="rounded-lg w-full mt-4 p-2"
           style={{ border: "2px solid orange", height: "40px" }}
-          onChange={(e)=>setUserdata({...userdata,password:e.target.value})}
+          onChange={(e) =>
+            setUserdata({ ...userdata, password: e.target.value })
+          }
           type="text"
           placeholder="Create Password"
         />
         <select
           className="rounded-lg w-full mt-4 p-2 bg-transparent"
           style={{ border: "2px solid orange", height: "40px" }}
-          onChange={(e)=>setUserdata({...userdata,gender:e.target.value})}
+          onChange={(e) => setUserdata({ ...userdata, gender: e.target.value })}
           type="select"
           placeholder="Gender"
         >
-          <option className="bg-transparent" selected>Male</option>
+          <option className="bg-transparent" selected>
+            Male
+          </option>
           <option className="bg-transparent">FeMale</option>
           <option className="bg-transparent">Prefered not to Disclose</option>
         </select>
         <div className="flext text-center mt-4">
-         By Joining I agreee to the terms and condition
+          By Joining I agreee to the terms and condition
         </div>
         <div className="grid items-center justify-center mt-2">
-          <button onClick={handleSubmit} className="rounded-2xl bg-orange-400 w-52 h-10 text-white font-semibold">
+          <button
+            onClick={handleSubmit}
+            className="rounded-2xl bg-orange-400 w-52 h-10 text-white font-semibold"
+          >
             Join Now
           </button>
         </div>
@@ -356,35 +425,47 @@ export default function LogoWithSearch() {
         </Link>
       </div>
       <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-        {/* <input
-         className="rounded-lg w-full mt-4 p-2"
-         style={{ border: "2px solid orange", height: "40px" }}
-         type="text"
-         placeholder="Name"
-       />
-       <input
-         className="rounded-lg w-full mt-4 p-2"
-         style={{ border: "2px solid orange", height: "40px" }}
-         type="text"
-         placeholder="Email"
-       />
-       <input
-         className="rounded-lg w-full mt-4 p-2"
-         style={{ border: "2px solid orange", height: "40px" }}
-         type="text"
-         placeholder="Password"
-       />
-       <input
-         className="rounded-lg w-full mt-4 p-2"
-         style={{ border: "2px solid orange", height: "40px" }}
-         type="text"
-         placeholder="Gender"
-       /> */}
+
+        <input
+          className="rounded-lg w-full mt-4 p-2"
+          style={{ border: "2px solid orange", height: "40px" }}
+          type="email"
+          onChange={(e) => setLoginDetails({ ...loginDetails, email: e.target.value })}
+          placeholder="Enter email"
+        />
+        <input
+          className="rounded-lg w-full mt-4 p-2"
+          style={{ border: "2px solid orange", height: "40px" }}
+          onChange={(e) =>
+            setLoginDetails({ ...loginDetails, password: e.target.value })
+          }
+          type="text"
+          placeholder="Enter Password"
+        />
+
+        <div className="grid items-center justify-center mt-4">
+          <button
+            onClick={login}
+            className="rounded-2xl bg-orange-400 w-32 h-10 text-white font-semibold"
+          >
+            Login
+          </button>
+        </div>
+      </Typography>
+    </>,
+    <>
+      <div className="logo flex justify-center">
+        <Link href="/">
+          <img src="/images/logo/logo-black.png" alt="Logo" />
+        </Link>
+      </div>
+      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+        
         <div className="flext text-center mt-4">
           I agreee to the terms and condition
         </div>
         <div className="grid items-center justify-center mt-2">
-          <button  className="rounded-2xl bg-orange-400 w-52 h-10 text-white font-semibold">
+          <button className="rounded-2xl bg-orange-400 w-52 h-10 text-white font-semibold">
             Join Now
           </button>
         </div>
@@ -392,21 +473,36 @@ export default function LogoWithSearch() {
     </>,
   ];
 
-  
+  const router = useRouter();
   // const token = hasCookie("AdminDetails")
   // console.log("tttt",token)
-  // const token ="jgbg" 
-useEffect(()=>{
-  const tokens = hasCookie("AdminDetails")
-  setToken(tokens)
-})
-
-console.log("oooooo",token)
-  const logout = () => {
-    deleteCookie("AdminDetails");
-    router.refresh();
+  // const token ="jgbg"
+  useEffect(() => {
   
+    const Usertokens = hasCookie("UserDetails");
+    setUsertoken(Usertokens)
+  });
+
+  const logout = () => {
+    deleteCookie("UserDetails");
+    router.refresh();
   };
+
+  const serach=async(e)=>{
+    try{
+      const response=await axios.post(`${api}/searchPost`,{naming:e.target.value})
+      setsearchlist(response?.data)
+      const selectedOption = searchlist.find(
+        (ele) => ele.heading === e.target.value
+      );
+      if (selectedOption) {
+        router.push(`${Domain}/${selectedOption.category}/${selectedOption.slug}`);
+      }
+    }catch(error){
+      console.log("error in seraching post in frontend",error)
+    }
+  }
+
 
   return (
     <div className="header-centerbar" style={{ padding: "0%" }}>
@@ -414,26 +510,26 @@ console.log("oooooo",token)
         <div className="row align-items-center bg-orange-400 pt-1 pb-1">
           <div className="col-lg-3 col-md-5 flex justify-between logo p-0">
             {/* <div className=" bg-green-200"> */}
-              {portJoin ? (
-                <Link href="/">
-                  <Image
-                    height={200}
-                    width={200}
-                    src="/images/logo/logo-black.png"
-                    alt="Logo"
-                  />
-                </Link>
-              ) : (
-                <Link href="/" >
-                  <Image
-                    style={{ height: "100px", width: "130%" }}
-                    height={200}
-                    width={200}
-                    src="/images/logo/logo-black.png"
-                    alt="Logo"
-                  />
-                </Link>
-              )}
+            {portJoin ? (
+              <Link href="/">
+                <Image
+                  height={200}
+                  width={200}
+                  src="/images/logo/logo-black.png"
+                  alt="Logo"
+                />
+              </Link>
+            ) : (
+              <Link href="/">
+                <Image
+                  style={{ height: "100px", width: "130%" }}
+                  height={200}
+                  width={200}
+                  src="/images/logo/logo-black.png"
+                  alt="Logo"
+                />
+              </Link>
+            )}
             {/* </div> */}
             {/* {portsize ? (
               <button
@@ -447,13 +543,14 @@ console.log("oooooo",token)
             )} */}
           </div>
           <div className="col-lg-5 col-md-7">
-            <div className="header-search  w-full items-center">
-              <div className=" flex items-center">
+            <div className="header-search  w-full items-center ">
+              <div className=" flex items-center mt-2 ">
                 {/* <div className=" bg-red-600"> */}
-                <span className="absolute left-8 top-3 text-gray-400">
+                <span className="absolute left-8 top4 text-gray-400">
                   <SearchIcon />{" "}
                 </span>
                 <input
+                list="serachlist"
                   className="rounded-full px-10"
                   style={{
                     border: "2px solid orange",
@@ -462,7 +559,12 @@ console.log("oooooo",token)
                   }}
                   type="text"
                   placeholder="Search..."
+                  onChange={serach}
                 />
+                <datalist id="serachlist" className="bg-red-300 rounded" >
+                 {searchlist && searchlist.map((ele,idx)=><option  key={idx} value={ele?.heading}>{ele?.heading}</option>)}
+                </datalist>
+
                 {/* </div> */}
                 &nbsp;
                 {portJoin ? (
@@ -470,12 +572,17 @@ console.log("oooooo",token)
                     <NotificationsSharpIcon
                       style={{ cursor: "pointer", fontSize: "30px" }}
                     />
-                    <button
+                    {usertoken?<button
+                      onClick={handleOpen}
+                      className=" rounded-full bg-dark w-24 h-10 text-sm text-white font-semibold  ml-4"
+                    >
+                      Logout
+                    </button>:<button
                       onClick={handleOpen}
                       className=" rounded-full bg-dark w-24 h-10 text-sm text-white font-semibold  ml-4"
                     >
                       Join Now
-                    </button>
+                    </button>}
                   </div>
                 ) : (
                   ""
@@ -483,15 +590,18 @@ console.log("oooooo",token)
               </div>
             </div>
           </div>
-          <div className="col-lg-4" style={{padding:"0%"}}>
-            <div className="header-temperature justify-content-end d-none d-lg-flex " style={{padding:"0%",margin:"0%"}} >
+          <div className="col-lg-4" style={{ padding: "0%" }}>
+            <div
+              className="header-temperature justify-evenly d-none d-lg-flex "
+              style={{ padding: "0%", margin: "0%" }}
+            >
               <Link
                 href={`${Domain}/E-News`}
                 style={{
                   display: "flex",
                   alignItems: "center",
                   fontSize: "20px",
-                  marginRight: "30px",
+                  // marginRight: "30px",
                   color: "white",
                 }}
               >
@@ -503,39 +613,28 @@ console.log("oooooo",token)
                   E-<p className="flex text-center mt-3"> Paper</p>
                 </span>{" "}
               </Link>
-
-              {token ? (
-                <button className="font-bold text-light text-lg" onClick={logout}>Logout</button>
-              ) : (
-                <Link
-                  href="/adminpanel"
-                  style={{
-                    fontSize: "20px",
-                    fontWeight: "600",
-                    color: "white",
-                  }}
-                >
-                  Login
-                </Link>
-              )}
-              
-              &nbsp;&nbsp;&nbsp;
+           
+              {/* &nbsp;&nbsp;&nbsp; */}
               <NotificationsSharpIcon
                 style={{ cursor: "pointer", fontSize: "30px", color: "white" }}
               />{" "}
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <button
+              {/* &nbsp;&nbsp;&nbsp; */}
+              
+              {usertoken?<button
+                onClick={logout}
+                className=" rounded-full w-32 bg-dark h-12 text-white font-semibold mr-1"
+              >
+                Logout
+              </button>:<button
                 onClick={handleOpen}
-                className=" rounded-full bg-dark w-64  h-12 text-white font-semibold mr-1"
+                className=" rounded-full bg-dark w-32  h-12 text-white font-semibold mr-1"
               >
                 Join Now
-              </button>
+              </button>}
             </div>
           </div>
           {portJoin ? (
-            <div
-              className="col-md-6 flex items-center justify-start px-4 pt-4 pb-2"
-            >
+            <div className="col-md-6 flex items-center justify-start px-4 pt-4 pb-2">
               <Link
                 href={`${Domain}/E-News`}
                 style={{
@@ -550,25 +649,9 @@ console.log("oooooo",token)
                   style={{ fontSize: "25px" }}
                   class="fas fa-newspaper font-bold mr-2"
                 ></i>
-
-                  E-Paper
-
+                E-Paper
               </Link>
-              {token ? (
-                <button className="font-bold text-light text-sm" onClick={logout}>Logout <LogoutIcon /> </button>
-              ) : (
-                <Link
-                  href="/adminpanel"
-                  style={{
-                    fontSize: "17px",
-                    fontWeight: "600",
-                    color: "white",
-                  }}
-                >
-                  Login
-                </Link>
-              )}
-              &nbsp;&nbsp;
+              
             </div>
           ) : (
             ""

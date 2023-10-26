@@ -1,6 +1,13 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
+import ModalVideo from 'react-modal-video';
+import axios from 'axios';
+import { api,imageurl } from '../api/api';
+import { Domain } from '../api/domain';
+
+
+
 function PrevArrow(props) {
   const { onClick } = props;
   return (
@@ -18,7 +25,25 @@ function NextArrow(props) {
   );
 }
 
-export default function TrendingCarousel({ dark }) {
+export default function TwoPostCarousel({ dark, customClass }) {
+  const postUrl=imageurl
+  const [postData, setPostData] = useState([]);
+  const getAllPost = async () => {
+    try {
+      const response = await axios.post(`${api}/getPost`, {
+        subCategory: "Trending News",
+      });
+      // await ;
+      await setPostData(response.data.slice(0, 8));
+
+    } catch (error) {
+      console.log("error in getting featured news in frontend", error);
+    }
+  };
+  useEffect(() => {
+    getAllPost();
+  }, []);
+  const [isOpen, setOpen] = useState(false);
   const settings = {
     slidesToShow: 2,
     slidesToScroll: 1,
@@ -31,18 +56,6 @@ export default function TrendingCarousel({ dark }) {
     nextArrow: <NextArrow />,
     speed: 1000,
     responsive: [
-      {
-        breakpoint: 1140,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 992,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
       {
         breakpoint: 768,
         settings: {
@@ -60,114 +73,43 @@ export default function TrendingCarousel({ dark }) {
     ],
   };
   return (
-    <Slider {...settings} className="row trending-news-slider">
-      <div className="col">
-        <div
-          className={`trending-news-item ${
-            dark ? 'trending-news-item-dark' : ''
-          }`}
-        >
-          <div className="trending-news-thumb">
-            <img src="/images/trending-news-1.jpg" alt="trending" />
-            <div className="icon">
-              <Link href="/post-details-three">
-                <i className="fas fa-bolt"></i>
-              </Link>
-            </div>
-          </div>
-          <div className="trending-news-content">
-            <div className="post-meta">
-              <div className="meta-categories">
-                <Link href="/post-details-three">TECHNOLOGY</Link>
+    <section
+      className={`single-play-post-area mt-16 ${customClass} ${
+        dark ? 'single-play-post-dark-area' : ''
+      } `}
+    >
+    <h3 className='title font-semibold'>Trending News</h3>
+      <div className="container custom-container " style={{padding:"0%"}}>
+        <div className="single-play-box  " style={{padding:"0%"}}>
+          <Slider {...settings} className="row single-play-post-slider ">
+            {postData && postData.map((item, i) => (
+              <div className="col  " key={i + 1} >
+                <div className="single-play-post-item ">
+               
+                    <img src={`${postUrl}/${item.banner}`} className='cover-image' alt="play" style={{height:"400px"}} />
+                
+
+                  <div className="single-play-post-content">
+                    <div className="post-meta">
+                      <div className="meta-categories">
+                        <a href="#">{item.category}</a>
+                      </div>
+                      <div className="meta-date">
+                        <span>{item.createdAt.slice(0,10)}</span>
+                      </div>
+                    </div>
+                    <h3 className="title">
+                      <Link href={`${Domain}/${item.category}/${item.slug}`}>{item.heading}</Link>
+                    </h3>
+                  </div>
+                  
+                </div>
               </div>
-              <div className="meta-date">
-                <span>March 26, 2020</span>
-              </div>
-            </div>
-            <h3 className="title">
-              <Link href="/post-details-three">
-                There may be no consoles in the future ea exec says
-              </Link>
-            </h3>
-            <p className="text">
-              The property, complete with 30-seat screening from room, a
-              100-seat amphitheater and a swimming pond with sandy shower…
-            </p>
-          </div>
+            ))}
+          </Slider>
+          
         </div>
       </div>
-      <div className="col">
-        <div
-          className={`trending-news-item ${
-            dark ? 'trending-news-item-dark' : ''
-          }`}
-        >
-          <div className="trending-news-thumb">
-            <img src="/images/trending-news-2.jpg" alt="trending" />
-            <div className="icon">
-              <Link href="/post-details-three">
-                <i className="fas fa-bolt"></i>
-              </Link>
-            </div>
-          </div>
-          <div className="trending-news-content">
-            <div className="post-meta">
-              <div className="meta-categories">
-                <Link href="/post-details-three">TECHNOLOGY</Link>
-              </div>
-              <div className="meta-date">
-                <span>March 26, 2020</span>
-              </div>
-            </div>
-            <h3 className="title">
-              <Link href="/post-details-one">
-                Japan’s virus success has puzzled the world. Is its luck running
-                out?
-              </Link>
-            </h3>
-            <p className="text">
-              The property, complete with 30-seat screening from room, a
-              100-seat amphitheater and a swimming pond with sandy shower…
-            </p>
-          </div>
-        </div>
-      </div>
-      <div className="col">
-        <div
-          className={`trending-news-item ${
-            dark ? 'trending-news-item-dark' : ''
-          }`}
-        >
-          <div className="trending-news-thumb">
-            <img src="/images/trending-news-3.jpg" alt="trending" />
-            <div className="icon">
-              <Link href="/post-details-three">
-                <i className="fas fa-bolt"></i>
-              </Link>
-            </div>
-          </div>
-          <div className="trending-news-content">
-            <div className="post-meta">
-              <div className="meta-categories">
-                <Link href="/post-details-three">TECHNOLOGY</Link>
-              </div>
-              <div className="meta-date">
-                <span>March 26, 2020</span>
-              </div>
-            </div>
-            <h3 className="title">
-              <Link href="/post-details-one">
-                Japan’s virus success has puzzled the world. Is its luck running
-                out?
-              </Link>
-            </h3>
-            <p className="text">
-              The property, complete with 30-seat screening from room, a
-              100-seat amphitheater and a swimming pond with sandy shower…
-            </p>
-          </div>
-        </div>
-      </div>
-    </Slider>
+    </section>
   );
 }

@@ -1,9 +1,16 @@
+'use client'
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CategoryWidget from "./CategoryWidget";
 import Image from "next/image";
+import { deleteCookie, hasCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
+
 
 export default function Footer({ dark }) {
+  const [token, setToken] = useState(false);
+  
+  const router = useRouter();
   const footerClass = `footer-area ${dark ? "footer-dark" : ""}`;
   const copyrightClass = `footer-copyright ${
     dark ? "footer-copyright-dark" : ""
@@ -12,6 +19,15 @@ export default function Footer({ dark }) {
   const footerStyles = { backgroundColor: "#FBE1C3" ,padding:"0%"};
   const copyrightStyles = { backgroundColor: "#FBE1C3", color: "black" };
 
+  useEffect(() => {
+    const tokens = hasCookie("AdminDetails");
+    setToken(tokens);
+  });
+
+  const logout = () => {
+    deleteCookie("AdminDetails");
+    router.refresh();
+  };
   return (
     <footer className={footerClass} style={footerStyles}>
       <div className="container">
@@ -86,7 +102,7 @@ export default function Footer({ dark }) {
                 <p className="text-dark">
                   © Copyright 2020, All Rights Reserved
                 </p>
-                <ul>
+                <ul >
                   <li>
                     <Link href="/about" style={{ color: "black" }}>
                       About
@@ -106,6 +122,36 @@ export default function Footer({ dark }) {
                     <Link href="/contact" style={{ color: "black" }}>
                       Contact Us
                     </Link>
+                  </li>
+
+                  <li>
+                  {token ? (
+                <button
+                  className="font-bold text-dark ml-15"
+                  onClick={logout}
+                >
+                 Admin Logout
+                </button>
+              ) : (
+                <Link
+                  href="/adminpanel"
+                  style={{
+                    color:"black"
+                  }}
+                >
+                 Admin Login
+                </Link>
+              )}
+                  </li>
+                  <li>
+                  <Link
+                  href="/adminpanel"
+                  style={{
+                    color:"black"
+                  }}
+                >
+                 Admin Panel
+                </Link>
                   </li>
                 </ul>
               </div>
