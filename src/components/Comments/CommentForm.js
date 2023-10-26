@@ -1,8 +1,8 @@
 import React from 'react';
 
-const submit=async()=>{
-  alert("you have successfully posted opinion")
-}
+// const submit=async()=>{
+//   alert("you have successfully posted opinion")
+// }
 
 export default function CommentForm() {
   return (
@@ -35,7 +35,10 @@ export default function CommentForm() {
                         rows="10"
                         placeholder="Tell us about your opinion…"
                       ></textarea>
-                      <button className="main-btn " type="button" style={{backgroundColor:"orange"}} onClick={submit}>
+                      <button className="main-btn " type="button" 
+                      // style={{backgroundColor:"orange"}} 
+                      // onClick={alert("you have successfully posted opinion")}
+                      >
                         POST OPINION
                       </button>
                     </div>

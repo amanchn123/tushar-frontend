@@ -86,7 +86,7 @@ export default function TwoPostCarousel({ dark, customClass }) {
               <div className="col  " key={i + 1} >
                 <div className="single-play-post-item ">
                
-                    <img src={`${postUrl}/${item.banner}`} className='cover-image' alt="play" style={{height:"400px"}} />
+                    <img src={`${postUrl}/${item.banner}`} className='cover-image' alt="play" style={{height:"400px",width:"100vw"}} />
                 
 
                   <div className="single-play-post-content">
