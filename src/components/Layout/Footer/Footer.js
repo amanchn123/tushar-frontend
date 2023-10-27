@@ -82,7 +82,7 @@ export default function Footer({ dark }) {
             </div>
             <div className="col-lg-5 col-md-7">
               <div className="footer-newaletter">
-                {/* <div className="input-box ">
+                <div className="input-box ">
                   <input
                     type="text"
                     className="rounded-full"
@@ -105,7 +105,7 @@ export default function Footer({ dark }) {
                       }}
                     />
                   </button>
-                </div> */}
+                </div>
 
                 <p className="text-dark">We hate spam as much as you do</p>
               </div>
