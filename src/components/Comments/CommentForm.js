@@ -1,10 +1,12 @@
+'use client'
 import React from 'react';
 
-// const submit=async()=>{
-//   alert("you have successfully posted opinion")
-// }
+
 
 export default function CommentForm() {
+  const submit=async()=>{
+    // alert("you have successfully posted opinion")
+  }
   return (
     <div className="post-form-area">
       <div className="container">
@@ -36,8 +38,8 @@ export default function CommentForm() {
                         placeholder="Tell us about your opinion…"
                       ></textarea>
                       <button className="main-btn " type="button" 
-                      // style={{backgroundColor:"orange"}} 
-                      // onClick={alert("you have successfully posted opinion")}
+                      style={{backgroundColor:"orange"}} 
+                      onClick={submit}
                       >
                         POST OPINION
                       </button>

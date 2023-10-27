@@ -489,20 +489,20 @@ const login=async()=>{
     router.refresh();
   };
 
-  // const serach=async(e)=>{
-  //   try{
-  //     const response=await axios.post(`${api}/searchPost`,{naming:e.target.value})
-  //     setsearchlist(response?.data)
-  //     const selectedOption = searchlist.find(
-  //       (ele) => ele.heading === e.target.value
-  //     );
-  //     if (selectedOption) {
-  //       router.push(`${Domain}/${selectedOption.category}/${selectedOption.slug}`);
-  //     }
-  //   }catch(error){
-  //     console.log("error in seraching post in frontend",error)
-  //   }
-  // }
+  const serach=async(e)=>{
+    try{
+      const response=await axios.post(`${api}/searchPost`,{naming:e.target.value})
+      setsearchlist(response?.data)
+      const selectedOption = searchlist.find(
+        (ele) => ele.heading === e.target.value
+      );
+      if (selectedOption) {
+        router.push(`${Domain}/${selectedOption.category}/${selectedOption.slug}`);
+      }
+    }catch(error){
+      console.log("error in seraching post in frontend",error)
+    }
+  }
 
 
   return (
@@ -560,11 +560,11 @@ const login=async()=>{
                   }}
                   type="text"
                   placeholder="Search..."
-                  // onChange={serach}
+                  onChange={serach}
                 />
-                {/* <datalist id="serachlist" className="bg-red-300 rounded" >
+                <datalist id="serachlist" className="bg-red-300 rounded" >
                  {searchlist && searchlist.map((ele,idx)=><option  key={idx} value={ele?.heading}>{ele?.heading}</option>)}
-                </datalist> */}
+                </datalist>
 
                 {/* </div> */}
                 &nbsp;
