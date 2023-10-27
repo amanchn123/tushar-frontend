@@ -320,7 +320,6 @@ export default async function Technology({ params }) {
         </div>
       </section>
       <Footer />
-      <FooterCopyright />
     </div>
   );
 }

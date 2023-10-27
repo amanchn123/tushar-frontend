@@ -41,7 +41,7 @@ export default function NewsLetter({ dark }) {
                     <SendIcon style={{color:"orange",transform:"rotate(-45deg)",fontSize:"35px"}}/>
                   </button>
                 </div>
-                <p>We hate spam as much as you do</p>
+                <p className="text-dark ml-3">We hate spam as much as you do</p>
               </div>
             </div>
           </div>

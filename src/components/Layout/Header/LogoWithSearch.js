@@ -523,7 +523,7 @@ const login=async()=>{
             ) : (
               <Link href="/">
                 <Image
-                  style={{ height: "100px", width: "130%" }}
+                  style={{ width: "300px" }}
                   height={200}
                   width={200}
                   src="/images/logo/logo-black.png"

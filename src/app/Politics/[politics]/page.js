@@ -162,8 +162,7 @@ export default async function PostDetailsOne({ params }) {
             </div>
           </div>
           
-        </section>
-        
+        </section> 
         <Footer />
       </div>
     </>

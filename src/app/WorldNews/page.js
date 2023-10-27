@@ -319,7 +319,6 @@ export default async function Technology() {
         </div>
       </section>
       <Footer />
-      <FooterCopyright />
     </div>
   );
 }
