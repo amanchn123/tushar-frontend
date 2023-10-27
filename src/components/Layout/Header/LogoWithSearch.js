@@ -43,7 +43,7 @@ export default function LogoWithSearch() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [slideno, setSlideno] = useState(3);
+  const [slideno, setSlideno] = useState(0);
   const [invalidOtp, setInvalidOtp] = useState(false);
   const [users, setUsers] = useState(null);
   const [otp, setOtp] = useState();
