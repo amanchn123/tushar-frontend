@@ -354,7 +354,7 @@ export default function Page({ params }) {
             <div className="bg-orange-100 p-4">
               {postInfo?.content &&
                 postInfo?.content.map((ele, index) => (
-                  <div>
+                  <div key={index}>
                     {ele?.hasOwnProperty("par") && (
                       <>
                         
