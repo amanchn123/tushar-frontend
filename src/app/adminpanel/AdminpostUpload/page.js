@@ -19,8 +19,10 @@ import { api } from "@/components/api/api";
 import { getCookie } from "cookies-next";
 import MuiAlert from "@mui/material/Alert";
 import { imageurl } from "@/components/api/api";
+import JoditEditor from "jodit-react";
 
 export default function Page() {
+  const editor = React.useRef(null);
   const imageUrl = imageurl;
 
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -40,7 +42,7 @@ export default function Page() {
   const [allowed, setAllowed] = React.useState(true);
   const [selectAll, setSelectAll] = React.useState(true);
   let [selectedELement, setSelectedElement] = React.useState([]);
-  const [khali,setKhali]=React.useState()
+  const [khali, setKhali] = React.useState();
 
   let [state, setState] = React.useState({
     heading: null,
@@ -62,11 +64,12 @@ export default function Page() {
   const haadlelement = async (e) => {
     const val = e.target.value;
     await setSelectedElement([...selectedELement, val]);
-    setKhali("")
+    setKhali("");
   };
 
-
-  const token = getCookie("AdminDetails")?JSON.parse(getCookie("AdminDetails"))?.token:null;
+  const token = getCookie("AdminDetails")
+    ? JSON.parse(getCookie("AdminDetails"))?.token
+    : null;
 
   const uploadPost = async () => {
     if (
@@ -76,9 +79,10 @@ export default function Page() {
       !state.slug ||
       !state.banner
     ) {
-      alert("pls Select all fields")
+      alert("pls Select all fields");
       // setSelectAll(false);
     } else {
+      console.log("stateee", state);
       try {
         let contentFinal = selectedELement;
         let newPara = await state.paragraph.filter((ele) => {
@@ -86,7 +90,7 @@ export default function Page() {
         });
 
         let subHead = (await state.subHeading) && state.subHeading;
-        
+
         let modifiedContentFinal = await contentFinal.map((ele, index) => {
           if (ele === "para") {
             let head = subHead.shift();
@@ -104,7 +108,6 @@ export default function Page() {
             formdata.append(`images`, fil);
           });
 
-
         await formdata.append("heading", state.heading);
         await formdata.append("description", state.description);
         await formdata.append("featuredImage", state.featuredImage);
@@ -116,7 +119,6 @@ export default function Page() {
         await formdata.append("alt", JSON.stringify(state.alt));
         await formdata.append("final", JSON.stringify(modifiedContentFinal));
 
-
         const response = await axios.post(`${api}/createNewPost`, formdata, {
           headers: {
             authorization: token.toString(),
@@ -127,8 +129,8 @@ export default function Page() {
         if (response.data == "not allowed") {
           setAllowed(false);
         } else if (response.data.postSuccess) {
-          alert("Post updated Successfully")
-          setSuccessPost(true);        
+          alert("Post updated Successfully");
+          setSuccessPost(true);
         }
       } catch (error) {
         console.log("error in upload post frontend", error);
@@ -147,8 +149,9 @@ export default function Page() {
     whiteSpace: "nowrap",
     width: 1,
   });
-
   const portsize = useMediaQuery("(max-width: 1000px)");
+
+
   return (
     <>
       <DrawerHeader />
@@ -204,7 +207,7 @@ export default function Page() {
             }}
           />
 
-          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+          <FormControl variant="standard" sx={{ m: 1, minWidth: 120, ml: 4 }}>
             <InputLabel id="demo-simple-select-standard-label">
               Category
             </InputLabel>
@@ -226,7 +229,7 @@ export default function Page() {
             </Select>
           </FormControl>
 
-          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+          <FormControl variant="standard" sx={{ m: 1, minWidth: 120, ml: 4 }}>
             <InputLabel id="demo-simple-select-standard-label">
               Subcategory
             </InputLabel>
@@ -269,7 +272,6 @@ export default function Page() {
             label="Blog Description"
             multiline
             rows={3}
-            
             onChange={(e) =>
               setState({ ...state, description: e.target.value })
             }
@@ -281,7 +283,8 @@ export default function Page() {
             selectedELement.map((ele, index) => (
               <>
                 {ele == "para" && (
-                  <>
+                  <div className="grid mt-4">
+                    
                     <TextField
                       id="outlined-textarea"
                       label={`Paragraph ${index + 1} Heading (optional)`}
@@ -292,18 +295,21 @@ export default function Page() {
                         setState({ ...state, subHeading: updatedContent });
                       }}
                     />
-                    <textarea
-                      class="mt-10 resize rounded-md appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                      id="exampleFormControlTextarea1"
-                      rows="7"
-                      placeholder={`Paragraph ${index + 1}`}
-                      onChange={(e) => {
+                    <JoditEditor
+                      ref={editor}
+                      // config={config}
+                      tabIndex={1} // tabIndex of textarea
+                      // preferred to use only this option to update the content for performance reasons
+                      onChange={(newContent) => {
                         const updatedContent = [...state.paragraph]; // Create a copy of the existing content array
-                        updatedContent[index] = e.target.value; // Update the specific index with the new value
-                        setState({ ...state, paragraph: updatedContent }); // Update the state
+                        updatedContent[index] = newContent;
+                        setState({
+                          ...state,
+                          paragraph: updatedContent,
+                        });
                       }}
-                    ></textarea>
-                  </>
+                    />
+                  </div>
                 )}
 
                 {ele == "image" && (
@@ -373,21 +379,16 @@ export default function Page() {
               Add a New field
             </label>
             <div class="relative">
-            
               <select
-              value={khali}
-              onChange={haadlelement}
+                value={khali}
+                onChange={haadlelement}
                 className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="grid-state"
               >
                 {/* <option value="">None</option> */}
-                <option >Select</option>
-                <option  value="para">
-                  Para
-                </option>
-                <option  value="image">
-                  Image
-                </option>
+                <option>Select</option>
+                <option value="para">Para</option>
+                <option value="image">Image</option>
               </select>
 
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -404,7 +405,11 @@ export default function Page() {
         </div>
         {/* </form> */}
         <div style={{ display: "flex", justifyContent: portsize ? "" : "end" }}>
-          <Button variant="contained" onClick={uploadPost} style={{backgroundColor:"orange"}}>
+          <Button
+            variant="contained"
+            onClick={uploadPost}
+            style={{ backgroundColor: "orange" }}
+          >
             Upload Post
           </Button>
         </div>

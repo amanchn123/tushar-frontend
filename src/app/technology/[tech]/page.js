@@ -22,10 +22,17 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function PostDetailsOne({ params }) {
+//   const window = new JSDOM('').window;
+// const DOMPurify = createDOMPurify(window);
+
   let Postdata = await content(params);
   let contentData = Postdata.content;
 
   let imagePath = imageurl;
+  
+  function createMarkup(c) {
+    return {__html:c};
+  }
 
   return (
     <>
@@ -98,12 +105,16 @@ export default async function PostDetailsOne({ params }) {
                   </div>
                   {contentData &&
                     contentData.map((ele, index) => {
+                      
                       return (
                         <div className="post-text mt-15" key={index}>
-                          {ele.hasOwnProperty("par") ? (
+                          {ele.hasOwnProperty("par") ?
+                          
+                           (
                             <>
                               <h5 className="title">{ele.head}</h5>
-                              <p>{ele.par}</p>
+                              
+                              <div dangerouslySetInnerHTML={createMarkup(ele.par)} ></div>
                             </>
                           ) : (
                             ""

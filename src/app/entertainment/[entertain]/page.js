@@ -103,7 +103,7 @@ export default async function PostDetailsOne({ params }) {
                           {ele.hasOwnProperty("par") ? (
                             <>
                               <h5 className="title">{ele.head}</h5>
-                              <p>{ele.par}</p>
+                              <div dangerouslySetInnerHTML={{ __html: ele.par }}></div>
                             </>
                           ) : (
                             ""

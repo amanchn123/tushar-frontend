@@ -37,8 +37,9 @@ const TableOne = () => {
         },
       });
    
-      if (response.data) {
-
+      if (response.data=="not allowed"){
+        alert("your login seasson for 1 hr is over Pls login again")
+      }else if(response.data!=="not allowed"){
         setData(response.data);
       }
     } catch (error) {
@@ -48,7 +49,7 @@ const TableOne = () => {
 
   useEffect(() => {
     getAllPost();
-  }, []);
+  });
 
   const bannerUrl = imageurl;
   const matches = useMediaQuery("(min-width:800px)");

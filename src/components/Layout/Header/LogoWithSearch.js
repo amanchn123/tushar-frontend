@@ -509,7 +509,7 @@ const login=async()=>{
     <div className="header-centerbar" style={{ padding: "0%" }}>
       <div className="container custom-container">
         <div className="row align-items-center bg-orange-400 pt-1 pb-1">
-          <div className="col-lg-3 col-md-5 flex justify-between logo p-0">
+          <div className="col-lg-3 col-md-5  flex justify-between logo p-0">
             {/* <div className=" bg-green-200"> */}
             {portJoin ? (
               <Link href="/">

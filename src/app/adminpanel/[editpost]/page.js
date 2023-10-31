@@ -20,6 +20,7 @@ import { getCookie } from "cookies-next";
 import MuiAlert from "@mui/material/Alert";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { imageurl } from "@/components/api/api";
+import JoditEditor from "jodit-react";
 
 export default function Page({ params }) {
   const getPostDet = async () => {
@@ -35,7 +36,6 @@ export default function Page({ params }) {
       console.log("error in getting post in edit post in frontend", error);
     }
   };
-
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return (
@@ -86,7 +86,6 @@ export default function Page({ params }) {
     banner: null,
   });
 
-
   const uploadPost = async () => {
     if (!postInfo.slug) {
       setSelectAll(false);
@@ -125,7 +124,6 @@ export default function Page({ params }) {
             formdata.append(`images`, fil);
           });
 
-
         await formdata.append("heading", postInfo.heading);
         await formdata.append("id", params.editpost);
         await formdata.append("description", postInfo?.metadata?.description);
@@ -147,7 +145,7 @@ export default function Page({ params }) {
 
         await formdata.delete("final");
         if (response.data == "not allowed") {
-           alert("You are not allowed Pls login again")
+          alert("You are not allowed Pls login again");
         } else if (response.data.postUpdated) {
           alert("Post updated Successfully");
           setSuccessPost(true);
@@ -187,8 +185,10 @@ export default function Page({ params }) {
     setPostInfo({ ...postInfo, content: updatedContent }); // Update the state
   };
 
-
   const portsize = useMediaQuery("(max-width: 1000px)");
+
+  const editor = React.useRef(null);
+
   return (
     <>
       {mount ? (
@@ -198,11 +198,20 @@ export default function Page({ params }) {
           <Box
             component="form"
             sx={{
-              "& .MuiTextField-root": { m: 3, width:portsize?"30ch":"35ch" },
-              display: "grid",
-              justifyContent: "center",
-              padding: "10px",
-            }}
+          "& .MuiTextField-root": { m: 3, width: "35ch" },
+          display: "grid",
+          justifyContent: "center",
+          padding: "10px",
+        }}
+            // sx={{
+            //   "& .MuiTextField-root": {
+            //     m: 3,
+            //     width: portsize ? "30ch" : "35ch",
+            //   },
+            //   display: "grid",
+            //   justifyContent: "center",
+            //   padding: "10px",
+            // }}
             noValidate
             autoComplete="off"
           >
@@ -249,7 +258,10 @@ export default function Page({ params }) {
                 }}
               />
 
-              <FormControl variant="standard" sx={{ m: 1, minWidth: 120,marginLeft:"25px" }}>
+              <FormControl
+                variant="standard"
+                sx={{ m: 1, minWidth: 120, marginLeft: "25px" }}
+              >
                 <InputLabel id="demo-simple-select-standard-label">
                   Category
                 </InputLabel>
@@ -342,15 +354,17 @@ export default function Page({ params }) {
             <div className="bg-orange-100 p-4">
               {postInfo?.content &&
                 postInfo?.content.map((ele, index) => (
-                  <>
+                  <div>
                     {ele?.hasOwnProperty("par") && (
                       <>
+                        
                         <div className="flex justify-end p-2">
                           <DeleteIcon
                             onClick={() => handlremovelement(index)}
                             style={{ cursor: "pointer" }}
                           />{" "}
                         </div>
+
                         <TextField
                           id="outlined-textarea"
                           label={`Paragraph ${index + 1} Heading (optional)`}
@@ -359,21 +373,45 @@ export default function Page({ params }) {
                           onChange={(e) => {
                             const updatedContent = [...postInfo.content]; // Create a copy of the existing content array
                             updatedContent[index].head = e.target.value;
-                            setState({ ...postInfo, content: updatedContent });
+                            setPostInfo({
+                              ...postInfo,
+                              content: updatedContent,
+                            });
                           }}
                         />
-                        <textarea
-                          defaultValue={ele.par}
-                          class="mt-10 resize rounded-md appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                          id="exampleFormControlTextarea1"
-                          rows="7"
-                          placeholder={`Paragraph ${index + 1}`}
-                          onChange={(e) => {
+
+                        <div style={{width:portsize?"90vw": "70vw"}}>
+                        <JoditEditor
+                          ref={editor}
+                          value={ele.par}
+                          // config={config}
+                          tabIndex={1} // tabIndex of textarea
+                          // preferred to use only this option to update the content for performance reasons
+                          onChange={(newContent) => {
                             const updatedContent = [...postInfo.content]; // Create a copy of the existing content array
-                            updatedContent[index].par = e.target.value; // Update the specific index with the new value
-                            setState({ ...postInfo, content: updatedContent }); // Update the state
+                            updatedContent[index].par = newContent;
+                            setPostInfo({
+                              ...postInfo,
+                              content: updatedContent,
+                            });
                           }}
-                        ></textarea>
+                        />
+                        </div>
+
+                        {/* <div
+                          contentEditable="true"
+                          className="mt-10 resize rounded-md appearance-none block  bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                          style={{
+                            border: "1px solid #ccc",
+                            // minHeight: "30px",
+                            // padding: "5px",
+                            width: "40%",
+                          }}
+                          ref={textInput}
+                          dangerouslySetInnerHTML={createMarkup(ele.par)}
+                          // onInput={handleInput}
+                          // dangerouslySetInnerHTML={{ __html: ele.par }}
+                        ></div> */}
                       </>
                     )}
                     {ele == "para" && (
@@ -384,6 +422,7 @@ export default function Page({ params }) {
                             style={{ cursor: "pointer" }}
                           />{" "}
                         </div>
+               
                         <TextField
                           id="outlined-textarea"
                           label={`Paragraph ${index + 1} Heading (optional)`}
@@ -395,18 +434,21 @@ export default function Page({ params }) {
                             setState({ ...state, subHeading: updatedContent });
                           }}
                         />
-                        <textarea
-                          // defaultValue={ele.par}
-                          class="mt-10 resize rounded-md appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                          id="exampleFormControlTextarea1"
-                          rows="7"
-                          placeholder={`Paragraph ${index + 1}`}
-                          onChange={(e) => {
+                        <JoditEditor
+                          ref={editor}
+                          
+                          // config={config}
+                          tabIndex={1} // tabIndex of textarea
+                          // preferred to use only this option to update the content for performance reasons
+                          onChange={(newContent) => {
                             const updatedContent = [...state.paragraph]; // Create a copy of the existing content array
-                            updatedContent[index] = e.target.value; // Update the specific index with the new value
-                            setState({ ...state, paragraph: updatedContent }); // Update the state
+                            updatedContent[index] = newContent;
+                            setState({
+                              ...state,
+                              paragraph: updatedContent,
+                            });
                           }}
-                        ></textarea>
+                        />
                       </>
                     )}
                     {ele?.hasOwnProperty("img") && (
@@ -429,7 +471,7 @@ export default function Page({ params }) {
                             src={`${imageUrls}/${ele.img?.filename}`}
                           />
                           <Button
-                            sx={{backgroundColor:"#ffa31a",color:"white"}}
+                            sx={{ backgroundColor: "#ffa31a", color: "white" }}
                             component="label"
                             // variant="contained"
                             startIcon={<CloudUploadIcon />}
@@ -487,7 +529,7 @@ export default function Page({ params }) {
                             First add Alt then select Image
                           </label>
                           <Button
-                            sx={{backgroundColor:"#ffa31a",color:"white"}}
+                            sx={{ backgroundColor: "#ffa31a", color: "white" }}
                             component="label"
                             // variant="contained"
                             startIcon={<CloudUploadIcon />}
@@ -549,12 +591,16 @@ export default function Page({ params }) {
                       </div>
                     </div>
                     <div className="w-full h-0.5 bg-black mt-2"> </div>
-                  </>
+                  </div>
                 ))}
               {selectedELement.length !== 0 && (
                 <Button
                   component="label"
-                  sx={{backgroundColor:"#ffa31a",color:"white",margin:"5px"}}
+                  sx={{
+                    backgroundColor: "#ffa31a",
+                    color: "white",
+                    margin: "5px",
+                  }}
                   startIcon={<CloudUploadIcon />}
                 >
                   Change Banner Image of Blog
@@ -563,7 +609,7 @@ export default function Page({ params }) {
                     onChange={(e) => {
                       const originalFile = e.target.files[0]; // Get the original File object
                       const updatedName = postInfo?.banner;
-        
+
                       const updatedFile = new File(
                         [originalFile],
                         updatedName,
@@ -582,9 +628,17 @@ export default function Page({ params }) {
 
             {/* </form> */}
             <div
-              style={{ display: "flex", justifyContent:"end",marginTop:"4px" }}
+              style={{
+                display: "flex",
+                justifyContent: "end",
+                marginTop: "4px",
+              }}
             >
-              <Button variant="contained" style={{backgroundColor:"#fb923c",color:"white"}} onClick={uploadPost}>
+              <Button
+                variant="contained"
+                style={{ backgroundColor: "#fb923c", color: "white" }}
+                onClick={uploadPost}
+              >
                 Upload Post
               </Button>
             </div>
