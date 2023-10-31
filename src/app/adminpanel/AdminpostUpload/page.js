@@ -19,7 +19,7 @@ import { api } from "@/components/api/api";
 import { getCookie } from "cookies-next";
 import MuiAlert from "@mui/material/Alert";
 import { imageurl } from "@/components/api/api";
-import JoditEditor from "jodit-react";
+// import JoditEditor from "jodit-react";
 
 export default function Page() {
   
@@ -295,7 +295,7 @@ export default function Page() {
                         setState({ ...state, subHeading: updatedContent });
                       }}
                     />
-                     <JoditEditor
+                     {/* <JoditEditor
                           ref={editor}
                           
                           // config={config}
@@ -309,7 +309,7 @@ export default function Page() {
                               paragraph: updatedContent,
                             });
                           }}
-                        />
+                        /> */}
                   </div>
                 )}
 
