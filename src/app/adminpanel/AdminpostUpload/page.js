@@ -22,7 +22,7 @@ import { imageurl } from "@/components/api/api";
 import JoditEditor from "jodit-react";
 
 export default function Page() {
-  const editor = React.useRef(null);
+  
   const imageUrl = imageurl;
 
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -150,7 +150,7 @@ export default function Page() {
     width: 1,
   });
   const portsize = useMediaQuery("(max-width: 1000px)");
-
+  const editor = React.useRef(null);
 
   return (
     <>
@@ -295,20 +295,21 @@ export default function Page() {
                         setState({ ...state, subHeading: updatedContent });
                       }}
                     />
-                    <JoditEditor
-                      ref={editor}
-                      // config={config}
-                      tabIndex={1} // tabIndex of textarea
-                      // preferred to use only this option to update the content for performance reasons
-                      onChange={(newContent) => {
-                        const updatedContent = [...state.paragraph]; // Create a copy of the existing content array
-                        updatedContent[index] = newContent;
-                        setState({
-                          ...state,
-                          paragraph: updatedContent,
-                        });
-                      }}
-                    />
+                     <JoditEditor
+                          ref={editor}
+                          
+                          // config={config}
+                          tabIndex={1} // tabIndex of textarea
+                          // preferred to use only this option to update the content for performance reasons
+                          onChange={(newContent) => {
+                            const updatedContent = [...state.paragraph]; // Create a copy of the existing content array
+                            updatedContent[index] = newContent;
+                            setState({
+                              ...state,
+                              paragraph: updatedContent,
+                            });
+                          }}
+                        />
                   </div>
                 )}
 

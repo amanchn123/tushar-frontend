@@ -434,7 +434,7 @@ export default function Page({ params }) {
                             setState({ ...state, subHeading: updatedContent });
                           }}
                         />
-                        <JoditEditor
+                        {/* <JoditEditor
                           ref={editor}
                           
                           // config={config}
@@ -448,7 +448,7 @@ export default function Page({ params }) {
                               paragraph: updatedContent,
                             });
                           }}
-                        />
+                        /> */}
                       </>
                     )}
                     {ele?.hasOwnProperty("img") && (
