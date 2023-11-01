@@ -98,7 +98,7 @@ const TablesPage = () => {
               <div className="grid">
               <Link
                 className="bg-orange-400 m-5 p-3 rounded-lg shadow"
-                href="/"
+                href="/adminpanel/userQues"
               >
                 Manage User Question{" "}
               </Link>

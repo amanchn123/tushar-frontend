@@ -49,7 +49,7 @@ const TableOne = () => {
 
   useEffect(() => {
     getAllPost();
-  });
+  },[]);
 
   const bannerUrl = imageurl;
   const matches = useMediaQuery("(min-width:800px)");
@@ -68,6 +68,7 @@ const TableOne = () => {
   
      if(response.data){
       alert("post deletd successfully")
+      getAllPost()
      }
      
     }catch(error){

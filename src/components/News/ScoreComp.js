@@ -94,7 +94,7 @@ export default function ScoreComp() {
         </h1>
         <div style={{ height: "100%" }}>.</div>
       </div>
-          
+      
     </div>
   );
 }

@@ -52,10 +52,10 @@ export default function Home() {
       <div className="post__gallery__area">
         <div className="container">
           <div className="row mb-16">
-            <div className="col-lg-9 ">
+            <div className="col-lg-9 mt-5">
               <Blogs />
             </div>
-            <div className="col-lg-3">
+            <div className="col-lg-3 mt-5">
               <div
                 className="post_gallery_sidebar"
                 style={{ height: "100%", paddingTop: "6%" }}

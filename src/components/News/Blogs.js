@@ -21,11 +21,9 @@ export default function Blogs() {
   });
 
   const getAllPost = async () => {
-    const response = await axios.post(`${api}/getPost`, {
-      subCategory: "Featured News",
-    });
-    // await ;
-    setPostData(response.data.slice(1, 4));
+    const response = await axios.get(`${api}/getallopinion`);
+    console.log('open',response)
+    setPostData(response.data.slice(0, 5));
   };
   useEffect(() => {
     getAllPost();
@@ -36,10 +34,10 @@ export default function Blogs() {
   const imagePath = imageurl;
   return (
 <>
-      <h4 className="title mt-5 font-bold">
-        Blogs and Discussion
+      <h4 className="title  font-bold tracking-tighter">
+        BLOGS&nbsp; AND&nbsp; DISCUSSION 
       </h4>
-
+      
       {postData &&
         postData.map((ele,idx) => {
           const timeDifference = Date.now() - new Date(ele.createdAt);
@@ -47,7 +45,6 @@ export default function Blogs() {
           const hoursDifference = Math.floor(timeDifference / 1000 / 60 / 60);
 
           const convertDays = Math.floor(hoursDifference / 7);
-          const bannelurl = `${imagePath}/${ele.banner}`;
           return (
 
               <Card
@@ -57,18 +54,18 @@ export default function Blogs() {
                   marginBottom: "10px",
                   // height: "250px",
                   // width:"100%",
-                //   backgroundColor:"yellow"
+                  backgroundColor:"#e0e0d2"
                 }}
               >
                 <Grid container>
                   
                   <Grid item lg={12} sm={12} className="p-4">
                     <h5 className={`font-bold`}>
-                      {ele.heading}
+                      {ele?.question}
                     </h5>
                     <div style={{ height: "80px" }}>
                       
-                        {ele.metadata?.description.slice(0, 150)}
+                        {ele?.answer}
                         
                     </div>
                     <div
@@ -77,10 +74,11 @@ export default function Blogs() {
                         display: "flex",
                         justifyContent: "space-between",
                         marginTop: "20px",
+                        marginBottom:"0%"
                       }}
                     > 
                       <div>Comment &nbsp;&nbsp;&nbsp; <Link href='/' style={{ color: "red" }}>Read more..</Link></div>
-                      <span>
+                      {/* <span>
                         <AccessTimeIcon />{" "}
                         {minutesDifference <= 60
                           ? `${minutesDifference} Minutes`
@@ -89,7 +87,11 @@ export default function Blogs() {
                           ? `${hoursDifference} Hours`
                           : ""}{" "}
                         Ago
-                      </span>{" "}
+                      </span>{" "} */}
+                      <div className="flex">
+                        <span className="flex items-center text-lg font-medium mr-2">{ele?.userName?.charAt(0).toUpperCase() +ele?.userName.slice(1)}</span>
+                        <img className="h-16 rounded-full" src="/images/profilepng.png" alt="profile pic"/>
+                      </div>
                     </div>
                   </Grid>
 
