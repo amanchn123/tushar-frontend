@@ -288,7 +288,7 @@ const QuesTable = () => {
             </div>
           ))
         ) : (
-          <h5 className="title text-center">There is no User's opinion</h5>
+          <h5 className="title text-center">There is no User s opinion</h5>
         )}
       </div>
       <Modal
