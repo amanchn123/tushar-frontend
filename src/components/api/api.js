@@ -16,7 +16,5 @@ export const imageurl="https://api.dainikloksandarbh.com/uploads"
 
 
 
-
-
 // export const imageurl="https://dsapi-56q9.onrender.com/uploads" 
 // export const api="https://dsapi-56q9.onrender.com/api"

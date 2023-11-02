@@ -74,10 +74,12 @@ export default function Blogs() {
                         display: "flex",
                         justifyContent: "space-between",
                         marginTop: "20px",
-                        marginBottom:"0%"
+                        marginBottom:"0%",
+                        // backgroundColor:"yellow",
+                        
                       }}
                     > 
-                      <div>Comment &nbsp;&nbsp;&nbsp; <Link href='/' style={{ color: "red" }}>Read more..</Link></div>
+                      {/* <div style={{display:mobileV?"grid":"flex"}}>Comment &nbsp;&nbsp;&nbsp; <Link href='/' style={{ color: "red" }}>Read more..</Link></div> */}
                       {/* <span>
                         <AccessTimeIcon />{" "}
                         {minutesDifference <= 60
@@ -88,7 +90,7 @@ export default function Blogs() {
                           : ""}{" "}
                         Ago
                       </span>{" "} */}
-                      <div className="flex">
+                      <div style={{display:"flex"}}>
                         <span className="flex items-center text-lg font-medium mr-2">{ele?.userName?.charAt(0).toUpperCase() +ele?.userName.slice(1)}</span>
                         <img className="h-16 rounded-full" src="/images/profilepng.png" alt="profile pic"/>
                       </div>
