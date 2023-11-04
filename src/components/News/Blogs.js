@@ -63,7 +63,7 @@ export default function Blogs() {
                     <h5 className={`font-bold`}>
                       {ele?.question}
                     </h5>
-                    <div style={{ height: "80px" }}>
+                    <div style={{ height: "auto" }}>
                       
                         {ele?.answer}
                         

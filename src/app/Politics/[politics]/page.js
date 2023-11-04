@@ -31,7 +31,7 @@ export default async function PostDetailsOne({ params }) {
     <>
       <div className="home-1-bg">
         <DrawerHeader />
-        <BreakingNews />/
+        <BreakingNews />
         <section className="post-layout-1-area pb-80">
           <div className="container">
             <div className="row">
