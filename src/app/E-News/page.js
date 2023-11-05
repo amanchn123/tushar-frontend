@@ -28,28 +28,7 @@ export default function Home() {
             {/* <E_News /> */}
             <TrendingNews />
           </div>   
-            <div className="col-lg-12">
-              <NewsLetter />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      
-      <div className="post__gallery__area">
-        <div className="container">
-          <div className="row mb-16">
-            {/* <div className="col-lg-9 ">
-              <Blogs />
-            </div> */}
-            <div className="col-lg-3">
-              <div
-                className="post_gallery_sidebar"
-                style={{ height: "100%", paddingTop: "6%" }}
-              >
-                <NewsTabs />
-              </div>
-            </div>
+            
           </div>
         </div>
       </div>

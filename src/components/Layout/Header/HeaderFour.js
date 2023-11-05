@@ -8,6 +8,7 @@ import Link from "next/link";
 // import { useMediaQuery } from '@mui/material';
 import { Domain } from "@/components/api/domain";
 import CloseIcon from '@mui/icons-material/Close';
+import { usePathname } from 'next/navigation'
 
 const style = {
   position: "absolute",
@@ -23,6 +24,8 @@ const style = {
 };
 
 export default function HeaderFour({ action }) {
+  const pathname = usePathname()
+  console.log('pathname',pathname)
   // const portJoin = useMediaQuery("(max-width:990px)");
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -30,7 +33,12 @@ export default function HeaderFour({ action }) {
 
   useEffect(() => {
     const alertTimeout = setTimeout(() => {
-      setOpen(true);
+      if(pathname=="/E-News"){
+        setOpen(false)
+      }else{
+        setOpen(true);
+      }
+      
     }, 12000); // 10 seconds in milliseconds
 
     return () => {
