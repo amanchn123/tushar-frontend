@@ -1,9 +1,22 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useMediaQuery } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 
 export default function NewsLetter({ dark }) {
+  const [email,setEmail]=useState()
+  const submit=async()=>{
+    try{
+      if(email==undefined || email==null){
+        alert("pls enter valid email")
+      }else{
+
+        alert("you have successfully subscribed Newsletter")
+      }
+    }catch(error){
+      console.log('error in subscrbing email newsletter in frontend')
+    }
+  }
   const portsize = useMediaQuery("(max-width: 1000px)");
   return (
     <div className="post_gallery_sidebar mt-40">
@@ -33,11 +46,12 @@ export default function NewsLetter({ dark }) {
               <div className="footer-newaletter">
                 <div className="input-box ">
                   <input
-                    type="text"
+                    onChange={(e)=>setEmail(e.target.value)} 
+                    type="email"
                     className="rounded-full"
                     placeholder="Your email address"
                   />
-                  <button type="button" style={{backgroundColor:"transparent",width:"auto",paddingRight:"10px",paddingBottom:"2px"}}>
+                  <button onClick={submit} type="button" style={{backgroundColor:"transparent",width:"auto",paddingRight:"10px",paddingBottom:"2px"}}>
                     <SendIcon style={{color:"orange",transform:"rotate(-45deg)",fontSize:"35px"}}/>
                   </button>
                 </div>

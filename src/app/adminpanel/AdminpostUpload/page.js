@@ -60,6 +60,7 @@ export default function Page() {
     alt: [],
     subHeading: [],
     banner: null,
+    author:null
   });
 
   const haadlelement = async (e) => {
@@ -116,6 +117,7 @@ export default function Page() {
         await formdata.append("subCategory", state.subCategory);
         await formdata.append("slug", state.slug);
         await formdata.append("title", state.title);
+        await formdata.append("author", state.author);
         await formdata.append("banner", state.banner);
         await formdata.append("alt", JSON.stringify(state.alt));
         await formdata.append("final", JSON.stringify(modifiedContentFinal));
@@ -151,6 +153,7 @@ export default function Page() {
     width: 1,
   });
   const portsize = useMediaQuery("(max-width: 1000px)");
+  const desktopView = useMediaQuery("(max-width: 1130px)");
   const editor = React.useRef(null);
 
   React.useEffect(() => {
@@ -203,7 +206,7 @@ export default function Page() {
               Add new Post Blog
             </Typography>
 
-            <div>
+            <div className={` ${desktopView?"":"flex"} justify-between`}>
               <TextField
                 id="outlined-textarea"
                 label="www.domain/bog/"
@@ -267,6 +270,17 @@ export default function Page() {
                   <MenuItem value="Featured News">Featured News</MenuItem>
                 </Select>
               </FormControl>
+
+              <TextField
+                id="outlined-multiline-flexible"
+                label="Blog Author"
+                multiline
+                maxRows={4}
+                fullWidth
+                onChange={(e) =>
+                  setState({ ...state, author: e.target.value })
+                }
+              />
             </div>
             <div>
               <TextField

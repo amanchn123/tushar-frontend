@@ -11,8 +11,8 @@ import 'react-modal-video/scss/modal-video.scss';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'DLS News',
-  description: 'DLS latest news and blogging on every topic',
+  title: 'Dainik loksandarbh',
+  description: 'Dainik loksandarbh latest news and blogging on every topic',
 }
 
 export default function RootLayout({ children }) {

@@ -53,11 +53,11 @@ export default async function PostDetailsOne({ params }) {
                         <div className="thumb">
                           <img src={`${imagePath}/${Postdata.banner}`} alt="" />
                         </div>
-                        <h5 className="title">Subash Chandra</h5>
-                        <ul>
+                        <h5 className="title">{Postdata?.author?Postdata.author:"Dainik Loksandarbh"}</h5>
+                        {/* <ul>
                           <li>March 26, 2020</li>
                           <li>Updated 1:58 p.m. ET</li>
-                        </ul>
+                        </ul> */}
                       </div>
                       <div className="author-social">
                         <ul>

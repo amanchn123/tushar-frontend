@@ -78,7 +78,7 @@ export default function TwoPostCarousel({ dark, customClass }) {
         dark ? 'single-play-post-dark-area' : ''
       } `}
     >
-    <h3 className='title font-semibold'>Trending News</h3>
+    <h3 className='title font-semibold tracking-tighter'>Trending News</h3>
       <div className="container custom-container " style={{padding:"0%"}}>
         <div className="single-play-box  " style={{padding:"0%"}}>
           <Slider {...settings} className="row single-play-post-slider ">

@@ -78,7 +78,7 @@ export default async function Technology() {
                           >
                             <div className="row">
                               <div
-                                className={`${newsTab.categorybanner1}  col-lg-3 container rounded grid justify-center w-full`}
+                                className={`${newsTab.categorybanner1}  col-lg-3 container rounded grid w-full`}
                               >
                                 <h5
                                   className={`${newsTab.categorybanner1} font-bold p-2`}
@@ -88,7 +88,7 @@ export default async function Technology() {
                                 <img
                                   style={{
                                     display: "block",
-                                    height: "250px",
+                                    maxHeight:"340px",
                                     position: "relative",
                                     width: "100%",
                                     padding: "0%",
@@ -98,7 +98,7 @@ export default async function Technology() {
                               </div>
                               <div className="col-lg-8 col-md-8 col-sm-12">
                                 <h5
-                                  className={`${newsTab.category2banner} hidden md:block font-bold text-center p-3 px-2`}
+                                  className={`${newsTab.category2banner} hidden md:block font-bold p-3 px-2`}
                                 >
                                   {ele.heading}
                                 </h5>
