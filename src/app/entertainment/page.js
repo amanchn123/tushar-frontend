@@ -46,12 +46,12 @@ export default async function Technology({ params }) {
       <BreakingNews />
       <section className="about-item-area">
         <div className="container px-4">
-        <div className="row">
+          <div className="row">
             <div className="col-lg-12"></div>
             <div className="row">
               <div className="col-lg-9 ">
                 <Grid container lg={12}>
-                  <h4 className="title font-bold">World News</h4>
+                  <h4 className="title font-bold">Entertainment News</h4>
 
                   {bloglist1 &&
                     bloglist1.map((ele, index) => {
@@ -64,7 +64,7 @@ export default async function Technology({ params }) {
                         timeDifference / 1000 / 60 / 60
                       );
 
-                      const convertDays = Math.floor(hoursDifference / 7);
+                      const convertDays = Math.floor(hoursDifference / 24);
                       return (
                         <Link
                           href={`${ele.category}/${ele.slug}`}
@@ -88,7 +88,7 @@ export default async function Technology({ params }) {
                                 <img
                                   style={{
                                     display: "block",
-                                    maxHeight:"340px",
+                                    maxHeight: "340px",
                                     position: "relative",
                                     width: "100%",
                                     padding: "0%",
@@ -122,11 +122,9 @@ export default async function Technology({ params }) {
                                     <AccessTimeIcon />
                                     {minutesDifference <= 60
                                       ? `${minutesDifference} Minutes`
-                                      : minutesDifference > 60
+                                      : hoursDifference <= 24
                                       ? `${hoursDifference} hrs`
-                                      : hoursDifference > 24
-                                      ? `${convertDays} days`
-                                      : ""}
+                                      : `${convertDays} days`}
                                     Ago
                                   </span>{" "}
                                 </div>

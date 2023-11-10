@@ -10,8 +10,6 @@ import Image from "next/image";
 import { imageurl } from "../api/api";
 
 export default function FeaturedNews() {
-
-
   const [postData, setPostData] = useState([]);
   const [time, setTime] = useState([]);
   const [mobileV, setMobileV] = useState();
@@ -42,9 +40,7 @@ export default function FeaturedNews() {
   const imagePath = imageurl;
   return (
     <Grid container>
-      <h4 className="title font-bold">
-        Featured News
-      </h4>
+      <h4 className="title font-bold">Featured News</h4>
 
       {postData &&
         postData.map((ele, idx) => {
@@ -52,7 +48,7 @@ export default function FeaturedNews() {
           const minutesDifference = Math.floor(timeDifference / 1000 / 60);
           const hoursDifference = Math.floor(timeDifference / 1000 / 60 / 60);
 
-          const convertDays = Math.floor(hoursDifference / 7);
+          const convertDays = Math.floor(hoursDifference / 24);
           const bannelurl = `${imagePath}/${ele.banner}`;
           return (
             <Link
@@ -91,9 +87,9 @@ export default function FeaturedNews() {
                     <h5
                       className={`${newsTab.category2banner} hidden md:block font-bold  p-3 px-2`}
                     >
-                      {ele?.heading?.slice(0,90)}
+                      {ele?.heading?.slice(0, 90)}
                     </h5>
-                    <div style={{ height: "120px", padding: "10px"}}>
+                    <div style={{ height: "120px", padding: "10px" }}>
                       {ele.metadata?.description.slice(0, 250)}
                     </div>
                     <div
@@ -109,11 +105,9 @@ export default function FeaturedNews() {
                         <AccessTimeIcon />
                         {minutesDifference <= 60
                           ? `${minutesDifference} Minutes`
-                          : minutesDifference > 60
+                          : hoursDifference <= 24
                           ? `${hoursDifference} hrs`
-                          : hoursDifference > 24
-                          ? `${convertDays} days`
-                          : ""}
+                          : `${convertDays} days`}
                         Ago
                       </span>{" "}
                     </div>

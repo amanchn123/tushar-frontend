@@ -52,7 +52,7 @@ export default async function Technology({ params }) {
             <div className="row">
               <div className="col-lg-9 ">
                 <Grid container lg={12}>
-                  <h4 className="title font-bold">World News</h4>
+                  <h4 className="title font-bold">Politics News</h4>
 
                   {bloglist1 &&
                     bloglist1.map((ele, index) => {
@@ -65,7 +65,7 @@ export default async function Technology({ params }) {
                         timeDifference / 1000 / 60 / 60
                       );
 
-                      const convertDays = Math.floor(hoursDifference / 7);
+                      const convertDays = Math.floor(hoursDifference / 24);
                       return (
                         <Link
                           href={`${ele.category}/${ele.slug}`}
@@ -122,12 +122,10 @@ export default async function Technology({ params }) {
                                   <span>
                                     <AccessTimeIcon />
                                     {minutesDifference <= 60
-                                      ? `${minutesDifference} Minutes`
-                                      : minutesDifference > 60
-                                      ? `${hoursDifference} hrs`
-                                      : hoursDifference > 24
-                                      ? `${convertDays} days`
-                                      : ""}
+    ? `${minutesDifference} Minutes`
+    : hoursDifference <= 24
+    ? `${hoursDifference} hrs`
+    : `${convertDays} days`}
                                     Ago
                                   </span>{" "}
                                 </div>

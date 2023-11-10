@@ -9,7 +9,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import NotificationsSharpIcon from "@mui/icons-material/NotificationsSharp";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
-import { Checkbox } from "@mui/material";
+import { Checkbox, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { auth } from "../../../app/firebase.config";
@@ -41,8 +41,16 @@ const style = {
 export default function LogoWithSearch() {
   const [number, setNumber] = useState(null);
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => {
+    setOpen(true)};
+
+  const handleClose = () => {
+    setOpenAlert(true)
+  }
+  
+
+
+
   const [slideno, setSlideno] = useState(0);
   const [invalidOtp, setInvalidOtp] = useState(false);
   const [users, setUsers] = useState(null);
@@ -60,6 +68,18 @@ export default function LogoWithSearch() {
   const portJoin = useMediaQuery("(max-width:990px)");
   const [isInputDisabled, setInputDisabled] = useState(false);
   const [searchlist,setsearchlist]=useState([])
+  const[openAlert,setOpenAlert]=useState(false)
+
+  const handlecloseAll=async()=>{
+    setOpenAlert(false)
+    setOpen(false)
+    setSlideno(0) 
+  };
+
+  const handleCloseAlert=()=>{
+    setOpenAlert(false)
+  }
+  
 
   const [userdata, setUserdata] = useState({
     name: "",
@@ -80,6 +100,7 @@ export default function LogoWithSearch() {
 
   setCookie("UserDetails", response.data, { sameSite: "Strict" });
   alert("You are successfully logged in");
+  setSlideno(0)
   setOpen(false);
  }catch(error){
   console.log("error in registrating user",error)
@@ -99,6 +120,7 @@ const login=async()=>{
       if(response.data.success){
         setCookie("UserDetails", response.data.result, { sameSite: "Strict" }); 
         alert("successfully logged in")
+        setOpen(false)
       }else{
         alert("Pls check your crendentials")
       }
@@ -658,7 +680,26 @@ const login=async()=>{
             ""
           )}
         </div>
+        
       </div>
+      <Dialog
+        open={openAlert}
+        onClose={handleCloseAlert}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Use Google's location service?"}
+        </DialogTitle>
+
+        <DialogActions>
+          <Button onClick={handleCloseAlert}>Cancel</Button>
+          <Button variant="warning" onClick={handlecloseAll}>
+            Discard
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <Modal
         open={open}
         onClose={handleClose}
