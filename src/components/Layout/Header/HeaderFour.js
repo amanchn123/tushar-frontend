@@ -7,8 +7,9 @@ import Link from "next/link";
 // import TopbarThree from './TopbarThree';
 // import { useMediaQuery } from '@mui/material';
 import { Domain } from "@/components/api/domain";
-import CloseIcon from '@mui/icons-material/Close';
-import { usePathname } from 'next/navigation'
+import CloseIcon from "@mui/icons-material/Close";
+import { usePathname } from "next/navigation";
+import { getCookie, setCookie } from "cookies-next";
 
 const style = {
   position: "absolute",
@@ -24,22 +25,25 @@ const style = {
 };
 
 export default function HeaderFour({ action }) {
-  const pathname = usePathname()
-  console.log('pathname',pathname)
+  const pathname = usePathname();
   // const portJoin = useMediaQuery("(max-width:990px)");
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false)
+    setCookie("epaper_status","disable")
+  }
 
+  const epaper_status=getCookie("epaper_status") 
   useEffect(() => {
     const alertTimeout = setTimeout(() => {
-      if(pathname=="/E-News"){
-        setOpen(false)
-      }else{
+
+      if (pathname == "/E-News" || pathname.startsWith("/adminpanel") || epaper_status=="disable") {
+        setOpen(false);
+      } else {
         setOpen(true);
       }
-      
-    }, 12000); // 10 seconds in milliseconds
+    }, 4000); // 10 seconds in milliseconds
 
     return () => {
       // Clear the timeout when the component unmounts to avoid memory leaks
@@ -81,26 +85,29 @@ export default function HeaderFour({ action }) {
                 aria-describedby="modal-modal-description"
               >
                 <Box sx={style}>
-                <div className="-mt-5 flex justify-end -mr-4 cursor-pointer"><CloseIcon onClick={()=>setOpen(false)} /></div>
-                Click Here to Read Todays <Link
-                href={`${Domain}/E-News`}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  fontSize: "20px",
-                  // marginRight: "30px",
-                  // color: "white",
-                }}
-              >
-              
-                <i
-                  style={{ fontSize: "30px" }}
-                  class="fas fa-newspaper  mr-2"
-                ></i>
-                <span className="flex items-center text-center">
-                  E-<p className="flex text-center mt-3"> Paper</p>
-                </span>{" "}
-              </Link></Box>
+                  <div className="-mt-5 flex justify-end -mr-4 cursor-pointer">
+                    <CloseIcon onClick={handleClose} />
+                  </div>
+                  Click Here to Read Todays{" "}
+                  <Link
+                    href={`${Domain}/E-News`}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      fontSize: "20px",
+                      // marginRight: "30px",
+                      // color: "white",
+                    }}
+                  >
+                    <i
+                      style={{ fontSize: "30px" }}
+                      class="fas fa-newspaper  mr-2"
+                    ></i>
+                    <span className="flex items-center text-center">
+                      E-<p className="flex text-center mt-3"> Paper</p>
+                    </span>{" "}
+                  </Link>
+                </Box>
               </Modal>
             </div>
           </div>

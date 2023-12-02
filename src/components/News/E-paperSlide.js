@@ -113,9 +113,8 @@ export default function TwoPostCarousel({ dark, customClass }) {
             { epap?.content?.map((item, i) => (
               
               <div className="col" key={i + 1}>
-              {console.log("itemm",item)}
                 <div className="single-play-post-item ">
-                    <img src={`${imageurl}/${item}`} alt="play" style={{height:portsize?"":"700px"}}/>
+                    <img src={`${imageurl}/${item}`} alt="play" style={{height:portsize?"":""}}/>
    
 
                   <div className="single-play-post-content">
