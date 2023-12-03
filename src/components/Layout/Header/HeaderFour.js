@@ -43,7 +43,7 @@ export default function HeaderFour({ action }) {
       } else {
         setOpen(true);
       }
-    }, 4000); // 10 seconds in milliseconds
+    }, 12000); // 10 seconds in milliseconds
 
     return () => {
       // Clear the timeout when the component unmounts to avoid memory leaks
